@@ -37,6 +37,7 @@
 @optional
 
 // when we start/end showing the search UI
+- (BOOL)composeDisplayControllerShouldBeginSearch:(TURecipientDisplayController *)controller;
 - (void)composeDisplayControllerWillBeginSearch:(TURecipientDisplayController *)controller;
 - (void)composeDisplayControllerDidBeginSearch:(TURecipientDisplayController *)controller;
 - (void)composeDisplayControllerWillEndSearch:(TURecipientDisplayController *)controller;

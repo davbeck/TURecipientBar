@@ -12,6 +12,9 @@
 
 
 @implementation TURecipientDisplayController
+{
+    BOOL _shouldBeginSearch;
+}
 
 @synthesize searchResultsTableView = _searchResultsTableView;
 
@@ -63,35 +66,43 @@
 - (void)_showTableView
 {
 	if (!self.composeBar.searching) {
-		UITableView *tableView = self.searchResultsTableView;
-		
-		if ([self.delegate respondsToSelector:@selector(composeDisplayController:willShowSearchResultsTableView:)]) {
-			[self.delegate composeDisplayController:self willShowSearchResultsTableView:tableView];
-		}
-		
-		[self.composeContentsController.view addSubview:tableView];
-		[self.composeContentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
-		[self.composeContentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_composeBar][tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_composeBar, tableView)]];
-		[self.composeContentsController.view layoutIfNeeded];
-		
-		
-		tableView.alpha = 0.0;
-		[UIView animateWithDuration:0.2 animations:^{
-			//we don't want this to start from it's current location
-			tableView.alpha = 1.0;
-		}];
-		
-		
-		
-		[UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-			[self.composeBar setSearching:YES animated:NO];
-			
-			[self.composeBar.superview bringSubviewToFront:self.composeBar];
-		} completion:^(BOOL finished) {
-			if ([self.delegate respondsToSelector:@selector(composeDisplayController:didShowSearchResultsTableView:)]) {
-				[self.delegate composeDisplayController:self didShowSearchResultsTableView:tableView];
-			}
-		}];
+        if (_shouldBeginSearch) {
+            UITableView *tableView = self.searchResultsTableView;
+            
+            if ([self.delegate respondsToSelector:@selector(composeDisplayController:willShowSearchResultsTableView:)]) {
+                [self.delegate composeDisplayController:self willShowSearchResultsTableView:tableView];
+            }
+            
+            [self.composeContentsController.view addSubview:tableView];
+            [self.composeContentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
+            [self.composeContentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_composeBar][tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_composeBar, tableView)]];
+            
+            [self.composeContentsController.view layoutIfNeeded];
+            
+            
+            tableView.alpha = 0.0;
+            [UIView animateWithDuration:0.2 animations:^{
+                //we don't want this to start from it's current location
+                tableView.alpha = 1.0;
+            }];
+            
+            
+            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
+                [self.composeBar setSearching:YES animated:NO];
+                
+                [self.composeBar.superview bringSubviewToFront:self.composeBar];
+            } completion:^(BOOL finished) {
+                if ([self.delegate respondsToSelector:@selector(composeDisplayController:didShowSearchResultsTableView:)]) {
+                    [self.delegate composeDisplayController:self didShowSearchResultsTableView:tableView];
+                }
+            }];
+        } else {
+            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
+                [self.composeBar setSearching:YES animated:NO];
+                
+                [self.composeBar.superview bringSubviewToFront:self.composeBar];
+            } completion:nil];
+        }
 	}
 }
 
@@ -194,7 +205,13 @@
 	}
 	
 	if (should) {
-		if ([self.delegate respondsToSelector:@selector(composeDisplayControllerWillBeginSearch:)]) {
+        _shouldBeginSearch = YES;
+        
+        if ([self.delegate respondsToSelector:@selector(composeDisplayControllerShouldBeginSearch:)]) {
+            _shouldBeginSearch = [self.delegate composeDisplayControllerShouldBeginSearch:self];
+        }
+        
+		if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(composeDisplayControllerWillBeginSearch:)]) {
 			[self.delegate composeDisplayControllerWillBeginSearch:self];
 		}
 	}
@@ -208,7 +225,7 @@
 		[(id<TUComposeBarDelegate>)self.delegate composeBarTextDidBeginEditing:composeBar];
 	}
 	
-	if ([self.delegate respondsToSelector:@selector(composeDisplayControllerDidBeginSearch:)]) {
+	if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(composeDisplayControllerDidBeginSearch:)]) {
 		[self.delegate composeDisplayControllerDidBeginSearch:self];
 	}
 }
