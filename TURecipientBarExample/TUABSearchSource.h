@@ -15,7 +15,7 @@
 @interface TUABSearchSource : NSObject <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, weak) IBOutlet TURecipientsBar *composeBar;
+@property (nonatomic, weak) IBOutlet TURecipientsBar *recipientsBar;
 
 @property (nonatomic, copy) NSString *searchTerm;
 

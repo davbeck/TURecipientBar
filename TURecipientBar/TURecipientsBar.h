@@ -1,5 +1,5 @@
 //
-//  TUComposeBar.h
+//  TURecipientsBar.h
 //  ThinkSocial
 //
 //  Created by David Beck on 10/23/12.
@@ -32,7 +32,7 @@
 @property (nonatomic) UITextSpellCheckingType spellCheckingType;
 @property (nonatomic) BOOL showsAddButton;
 
-@property (nonatomic, weak) id<TURecipientsBarDelegate> composeBarDelegate;
+@property (nonatomic, weak) id<TURecipientsBarDelegate> recipientsBarDelegate;
 
 - (void)selectRecipient:(TURecipient *)recipient;
 
@@ -52,17 +52,17 @@
 
 @optional
 
-- (BOOL)composeBarShouldBeginEditing:(TURecipientsBar *)composeBar;                      // return NO to not become first responder
-- (void)composeBarTextDidBeginEditing:(TURecipientsBar *)composeBar;                     // called when text starts editing
-- (BOOL)composeBarShouldEndEditing:(TURecipientsBar *)composeBar;                        // return NO to not resign first responder
-- (void)composeBarTextDidEndEditing:(TURecipientsBar *)composeBar;                       // called when text ends editing
-- (void)composeBar:(TURecipientsBar *)composeBar textDidChange:(NSString *)searchText;   // called when text changes (including clear)
-- (BOOL)composeBar:(TURecipientsBar *)composeBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text; // called before text changes
+- (BOOL)recipientsBarShouldBeginEditing:(TURecipientsBar *)recipientsBar;                      // return NO to not become first responder
+- (void)recipientsBarTextDidBeginEditing:(TURecipientsBar *)recipientsBar;                     // called when text starts editing
+- (BOOL)recipientsBarShouldEndEditing:(TURecipientsBar *)recipientsBar;                        // return NO to not resign first responder
+- (void)recipientsBarTextDidEndEditing:(TURecipientsBar *)recipientsBar;                       // called when text ends editing
+- (void)recipientsBar:(TURecipientsBar *)recipientsBar textDidChange:(NSString *)searchText;   // called when text changes (including clear)
+- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text; // called before text changes
 
-- (BOOL)composeBar:(TURecipientsBar *)composeBar shouldSelectRecipient:(TURecipient *)recipient;
-- (void)composeBar:(TURecipientsBar *)composeBar didSelectRecipient:(TURecipient *)recipient;
+- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldSelectRecipient:(TURecipient *)recipient;
+- (void)recipientsBar:(TURecipientsBar *)recipientsBar didSelectRecipient:(TURecipient *)recipient;
 
-- (void)composeBarReturnButtonClicked:(TURecipientsBar *)composeBar;                     // called when keyboard return button pressed
-- (void)composeBarAddButtonClicked:(TURecipientsBar *)composeBar;                        // called when add button pressed
+- (void)recipientsBarReturnButtonClicked:(TURecipientsBar *)recipientsBar;                     // called when keyboard return button pressed
+- (void)recipientsBarAddButtonClicked:(TURecipientsBar *)recipientsBar;                        // called when add button pressed
 
 @end

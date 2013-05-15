@@ -1,5 +1,5 @@
 //
-//  TUComposeDisplayController.m
+//  TURecipientsDisplayController.m
 //  ThinkSocial
 //
 //  Created by David Beck on 10/24/12.
@@ -30,24 +30,24 @@
 	_active = active;
 }
 
-- (void)setComposeBar:(TURecipientsBar *)composeBar
+- (void)setRecipientsBar:(TURecipientsBar *)recipientsBar
 {
-	_composeBar = composeBar;
+	_recipientsBar = recipientsBar;
 	
-	_composeBar.composeBarDelegate = self;
+	_recipientsBar.recipientsBarDelegate = self;
 }
 
 - (UITableView *)searchResultsTableView
 {
 	if (_searchResultsTableView == nil) {
-		_searchResultsTableView = [[UITableView alloc] initWithFrame:self.composeContentsController.view.bounds style:UITableViewStylePlain];
+		_searchResultsTableView = [[UITableView alloc] initWithFrame:self.contentsController.view.bounds style:UITableViewStylePlain];
 		_searchResultsTableView.dataSource = self.searchResultsDataSource;
 		_searchResultsTableView.delegate = self.searchResultsDelegate;
 		_searchResultsTableView.translatesAutoresizingMaskIntoConstraints = NO;
 		_searchResultsTableView.backgroundColor = [UIColor colorWithWhite:0.925 alpha:1.000];
 		
-		if ([self.delegate respondsToSelector:@selector(composeDisplayController:didLoadSearchResultsTableView:)]) {
-			[self.delegate composeDisplayController:self didLoadSearchResultsTableView:_searchResultsTableView];
+		if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didLoadSearchResultsTableView:)]) {
+			[self.delegate recipientsDisplayController:self didLoadSearchResultsTableView:_searchResultsTableView];
 		}
 	}
 	
@@ -56,8 +56,8 @@
 
 - (void)_unloadTableView
 {
-	if ([self.delegate respondsToSelector:@selector(composeDisplayController:willUnloadSearchResultsTableView:)]) {
-		[self.delegate composeDisplayController:self willUnloadSearchResultsTableView:_searchResultsTableView];
+	if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:willUnloadSearchResultsTableView:)]) {
+		[self.delegate recipientsDisplayController:self willUnloadSearchResultsTableView:_searchResultsTableView];
 	}
 	
 	_searchResultsTableView = nil;
@@ -65,19 +65,19 @@
 
 - (void)_showTableView
 {
-	if (!self.composeBar.searching) {
+	if (!self.recipientsBar.searching) {
         if (_shouldBeginSearch) {
             UITableView *tableView = self.searchResultsTableView;
             
-            if ([self.delegate respondsToSelector:@selector(composeDisplayController:willShowSearchResultsTableView:)]) {
-                [self.delegate composeDisplayController:self willShowSearchResultsTableView:tableView];
+            if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:willShowSearchResultsTableView:)]) {
+                [self.delegate recipientsDisplayController:self willShowSearchResultsTableView:tableView];
             }
             
-            [self.composeContentsController.view addSubview:tableView];
-            [self.composeContentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
-            [self.composeContentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_composeBar][tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_composeBar, tableView)]];
+            [self.contentsController.view addSubview:tableView];
+            [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
+            [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_recipientsBar][tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_recipientsBar, tableView)]];
             
-            [self.composeContentsController.view layoutIfNeeded];
+            [self.contentsController.view layoutIfNeeded];
             
             
             tableView.alpha = 0.0;
@@ -88,19 +88,19 @@
             
             
             [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-                [self.composeBar setSearching:YES animated:NO];
+                [self.recipientsBar setSearching:YES animated:NO];
                 
-                [self.composeBar.superview bringSubviewToFront:self.composeBar];
+                [self.recipientsBar.superview bringSubviewToFront:self.recipientsBar];
             } completion:^(BOOL finished) {
-                if ([self.delegate respondsToSelector:@selector(composeDisplayController:didShowSearchResultsTableView:)]) {
-                    [self.delegate composeDisplayController:self didShowSearchResultsTableView:tableView];
+                if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didShowSearchResultsTableView:)]) {
+                    [self.delegate recipientsDisplayController:self didShowSearchResultsTableView:tableView];
                 }
             }];
         } else {
             [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-                [self.composeBar setSearching:YES animated:NO];
+                [self.recipientsBar setSearching:YES animated:NO];
                 
-                [self.composeBar.superview bringSubviewToFront:self.composeBar];
+                [self.recipientsBar.superview bringSubviewToFront:self.recipientsBar];
             } completion:nil];
         }
 	}
@@ -108,25 +108,25 @@
 
 - (void)_hideTableView
 {
-	if (self.composeBar.searching) {
+	if (self.recipientsBar.searching) {
 		UITableView *tableView = self.searchResultsTableView;
 		
-		if ([self.delegate respondsToSelector:@selector(composeDisplayController:willHideSearchResultsTableView:)]) {
-			[self.delegate composeDisplayController:self willHideSearchResultsTableView:tableView];
+		if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:willHideSearchResultsTableView:)]) {
+			[self.delegate recipientsDisplayController:self willHideSearchResultsTableView:tableView];
 		}
 		
-		[self.composeContentsController.view layoutIfNeeded];
+		[self.contentsController.view layoutIfNeeded];
 		
 		
 		[UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-			[self.composeBar setSearching:NO animated:NO];
+			[self.recipientsBar setSearching:NO animated:NO];
 			
 			tableView.alpha = 0.0;
 		} completion:^(BOOL finished) {
 			[tableView removeFromSuperview];
 			
-			if ([self.delegate respondsToSelector:@selector(composeDisplayController:didHideSearchResultsTableView:)]) {
-				[self.delegate composeDisplayController:self didHideSearchResultsTableView:tableView];
+			if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didHideSearchResultsTableView:)]) {
+				[self.delegate recipientsDisplayController:self didHideSearchResultsTableView:tableView];
 			}
 		}];
 	}
@@ -144,7 +144,7 @@
 
 - (id)init
 {
-	self = [self initWithComposeBar:nil contentsController:nil];
+	self = [self initWithRecipientsBar:nil contentsController:nil];
 	if (self != nil) {
 		
 	}
@@ -152,13 +152,13 @@
 	return self;
 }
 
-- (id)initWithComposeBar:(TURecipientsBar *)composeBar contentsController:(UIViewController *)viewController
+- (id)initWithRecipientsBar:(TURecipientsBar *)recipientsBar contentsController:(UIViewController *)viewController
 {
 	self = [super init];
 	if (self != nil) {
-		_composeBar = composeBar;
-		_composeBar.composeBarDelegate = self;
-		_composeContentsController = viewController;
+		_recipientsBar = recipientsBar;
+		_recipientsBar.recipientsBarDelegate = self;
+		_contentsController = viewController;
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 	}
@@ -177,102 +177,102 @@
 }
 
 
-#pragma mark - TUComposeBarDelegate
+#pragma mark - TURecipientsBarDelegate
 
-- (void)_createRecipientForComposeBar:(TURecipientsBar *)composeBar
+- (void)_createRecipientForRecipientsBar:(TURecipientsBar *)recipientsBar
 {
-	TURecipient *recipient = [TURecipient recipientWithTitle:composeBar.text address:nil];
+	TURecipient *recipient = [TURecipient recipientWithTitle:recipientsBar.text address:nil];
 	
-	if ([self.delegate respondsToSelector:@selector(composeDisplayController:willAddRecipient:)]) {
-		recipient = [self.delegate composeDisplayController:self willAddRecipient:recipient];
+	if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:willAddRecipient:)]) {
+		recipient = [self.delegate recipientsDisplayController:self willAddRecipient:recipient];
 	}
 	
 	if (recipient != nil) {
-		[_composeBar addRecipient:recipient];
-		composeBar.text = nil;
+		[_recipientsBar addRecipient:recipient];
+		recipientsBar.text = nil;
 		
-		if ([self.delegate respondsToSelector:@selector(composeDisplayController:didAddRecipient:)]) {
-			[self.delegate composeDisplayController:self didAddRecipient:recipient];
+		if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didAddRecipient:)]) {
+			[self.delegate recipientsDisplayController:self didAddRecipient:recipient];
 		}
 	}
 }
 
-- (BOOL)composeBarShouldBeginEditing:(TURecipientsBar *)composeBar
+- (BOOL)recipientsBarShouldBeginEditing:(TURecipientsBar *)recipientsBar
 {
 	BOOL should = YES;
-	if ([self.delegate respondsToSelector:@selector(composeBarShouldBeginEditing:)]) {
-		should = [(id<TURecipientsBarDelegate>)self.delegate composeBarShouldBeginEditing:composeBar];
+	if ([self.delegate respondsToSelector:@selector(recipientsBarShouldBeginEditing:)]) {
+		should = [(id<TURecipientsBarDelegate>)self.delegate recipientsBarShouldBeginEditing:recipientsBar];
 	}
 	
 	if (should) {
         _shouldBeginSearch = YES;
         
-        if ([self.delegate respondsToSelector:@selector(composeDisplayControllerShouldBeginSearch:)]) {
-            _shouldBeginSearch = [self.delegate composeDisplayControllerShouldBeginSearch:self];
+        if ([self.delegate respondsToSelector:@selector(recipientsDisplayControllerShouldBeginSearch:)]) {
+            _shouldBeginSearch = [self.delegate recipientsDisplayControllerShouldBeginSearch:self];
         }
         
-		if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(composeDisplayControllerWillBeginSearch:)]) {
-			[self.delegate composeDisplayControllerWillBeginSearch:self];
+		if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(recipientsDisplayControllerWillBeginSearch:)]) {
+			[self.delegate recipientsDisplayControllerWillBeginSearch:self];
 		}
 	}
 	
 	return should;
 }
 
-- (void)composeBarTextDidBeginEditing:(TURecipientsBar *)composeBar
+- (void)recipientsBarTextDidBeginEditing:(TURecipientsBar *)recipientsBar
 {
-	if ([self.delegate respondsToSelector:@selector(composeBarTextDidBeginEditing:)]) {
-		[(id<TURecipientsBarDelegate>)self.delegate composeBarTextDidBeginEditing:composeBar];
+	if ([self.delegate respondsToSelector:@selector(recipientsBarTextDidBeginEditing:)]) {
+		[(id<TURecipientsBarDelegate>)self.delegate recipientsBarTextDidBeginEditing:recipientsBar];
 	}
 	
-	if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(composeDisplayControllerDidBeginSearch:)]) {
-		[self.delegate composeDisplayControllerDidBeginSearch:self];
+	if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(recipientsDisplayControllerDidBeginSearch:)]) {
+		[self.delegate recipientsDisplayControllerDidBeginSearch:self];
 	}
 }
 
-- (BOOL)composeBarShouldEndEditing:(TURecipientsBar *)composeBar
+- (BOOL)recipientsBarShouldEndEditing:(TURecipientsBar *)recipientsBar
 {
 	BOOL should = YES;
-	if ([self.delegate respondsToSelector:@selector(composeBarShouldEndEditing:)]) {
-		should = [(id<TURecipientsBarDelegate>)self.delegate composeBarShouldEndEditing:composeBar];
+	if ([self.delegate respondsToSelector:@selector(recipientsBarShouldEndEditing:)]) {
+		should = [(id<TURecipientsBarDelegate>)self.delegate recipientsBarShouldEndEditing:recipientsBar];
 	}
 
 	if (should) {
-		if ([self.delegate respondsToSelector:@selector(composeDisplayControllerWillEndSearch:)]) {
-			[self.delegate composeDisplayControllerWillEndSearch:self];
+		if ([self.delegate respondsToSelector:@selector(recipientsDisplayControllerWillEndSearch:)]) {
+			[self.delegate recipientsDisplayControllerWillEndSearch:self];
 		}
 		
-		if (composeBar.text.length > 0) {
-			[self _createRecipientForComposeBar:composeBar];
+		if (recipientsBar.text.length > 0) {
+			[self _createRecipientForRecipientsBar:recipientsBar];
 		}
 	}
 	
 	return should;
 }
 
-- (void)composeBarTextDidEndEditing:(TURecipientsBar *)composeBar
+- (void)recipientsBarTextDidEndEditing:(TURecipientsBar *)recipientsBar
 {
-	if ([self.delegate respondsToSelector:@selector(composeBarTextDidEndEditing:)]) {
-		[(id<TURecipientsBarDelegate>)self.delegate composeBarTextDidEndEditing:composeBar];
+	if ([self.delegate respondsToSelector:@selector(recipientsBarTextDidEndEditing:)]) {
+		[(id<TURecipientsBarDelegate>)self.delegate recipientsBarTextDidEndEditing:recipientsBar];
 	}
 	
-	if ([self.delegate respondsToSelector:@selector(composeDisplayControllerDidEndSearch:)]) {
-		[self.delegate composeDisplayControllerDidEndSearch:self];
+	if ([self.delegate respondsToSelector:@selector(recipientsDisplayControllerDidEndSearch:)]) {
+		[self.delegate recipientsDisplayControllerDidEndSearch:self];
 	}
 }
 
-- (void)composeBar:(TURecipientsBar *)composeBar textDidChange:(NSString *)searchText
+- (void)recipientsBar:(TURecipientsBar *)recipientsBar textDidChange:(NSString *)searchText
 {
-	if ([self.delegate respondsToSelector:@selector(composeBar:textDidChange:)]) {
-		[(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar textDidChange:searchText];
+	if ([self.delegate respondsToSelector:@selector(recipientsBar:textDidChange:)]) {
+		[(id<TURecipientsBarDelegate>)self.delegate recipientsBar:recipientsBar textDidChange:searchText];
 	}
 	
-	if (composeBar.text.length > 0) {
+	if (recipientsBar.text.length > 0) {
 		[self _showTableView];
 		
 		BOOL should = YES;
-		if ([self.delegate respondsToSelector:@selector(composeDisplayController:shouldReloadTableForSearchString:)]) {
-			should = [self.delegate composeDisplayController:self shouldReloadTableForSearchString:searchText];
+		if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:shouldReloadTableForSearchString:)]) {
+			should = [self.delegate recipientsDisplayController:self shouldReloadTableForSearchString:searchText];
 		}
 		
 		if (should) {
@@ -283,54 +283,54 @@
 	}
 }
 
-- (BOOL)composeBar:(TURecipientsBar *)composeBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
 	BOOL should = YES;
-	if ([self.delegate respondsToSelector:@selector(composeBar:shouldChangeTextInRange:replacementText:)]) {
-		should = [(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar shouldChangeTextInRange:range replacementText:text];
+	if ([self.delegate respondsToSelector:@selector(recipientsBar:shouldChangeTextInRange:replacementText:)]) {
+		should = [(id<TURecipientsBarDelegate>)self.delegate recipientsBar:recipientsBar shouldChangeTextInRange:range replacementText:text];
 	}
 	
 	return should;
 }
 
-- (BOOL)composeBar:(TURecipientsBar *)composeBar shouldSelectRecipient:(TURecipient *)recipient
+- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldSelectRecipient:(TURecipient *)recipient
 {
 	BOOL should = YES;
-	if ([self.delegate respondsToSelector:@selector(composeBar:shouldSelectRecipient:)]) {
-		should = [(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar shouldSelectRecipient:recipient];
+	if ([self.delegate respondsToSelector:@selector(recipientsBar:shouldSelectRecipient:)]) {
+		should = [(id<TURecipientsBarDelegate>)self.delegate recipientsBar:recipientsBar shouldSelectRecipient:recipient];
 	}
 	
 	if (should) {
-		if (composeBar.text.length > 0) {
-			[self _createRecipientForComposeBar:composeBar];
+		if (recipientsBar.text.length > 0) {
+			[self _createRecipientForRecipientsBar:recipientsBar];
 		}
 	}
 	
 	return should;
 }
 
-- (void)composeBar:(TURecipientsBar *)composeBar didSelectRecipient:(TURecipient *)recipient
+- (void)recipientsBar:(TURecipientsBar *)recipientsBar didSelectRecipient:(TURecipient *)recipient
 {
-	if ([self.delegate respondsToSelector:@selector(composeBar:didSelectRecipient:)]) {
-		[(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar didSelectRecipient:recipient];
+	if ([self.delegate respondsToSelector:@selector(recipientsBar:didSelectRecipient:)]) {
+		[(id<TURecipientsBarDelegate>)self.delegate recipientsBar:recipientsBar didSelectRecipient:recipient];
 	}
 }
 
-- (void)composeBarReturnButtonClicked:(TURecipientsBar *)composeBar
+- (void)recipientsBarReturnButtonClicked:(TURecipientsBar *)recipientsBar
 {
-	if ([self.delegate respondsToSelector:@selector(composeBarReturnButtonClicked:)]) {
-		[(id<TURecipientsBarDelegate>)self.delegate composeBarReturnButtonClicked:composeBar];
+	if ([self.delegate respondsToSelector:@selector(recipientsBarReturnButtonClicked:)]) {
+		[(id<TURecipientsBarDelegate>)self.delegate recipientsBarReturnButtonClicked:recipientsBar];
 	}
 	
-	if (composeBar.text.length > 0) {
-		[self _createRecipientForComposeBar:composeBar];
+	if (recipientsBar.text.length > 0) {
+		[self _createRecipientForRecipientsBar:recipientsBar];
 	}
 }
 
-- (void)composeBarAddButtonClicked:(TURecipientsBar *)composeBar
+- (void)recipientsBarAddButtonClicked:(TURecipientsBar *)recipientsBar
 {
-	if ([self.delegate respondsToSelector:@selector(composeBarAddButtonClicked:)]) {
-		[(id<TURecipientsBarDelegate>)self.delegate composeBarAddButtonClicked:composeBar];
+	if ([self.delegate respondsToSelector:@selector(recipientsBarAddButtonClicked:)]) {
+		[(id<TURecipientsBarDelegate>)self.delegate recipientsBarAddButtonClicked:recipientsBar];
 	}
 }
 

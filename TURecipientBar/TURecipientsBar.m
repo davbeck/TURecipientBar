@@ -1,5 +1,5 @@
 //
-//  TUComposeBar.m
+//  TURecipientsBar.m
 //  ThinkSocial
 //
 //  Created by David Beck on 10/23/12.
@@ -11,10 +11,10 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-#define TUComposeLineHeight 43.0
-#define TUComposePlaceholder @"\u200B"
+#define TURecipientsLineHeight 43.0
+#define TURecipientsPlaceholder @"\u200B"
 
-void *TUComposeSelectionContext = &TUComposeSelectionContext;
+void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 
 @implementation TURecipientsBar
@@ -207,19 +207,19 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 - (void)setText:(NSString *)text
 {
 	if (text != nil) {
-		[_textField setText:[TUComposePlaceholder stringByAppendingString:text]];
+		[_textField setText:[TURecipientsPlaceholder stringByAppendingString:text]];
 	} else {
-		[_textField setText:TUComposePlaceholder];
+		[_textField setText:TURecipientsPlaceholder];
 	}
 	
-	if ([self.composeBarDelegate respondsToSelector:@selector(composeBar:textDidChange:)]) {
-		[self.composeBarDelegate composeBar:self textDidChange:self.text];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:textDidChange:)]) {
+		[self.recipientsBarDelegate recipientsBar:self textDidChange:self.text];
 	}
 }
 
 - (NSString *)text
 {
-	return [[_textField text] stringByReplacingOccurrencesOfString:TUComposePlaceholder withString:@""];
+	return [[_textField text] stringByReplacingOccurrencesOfString:TURecipientsPlaceholder withString:@""];
 }
 
 - (void)setLabel:(NSString *)label
@@ -303,7 +303,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 - (void)dealloc
 {
-	[_textField removeObserver:self forKeyPath:@"selectedTextRange" context:TUComposeSelectionContext];
+	[_textField removeObserver:self forKeyPath:@"selectedTextRange" context:TURecipientsSelectionContext];
 }
 
 - (void)_init
@@ -323,7 +323,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	
 	self.backgroundColor = [UIColor whiteColor];
 	if (self.heightConstraint == nil) {
-		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:TUComposeLineHeight + 1.0];
+		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:TURecipientsLineHeight + 1.0];
 		[self addConstraint:_heightConstraint];
 	}
 	self.clipsToBounds = YES;
@@ -356,7 +356,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	[_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_addButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-23.0]];
 	
 	_textField = [[UITextField alloc] init];
-	_textField.text = TUComposePlaceholder;
+	_textField.text = TURecipientsPlaceholder;
 	_textField.delegate = self;
 	_textField.autocorrectionType = UITextAutocorrectionTypeNo;
 	_textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -367,7 +367,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	[_textField addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_textField(43)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField)]];
 	[_textField setContentHuggingPriority:100 forAxis:UILayoutConstraintAxisHorizontal];
 	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textField]-6-[_addButton]-6@900-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField, _addButton)]];
-	[_textField addObserver:self forKeyPath:@"selectedTextRange" options:0 context:TUComposeSelectionContext];
+	[_textField addObserver:self forKeyPath:@"selectedTextRange" options:0 context:TURecipientsSelectionContext];
 	
 	[[_recipientLines lastObject] addObject:_textField];
 	
@@ -443,7 +443,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 			} else {
 				[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[lastView]-6-[recipientView]->=6-[_addButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(recipientView, lastView, _addButton)]];
 			}
-			[updatingConstraints addObject:[NSLayoutConstraint constraintWithItem:recipientView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:topOffset + TUComposeLineHeight / 2.0]];
+			[updatingConstraints addObject:[NSLayoutConstraint constraintWithItem:recipientView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:topOffset + TURecipientsLineHeight / 2.0]];
 			
 			[recipientView setContentCompressionResistancePriority:compressionResistance forAxis:UILayoutConstraintAxisHorizontal];
 			
@@ -452,7 +452,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 		}
 		
 		lastView = nil;
-		topOffset += TUComposeLineHeight - 8.0;
+		topOffset += TURecipientsLineHeight - 8.0;
 	}
 	
 	
@@ -472,7 +472,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	if (_textField.isFirstResponder && !self.searching) {
 		self.heightConstraint.constant = self.contentSize.height;
 	} else {
-		self.heightConstraint.constant = TUComposeLineHeight + 1.0;
+		self.heightConstraint.constant = TURecipientsLineHeight + 1.0;
 	}
 	
 	
@@ -564,8 +564,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 - (IBAction)addContact:(id)sender
 {
-	if ([self.composeBarDelegate respondsToSelector:@selector(composeBarAddButtonClicked:)]) {
-		[self.composeBarDelegate composeBarAddButtonClicked:self];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarAddButtonClicked:)]) {
+		[self.recipientsBarDelegate recipientsBarAddButtonClicked:self];
 	}
 }
 
@@ -588,8 +588,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 - (void)selectRecipient:(TURecipient *)recipient
 {
 	BOOL should = YES;
-	if ([self.composeBarDelegate respondsToSelector:@selector(composeBar:shouldSelectRecipient:)]) {
-		should = [self.composeBarDelegate composeBar:self shouldSelectRecipient:recipient];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldSelectRecipient:)]) {
+		should = [self.recipientsBarDelegate recipientsBar:self shouldSelectRecipient:recipient];
 	}
 	
 	if (should) {
@@ -615,8 +615,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 		}
 		
 		
-		if ([self.composeBarDelegate respondsToSelector:@selector(composeBar:didSelectRecipient:)]) {
-			[self.composeBarDelegate composeBar:self didSelectRecipient:recipient];
+		if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:didSelectRecipient:)]) {
+			[self.recipientsBarDelegate recipientsBar:self didSelectRecipient:recipient];
 		}
 	}
 }
@@ -655,7 +655,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
 	//we use a zero width space to detect the backspace
-	if ([[_textField.text substringWithRange:range] isEqual:TUComposePlaceholder]) {
+	if ([[_textField.text substringWithRange:range] isEqual:TURecipientsPlaceholder]) {
 		//select the last recipient
 		if (_selectedRecipient == nil) {
 			if (self.text.length == 0) {
@@ -686,8 +686,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	
 	
 	BOOL delegateResponse = YES;
-	if ([self.composeBarDelegate respondsToSelector:@selector(composeBar:shouldChangeTextInRange::replacementText:)]) {
-		delegateResponse = [self.composeBarDelegate composeBar:self shouldChangeTextInRange:range replacementText:string];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldChangeTextInRange::replacementText:)]) {
+		delegateResponse = [self.recipientsBarDelegate recipientsBar:self shouldChangeTextInRange:range replacementText:string];
 	}
 	
 	
@@ -695,8 +695,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 		[self _manuallyChangeTextField:textField inRange:range replacementString:string];
 		
 		
-		if ([self.composeBarDelegate respondsToSelector:@selector(composeBar:textDidChange:)]) {
-			[self.composeBarDelegate composeBar:self textDidChange:self.text];
+		if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:textDidChange:)]) {
+			[self.recipientsBarDelegate recipientsBar:self textDidChange:self.text];
 		}
 	}
 	
@@ -717,8 +717,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-	if ([self.composeBarDelegate respondsToSelector:@selector(composeBarReturnButtonClicked:)]) {
-		[self.composeBarDelegate composeBarReturnButtonClicked:self];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarReturnButtonClicked:)]) {
+		[self.recipientsBarDelegate recipientsBarReturnButtonClicked:self];
 	}
 	
 	return NO;
@@ -727,8 +727,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
 	BOOL should = YES;
-	if ([self.composeBarDelegate respondsToSelector:@selector(composeBarShouldBeginEditing:)]) {
-		should = [self.composeBarDelegate composeBarShouldBeginEditing:self];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarShouldBeginEditing:)]) {
+		should = [self.recipientsBarDelegate recipientsBarShouldBeginEditing:self];
 	}
 	
 	return should;
@@ -751,8 +751,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
         
         [self _scrollToBottom];
     } completion:^(BOOL finished) {
-        if ([self.composeBarDelegate respondsToSelector:@selector(composeBarTextDidBeginEditing:)]) {
-            [self.composeBarDelegate composeBarTextDidBeginEditing:self];
+        if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarTextDidBeginEditing:)]) {
+            [self.recipientsBarDelegate recipientsBarTextDidBeginEditing:self];
         }
     }];
 }
@@ -760,8 +760,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
 	BOOL should = YES;
-	if ([self.composeBarDelegate respondsToSelector:@selector(composeBarShouldEndEditing:)]) {
-		should = [self.composeBarDelegate composeBarShouldEndEditing:self];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarShouldEndEditing:)]) {
+		should = [self.recipientsBarDelegate recipientsBarShouldEndEditing:self];
 	}
 	
 	if (should) {
@@ -783,8 +783,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 				
 				self.contentOffset = CGPointMake(0.0, 0.0);
 			} completion:^(BOOL finished) {
-				if ([self.composeBarDelegate respondsToSelector:@selector(composeBarTextDidEndEditing:)]) {
-					[self.composeBarDelegate composeBarTextDidEndEditing:self];
+				if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarTextDidEndEditing:)]) {
+					[self.recipientsBarDelegate recipientsBarTextDidEndEditing:self];
 				}
 			}];
 		});

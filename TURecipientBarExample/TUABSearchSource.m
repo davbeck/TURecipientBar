@@ -97,9 +97,9 @@
 {
 	ABRecordRef person = (__bridge ABRecordRef)([_people objectAtIndex:indexPath.row]);
     
-	[self.composeBar addRecipient:[TURecipient recipientWithTitle:CFBridgingRelease(ABRecordCopyCompositeName(person))
+	[self.recipientsBar addRecipient:[TURecipient recipientWithTitle:CFBridgingRelease(ABRecordCopyCompositeName(person))
                                                           address:(__bridge id)(person)]];
-	self.composeBar.text = nil;
+	self.recipientsBar.text = nil;
 }
 
 @end

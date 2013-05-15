@@ -34,7 +34,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="1022443986">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">1316</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="323141332">
@@ -42,7 +42,6 @@
 						<int key="NSvFlags">1298</int>
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="1022443986"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="589063680"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -63,8 +62,6 @@
 								<int key="NSvFlags">1316</int>
 								<string key="NSFrame">{{20, 20}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="589063680"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -93,7 +90,6 @@
 						</array>
 						<string key="NSFrame">{{0, 44}, {320, 460}}</string>
 						<reference key="NSSuperview" ref="1022443986"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="870029087"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -105,8 +101,6 @@
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrame">{{0, 64}, {320, 504}}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="323141332"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -210,14 +204,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">composeContentsController</string>
-						<reference key="source" ref="592628240"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">23</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchResultsDataSource</string>
 						<reference key="source" ref="592628240"/>
 						<reference key="destination" ref="673218452"/>
@@ -234,14 +220,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">composeBar</string>
-						<reference key="source" ref="592628240"/>
-						<reference key="destination" ref="323141332"/>
-					</object>
-					<int key="connectionID">30</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="592628240"/>
 						<reference key="destination" ref="372490531"/>
@@ -250,11 +228,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">composeBar</string>
+						<string key="label">recipientsBar</string>
+						<reference key="source" ref="592628240"/>
+						<reference key="destination" ref="323141332"/>
+					</object>
+					<int key="connectionID">45</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">contentsController</string>
+						<reference key="source" ref="592628240"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">46</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">recipientsBar</string>
 						<reference key="source" ref="673218452"/>
 						<reference key="destination" ref="323141332"/>
 					</object>
-					<int key="connectionID">29</int>
+					<int key="connectionID">47</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -608,7 +602,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">44</int>
+			<int key="maxID">47</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -642,6 +636,25 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TURecipientsBar</string>
 					<string key="superclassName">UIScrollView</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addContact:">id</string>
+						<string key="select:">id</string>
+						<string key="selectRecipientButton:">UIButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addContact:">
+							<string key="name">addContact:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="select:">
+							<string key="name">select:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectRecipientButton:">
+							<string key="name">selectRecipientButton:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">heightConstraint</string>
 						<string key="NS.object.0">NSLayoutConstraint</string>
