@@ -36,6 +36,13 @@
 
 - (void)selectRecipient:(TURecipient *)recipient;
 
+// UIAppearance
+- (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (UIImage *)recipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+@property (nonatomic) UIEdgeInsets recipientContentEdgeInsets UI_APPEARANCE_SELECTOR;
+- (void)setRecipientTitleTextAttributes:(NSDictionary *)attributes forState:(UIControlState)state;
+- (NSDictionary *)recipientTitleTextAttributesForState:(UIControlState)state;
+
 @end
 
 

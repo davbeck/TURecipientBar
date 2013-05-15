@@ -25,14 +25,19 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	UIButton *_addButton;
 	UILabel *_summaryLabel;
 	UIView *_lineView;
-	NSArray *_updatingConstraints;
-    NSArray *_addButtonHiddenConstraints;
+	NSArray *_updatingConstraints; // NSLayoutConstraint
+    NSArray *_addButtonHiddenConstraints; // NSLayoutConstraint
 	
-	NSMutableArray *_recipients;
-	NSMutableArray *_recipientViews;
-	NSMutableArray *_recipientLines;
+	NSMutableArray *_recipients; // TURecipient
+	NSMutableArray *_recipientViews; // UIButton
+	NSMutableArray *_recipientLines; // NSArray -> UIView
 	CGSize _lastKnownSize;
 	TURecipient *_selectedRecipient;
+    
+    // UIAppearance
+    NSMutableDictionary *_recipientBackgroundImages; // [@(UIControlState)] UIImage
+    NSMutableDictionary *_recipientTitleTextAttributes; // [@(UIControlState)] NSDictionary(text attributes dictionary)
+    
 }
 
 #pragma mark - Properties
@@ -59,27 +64,35 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	
 	
 	UIButton *recipientView = [UIButton buttonWithType:UIButtonTypeCustom];
-	recipientView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 9.0, 0.0, 9.0);
-	recipientView.titleLabel.font = [UIFont systemFontOfSize:15.0];
-	[recipientView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[recipientView setBackgroundImage:[[UIImage imageNamed:@"recipient.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]
-					  forState:UIControlStateNormal];
-	[recipientView addTarget:self action:@selector(selectRecipientButton:) forControlEvents:UIControlEventTouchUpInside];
-	
-	[recipientView setBackgroundImage:[[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]
-							 forState:UIControlStateHighlighted];
-	[recipientView setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-	[recipientView setBackgroundImage:[[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0]
-							 forState:UIControlStateSelected];
-	[recipientView setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    
 	recipientView.adjustsImageWhenHighlighted = NO;
+	recipientView.contentEdgeInsets = _recipientContentEdgeInsets;
+    
+    
+	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateNormal]
+                             forState:UIControlStateNormal];
+    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.title attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
+                             forState:UIControlStateNormal];
+    
+	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateHighlighted]
+							 forState:UIControlStateHighlighted];
+    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.title attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
+                             forState:UIControlStateHighlighted];
+    
+	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateSelected]
+							 forState:UIControlStateSelected];
+    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.title attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
+                             forState:UIControlStateSelected];
+    
+    
+	[recipientView addTarget:self action:@selector(selectRecipientButton:) forControlEvents:UIControlEventTouchUpInside];
+    
 	
 	recipientView.translatesAutoresizingMaskIntoConstraints = NO;
 	[_contentView addSubview:recipientView];
 	[_recipientViews addObject:recipientView];
 	
 	
-	[recipientView setTitle:recipient.title forState:UIControlStateNormal];
 	
 	[self _updateSummary];
 	
@@ -293,6 +306,10 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 - (void)_init
 {
     _showsAddButton = YES;
+    _recipientBackgroundImages = [NSMutableDictionary new];
+    _recipientTitleTextAttributes = [NSMutableDictionary new];
+    
+    _recipientContentEdgeInsets = UIEdgeInsetsMake(0.0, 9.0, 0.0, 9.0);
     
     self.contentSize = self.bounds.size;
     
@@ -783,6 +800,81 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 - (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
 {
     [super setContentOffset:contentOffset animated:animated];
+}
+
+
+#pragma mark - UIAppearance
+
+- (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR
+{
+    _recipientBackgroundImages[@(state)] = backgroundImage;
+    
+    for (UIButton *button in _recipientViews) {
+        [button setBackgroundImage:backgroundImage forState:state];
+    }
+}
+
+- (UIImage *)recipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR
+{
+    UIImage *backgroundImage = _recipientBackgroundImages[@(state)];
+    
+    if (backgroundImage == nil) {
+        if (state == UIControlStateNormal) {
+            backgroundImage = [[UIImage imageNamed:@"recipient.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+        } else if (state == UIControlStateHighlighted) {
+            backgroundImage = [[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+        } else if (state == UIControlStateSelected) {
+            backgroundImage = [[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+        }
+    }
+    
+    return backgroundImage;
+}
+
+- (void)setRecipientContentEdgeInsets:(UIEdgeInsets)recipientContentEdgeInsets
+{
+    _recipientContentEdgeInsets = recipientContentEdgeInsets;
+    
+    for (UIButton *button in _recipientViews) {
+        button.contentEdgeInsets = _recipientContentEdgeInsets;
+    }
+}
+
+- (void)setRecipientTitleTextAttributes:(NSDictionary *)attributes forState:(UIControlState)state
+{
+    _recipientTitleTextAttributes[@(state)] = attributes.copy;
+    
+    for (UIButton *button in _recipientViews) {
+        NSString *text = [button titleForState:state];
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+        [button setAttributedTitle:attributedText forState:state];
+    }
+}
+
+- (NSDictionary *)recipientTitleTextAttributesForState:(UIControlState)state
+{
+    NSDictionary *attributes = _recipientTitleTextAttributes[@(state)];
+    
+    if (attributes == nil) {
+        if (state == UIControlStateNormal) {
+            attributes = @{
+                           NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                           NSForegroundColorAttributeName: [UIColor blackColor],
+                           };
+        } else if (state == UIControlStateHighlighted) {
+            attributes = @{
+                           NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                           NSForegroundColorAttributeName: [UIColor whiteColor],
+                           };
+        } else if (state == UIControlStateSelected) {
+            attributes = @{
+                           NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                           NSForegroundColorAttributeName: [UIColor whiteColor],
+                           };
+        }
+    }
+    
+    return attributes;
 }
 
 @end
