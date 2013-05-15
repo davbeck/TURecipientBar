@@ -20,6 +20,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    self.composeBar.showsAddButton = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -31,23 +33,32 @@
 
 #pragma mark - TSComposeDisplayDelegate
 
-- (void)composeBarReturnButtonClicked:(TURecipientBar *)composeBar
+- (void)composeBarReturnButtonClicked:(TURecipientsBar *)composeBar
 {
 	if (composeBar.text.length == 0) {
 		[composeBar resignFirstResponder];
 	}
 }
 
-- (void)composeDisplayController:(TURecipientDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
+- (void)composeDisplayController:(TURecipientsDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
 	self.searchSource.tableView = tableView;
 }
 
-- (BOOL)composeDisplayController:(TURecipientDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+- (BOOL)composeDisplayController:(TURecipientsDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
 	self.searchSource.searchTerm = searchString;
 	
 	return YES;
 }
+
+/*
+ Uncomment to disable the search table view.
+ The shouldReloadTableForSearchString method and other text change methods will still be called, so you can provide your own search UI
+- (BOOL)composeDisplayControllerShouldBeginSearch:(TURecipientDisplayController *)controller
+{
+    return NO;
+}
+ */
 
 @end

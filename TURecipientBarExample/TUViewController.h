@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TURecipientDisplayController.h"
+#import "TURecipientsDisplayController.h"
 
 @class TUABSearchSource;
 
 
-@interface TUViewController : UIViewController <TUComposeDisplayDelegate, TUComposeBarDelegate>
+@interface TUViewController : UIViewController <TURecipientsDisplayDelegate, TURecipientsBarDelegate>
 
-@property (nonatomic, strong) IBOutlet TURecipientDisplayController *recipientDisplayController;
-@property (weak, nonatomic) IBOutlet TURecipientBar *composeBar;
+@property (nonatomic, strong) IBOutlet TURecipientsDisplayController *recipientDisplayController;
+@property (weak, nonatomic) IBOutlet TURecipientsBar *recipientsBar;
 @property (nonatomic, strong) IBOutlet TUABSearchSource *searchSource;
 
 @end

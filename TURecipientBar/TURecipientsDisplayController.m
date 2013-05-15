@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 ThinkUltimate. All rights reserved.
 //
 
-#import "TURecipientDisplayController.h"
+#import "TURecipientsDisplayController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
 
-@implementation TURecipientDisplayController
+@implementation TURecipientsDisplayController
 {
     BOOL _shouldBeginSearch;
 }
@@ -30,7 +30,7 @@
 	_active = active;
 }
 
-- (void)setComposeBar:(TURecipientBar *)composeBar
+- (void)setComposeBar:(TURecipientsBar *)composeBar
 {
 	_composeBar = composeBar;
 	
@@ -152,7 +152,7 @@
 	return self;
 }
 
-- (id)initWithComposeBar:(TURecipientBar *)composeBar contentsController:(UIViewController *)viewController
+- (id)initWithComposeBar:(TURecipientsBar *)composeBar contentsController:(UIViewController *)viewController
 {
 	self = [super init];
 	if (self != nil) {
@@ -179,7 +179,7 @@
 
 #pragma mark - TUComposeBarDelegate
 
-- (void)_createRecipientForComposeBar:(TURecipientBar *)composeBar
+- (void)_createRecipientForComposeBar:(TURecipientsBar *)composeBar
 {
 	TURecipient *recipient = [TURecipient recipientWithTitle:composeBar.text address:nil];
 	
@@ -197,11 +197,11 @@
 	}
 }
 
-- (BOOL)composeBarShouldBeginEditing:(TURecipientBar *)composeBar
+- (BOOL)composeBarShouldBeginEditing:(TURecipientsBar *)composeBar
 {
 	BOOL should = YES;
 	if ([self.delegate respondsToSelector:@selector(composeBarShouldBeginEditing:)]) {
-		should = [(id<TUComposeBarDelegate>)self.delegate composeBarShouldBeginEditing:composeBar];
+		should = [(id<TURecipientsBarDelegate>)self.delegate composeBarShouldBeginEditing:composeBar];
 	}
 	
 	if (should) {
@@ -219,10 +219,10 @@
 	return should;
 }
 
-- (void)composeBarTextDidBeginEditing:(TURecipientBar *)composeBar
+- (void)composeBarTextDidBeginEditing:(TURecipientsBar *)composeBar
 {
 	if ([self.delegate respondsToSelector:@selector(composeBarTextDidBeginEditing:)]) {
-		[(id<TUComposeBarDelegate>)self.delegate composeBarTextDidBeginEditing:composeBar];
+		[(id<TURecipientsBarDelegate>)self.delegate composeBarTextDidBeginEditing:composeBar];
 	}
 	
 	if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(composeDisplayControllerDidBeginSearch:)]) {
@@ -230,11 +230,11 @@
 	}
 }
 
-- (BOOL)composeBarShouldEndEditing:(TURecipientBar *)composeBar
+- (BOOL)composeBarShouldEndEditing:(TURecipientsBar *)composeBar
 {
 	BOOL should = YES;
 	if ([self.delegate respondsToSelector:@selector(composeBarShouldEndEditing:)]) {
-		should = [(id<TUComposeBarDelegate>)self.delegate composeBarShouldEndEditing:composeBar];
+		should = [(id<TURecipientsBarDelegate>)self.delegate composeBarShouldEndEditing:composeBar];
 	}
 
 	if (should) {
@@ -250,10 +250,10 @@
 	return should;
 }
 
-- (void)composeBarTextDidEndEditing:(TURecipientBar *)composeBar
+- (void)composeBarTextDidEndEditing:(TURecipientsBar *)composeBar
 {
 	if ([self.delegate respondsToSelector:@selector(composeBarTextDidEndEditing:)]) {
-		[(id<TUComposeBarDelegate>)self.delegate composeBarTextDidEndEditing:composeBar];
+		[(id<TURecipientsBarDelegate>)self.delegate composeBarTextDidEndEditing:composeBar];
 	}
 	
 	if ([self.delegate respondsToSelector:@selector(composeDisplayControllerDidEndSearch:)]) {
@@ -261,10 +261,10 @@
 	}
 }
 
-- (void)composeBar:(TURecipientBar *)composeBar textDidChange:(NSString *)searchText
+- (void)composeBar:(TURecipientsBar *)composeBar textDidChange:(NSString *)searchText
 {
 	if ([self.delegate respondsToSelector:@selector(composeBar:textDidChange:)]) {
-		[(id<TUComposeBarDelegate>)self.delegate composeBar:composeBar textDidChange:searchText];
+		[(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar textDidChange:searchText];
 	}
 	
 	if (composeBar.text.length > 0) {
@@ -283,21 +283,21 @@
 	}
 }
 
-- (BOOL)composeBar:(TURecipientBar *)composeBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (BOOL)composeBar:(TURecipientsBar *)composeBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
 	BOOL should = YES;
 	if ([self.delegate respondsToSelector:@selector(composeBar:shouldChangeTextInRange:replacementText:)]) {
-		should = [(id<TUComposeBarDelegate>)self.delegate composeBar:composeBar shouldChangeTextInRange:range replacementText:text];
+		should = [(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar shouldChangeTextInRange:range replacementText:text];
 	}
 	
 	return should;
 }
 
-- (BOOL)composeBar:(TURecipientBar *)composeBar shouldSelectRecipient:(TURecipient *)recipient
+- (BOOL)composeBar:(TURecipientsBar *)composeBar shouldSelectRecipient:(TURecipient *)recipient
 {
 	BOOL should = YES;
 	if ([self.delegate respondsToSelector:@selector(composeBar:shouldSelectRecipient:)]) {
-		should = [(id<TUComposeBarDelegate>)self.delegate composeBar:composeBar shouldSelectRecipient:recipient];
+		should = [(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar shouldSelectRecipient:recipient];
 	}
 	
 	if (should) {
@@ -309,17 +309,17 @@
 	return should;
 }
 
-- (void)composeBar:(TURecipientBar *)composeBar didSelectRecipient:(TURecipient *)recipient
+- (void)composeBar:(TURecipientsBar *)composeBar didSelectRecipient:(TURecipient *)recipient
 {
 	if ([self.delegate respondsToSelector:@selector(composeBar:didSelectRecipient:)]) {
-		[(id<TUComposeBarDelegate>)self.delegate composeBar:composeBar didSelectRecipient:recipient];
+		[(id<TURecipientsBarDelegate>)self.delegate composeBar:composeBar didSelectRecipient:recipient];
 	}
 }
 
-- (void)composeBarReturnButtonClicked:(TURecipientBar *)composeBar
+- (void)composeBarReturnButtonClicked:(TURecipientsBar *)composeBar
 {
 	if ([self.delegate respondsToSelector:@selector(composeBarReturnButtonClicked:)]) {
-		[(id<TUComposeBarDelegate>)self.delegate composeBarReturnButtonClicked:composeBar];
+		[(id<TURecipientsBarDelegate>)self.delegate composeBarReturnButtonClicked:composeBar];
 	}
 	
 	if (composeBar.text.length > 0) {
@@ -327,10 +327,10 @@
 	}
 }
 
-- (void)composeBarAddButtonClicked:(TURecipientBar *)composeBar
+- (void)composeBarAddButtonClicked:(TURecipientsBar *)composeBar
 {
 	if ([self.delegate respondsToSelector:@selector(composeBarAddButtonClicked:)]) {
-		[(id<TUComposeBarDelegate>)self.delegate composeBarAddButtonClicked:composeBar];
+		[(id<TURecipientsBarDelegate>)self.delegate composeBarAddButtonClicked:composeBar];
 	}
 }
 

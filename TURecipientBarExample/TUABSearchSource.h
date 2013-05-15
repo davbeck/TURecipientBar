@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TURecipientBar.h"
+#import "TURecipientsBar.h"
 #import <AddressBook/AddressBook.h>
 
 
 @interface TUABSearchSource : NSObject <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, weak) IBOutlet TURecipientBar *composeBar;
+@property (nonatomic, weak) IBOutlet TURecipientsBar *composeBar;
 
 @property (nonatomic, copy) NSString *searchTerm;
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 ThinkUltimate. All rights reserved.
 //
 
-#import "TURecipientBar.h"
+#import "TURecipientsBar.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -17,7 +17,7 @@
 void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 
-@implementation TURecipientBar
+@implementation TURecipientsBar
 {
 	UIView *_contentView;
 	UITextField *_textField;
