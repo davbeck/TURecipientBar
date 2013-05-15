@@ -206,6 +206,16 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	return [[_textField text] stringByReplacingOccurrencesOfString:TUComposePlaceholder withString:@""];
 }
 
+- (void)setLabel:(NSString *)label
+{
+	[_toLabel setText:label];
+}
+
+- (NSString *)label
+{
+	return [_toLabel text];
+}
+
 - (void)setHeightConstraint:(NSLayoutConstraint *)heightConstraint
 {
 	if (_heightConstraint != heightConstraint) {
