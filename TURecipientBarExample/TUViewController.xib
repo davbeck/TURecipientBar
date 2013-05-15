@@ -387,7 +387,7 @@
 								<object class="IBLayoutConstant" key="constant">
 									<double key="value">0.0</double>
 								</object>
-								<float key="priority">850</float>
+								<float key="priority">1000</float>
 								<reference key="containingView" ref="1022443986"/>
 								<int key="scoringType">9</int>
 								<float key="scoringTypeFloat">40</float>
@@ -608,7 +608,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">43</int>
+			<int key="maxID">44</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -642,25 +642,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TURecipientsBar</string>
 					<string key="superclassName">UIScrollView</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addContact:">id</string>
-						<string key="select:">id</string>
-						<string key="selectRecipientButton:">UIButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addContact:">
-							<string key="name">addContact:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="select:">
-							<string key="name">select:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="selectRecipientButton:">
-							<string key="name">selectRecipientButton:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">heightConstraint</string>
 						<string key="NS.object.0">NSLayoutConstraint</string>
