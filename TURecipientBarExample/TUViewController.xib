@@ -34,7 +34,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="1022443986">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">1316</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="323141332">
@@ -42,6 +42,7 @@
 						<int key="NSvFlags">1298</int>
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="1022443986"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="589063680"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -62,6 +63,8 @@
 								<int key="NSvFlags">1316</int>
 								<string key="NSFrame">{{20, 20}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="589063680"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -90,6 +93,7 @@
 						</array>
 						<string key="NSFrame">{{0, 44}, {320, 460}}</string>
 						<reference key="NSSuperview" ref="1022443986"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="870029087"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -101,6 +105,8 @@
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrame">{{0, 64}, {320, 504}}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="323141332"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -451,7 +457,7 @@
 								<int key="secondAttribute">0</int>
 								<float key="multiplier">1</float>
 								<object class="IBLayoutConstant" key="constant">
-									<double key="value">400</double>
+									<double key="value">300</double>
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="589063680"/>
@@ -619,13 +625,13 @@
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">composeBar</string>
-						<string key="NS.object.0">TURecipientBar</string>
+						<string key="NS.object.0">TURecipientsBar</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<string key="NS.key.0">composeBar</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
 							<string key="name">composeBar</string>
-							<string key="candidateClassName">TURecipientBar</string>
+							<string key="candidateClassName">TURecipientsBar</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -634,44 +640,7 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">TUComposeDisplayController</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="composeBar">TURecipientBar</string>
-						<string key="composeContentsController">UIViewController</string>
-						<string key="delegate">id</string>
-						<string key="searchResultsDataSource">id</string>
-						<string key="searchResultsDelegate">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="composeBar">
-							<string key="name">composeBar</string>
-							<string key="candidateClassName">TURecipientBar</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="composeContentsController">
-							<string key="name">composeContentsController</string>
-							<string key="candidateClassName">UIViewController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="delegate">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="searchResultsDataSource">
-							<string key="name">searchResultsDataSource</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="searchResultsDelegate">
-							<string key="name">searchResultsDelegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TUComposeDisplayController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TURecipientBar</string>
+					<string key="className">TURecipientsBar</string>
 					<string key="superclassName">UIScrollView</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addContact:">id</string>
@@ -705,25 +674,62 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TURecipientBar.h</string>
+						<string key="minorKey">./Classes/TURecipientsBar.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TURecipientsDisplayController</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="composeBar">TURecipientsBar</string>
+						<string key="composeContentsController">UIViewController</string>
+						<string key="delegate">id</string>
+						<string key="searchResultsDataSource">id</string>
+						<string key="searchResultsDelegate">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="composeBar">
+							<string key="name">composeBar</string>
+							<string key="candidateClassName">TURecipientsBar</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="composeContentsController">
+							<string key="name">composeContentsController</string>
+							<string key="candidateClassName">UIViewController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="delegate">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="searchResultsDataSource">
+							<string key="name">searchResultsDataSource</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="searchResultsDelegate">
+							<string key="name">searchResultsDelegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TURecipientsDisplayController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">TUViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="composeBar">TURecipientBar</string>
-						<string key="recipientDisplayController">TUComposeDisplayController</string>
+						<string key="recipientDisplayController">TURecipientsDisplayController</string>
+						<string key="recipientsBar">TURecipientsBar</string>
 						<string key="searchSource">TUABSearchSource</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="composeBar">
-							<string key="name">composeBar</string>
-							<string key="candidateClassName">TURecipientBar</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="recipientDisplayController">
 							<string key="name">recipientDisplayController</string>
-							<string key="candidateClassName">TUComposeDisplayController</string>
+							<string key="candidateClassName">TURecipientsDisplayController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="recipientsBar">
+							<string key="name">recipientsBar</string>
+							<string key="candidateClassName">TURecipientsBar</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="searchSource">
 							<string key="name">searchSource</string>
