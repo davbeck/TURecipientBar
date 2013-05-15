@@ -19,6 +19,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
 
 @property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString *label;
 @property (nonatomic, copy) NSString *placeholder;
 @property (nonatomic, readonly) NSArray *recipients;
 - (void)addRecipient:(TURecipient *)recipient;
