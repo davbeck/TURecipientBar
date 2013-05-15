@@ -37,6 +37,13 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 #pragma mark - Properties
 
+- (void)setPlaceholder:(NSString *)placeholder
+{
+    _placeholder = placeholder;
+    
+    [self _updateSummary];
+}
+
 - (NSArray *)recipients
 {
 	return [_recipients copy];
@@ -106,17 +113,23 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 - (void)_updateSummary
 {
-	NSMutableString *summary = [[NSMutableString alloc] init];
-	
-	for (TURecipient *recipient in _recipients) {
-		[summary appendString:recipient.title];
-		
-		if (recipient != [_recipients lastObject]) {
-			[summary appendString:@", "];
-		}
-	}
-	
-	_summaryLabel.text = summary;
+    if (_recipients.count > 0) {
+        NSMutableString *summary = [[NSMutableString alloc] init];
+        
+        for (TURecipient *recipient in _recipients) {
+            [summary appendString:recipient.title];
+            
+            if (recipient != [_recipients lastObject]) {
+                [summary appendString:@", "];
+            }
+        }
+        
+        _summaryLabel.text = summary;
+        _summaryLabel.textColor = [UIColor darkTextColor];
+    } else {
+        _summaryLabel.text = self.placeholder;
+        _summaryLabel.textColor = [UIColor lightGrayColor];
+    }
 }
 
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)autocapitalizationType
@@ -308,6 +321,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	[_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_toLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:21.0]];
 	
 	_addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    _addButton.alpha = 0.0;
 	_addButton.translatesAutoresizingMaskIntoConstraints = NO;
 	[_addButton addTarget:self action:@selector(addContact:) forControlEvents:UIControlEventTouchUpInside];
 	[_contentView addSubview:_addButton];
@@ -331,6 +345,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	
 	
 	_summaryLabel = [[UILabel alloc] init];
+    _summaryLabel.backgroundColor = [UIColor clearColor];
 	_summaryLabel.font = [UIFont systemFontOfSize:15.0];
 	_summaryLabel.translatesAutoresizingMaskIntoConstraints = NO;
 	[_contentView addSubview:_summaryLabel];

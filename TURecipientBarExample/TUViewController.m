@@ -21,7 +21,8 @@
 {
     [super viewDidLoad];
     
-//    self.composeBar.showsAddButton = NO;
+//    self.recipientsBar.showsAddButton = NO;
+//    self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
 }
 
 - (void)didReceiveMemoryWarning
