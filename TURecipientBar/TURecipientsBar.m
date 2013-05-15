@@ -808,7 +808,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR
 {
-    _recipientBackgroundImages[@(state)] = backgroundImage;
+    if (backgroundImage == nil) {
+        [_recipientBackgroundImages removeObjectForKey:@(state)];
+    } else {
+        _recipientBackgroundImages[@(state)] = backgroundImage;
+    }
+    
+    backgroundImage = [self recipientBackgroundImageForState:state];
     
     for (UIButton *button in _recipientViews) {
         [button setBackgroundImage:backgroundImage forState:state];
@@ -843,7 +849,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (void)setRecipientTitleTextAttributes:(NSDictionary *)attributes forState:(UIControlState)state
 {
-    _recipientTitleTextAttributes[@(state)] = attributes.copy;
+    if (attributes == nil) {
+        [_recipientTitleTextAttributes removeObjectForKey:@(state)];
+    } else {
+        _recipientTitleTextAttributes[@(state)] = attributes.copy;
+    }
+    
+    attributes = [self recipientTitleTextAttributesForState:state];
     
     for (UIButton *button in _recipientViews) {
         NSString *text = [button titleForState:state];

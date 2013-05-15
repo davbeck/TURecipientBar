@@ -24,6 +24,20 @@
 //    self.recipientsBar.showsAddButton = NO;
 //    self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
 //    self.recipientsBar.label = @"To:";
+    
+//    UIImage *backgroundImage = [[UIImage imageNamed:@"token"] stretchableImageWithLeftCapWidth:14.0 topCapHeight:0.0];
+//    [[TURecipientsBar appearance] setRecipientBackgroundImage:backgroundImage forState:UIControlStateNormal];
+//    NSDictionary *attributes = @{
+//                                 NSFontAttributeName: [UIFont fontWithName:@"American Typewriter" size:14.0],
+//                                 NSForegroundColorAttributeName: [UIColor yellowColor],
+//                                 };
+//    [[TURecipientsBar appearance] setRecipientTitleTextAttributes:attributes forState:UIControlStateNormal];
+//    
+//    NSDictionary *labelAttributes = @{
+//                                      NSFontAttributeName: [UIFont fontWithName:@"Marker Felt" size:14.0],
+//                                      NSForegroundColorAttributeName: [UIColor redColor],
+//                                      };
+//    [[TURecipientsBar appearance] setLabelTextAttributes:labelAttributes];
 }
 
 - (void)didReceiveMemoryWarning
