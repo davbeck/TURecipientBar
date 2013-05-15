@@ -23,6 +23,7 @@
     
 //    self.recipientsBar.showsAddButton = NO;
 //    self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
+//    self.recipientsBar.label = @"To:";
 }
 
 - (void)didReceiveMemoryWarning
