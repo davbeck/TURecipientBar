@@ -40,8 +40,10 @@
 - (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 - (UIImage *)recipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 @property (nonatomic) UIEdgeInsets recipientContentEdgeInsets UI_APPEARANCE_SELECTOR;
-- (void)setRecipientTitleTextAttributes:(NSDictionary *)attributes forState:(UIControlState)state;
-- (NSDictionary *)recipientTitleTextAttributesForState:(UIControlState)state;
+- (void)setRecipientTitleTextAttributes:(NSDictionary *)attributes forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (NSDictionary *)recipientTitleTextAttributesForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+@property (nonatomic, copy) NSDictionary *labelTextAttributes UI_APPEARANCE_SELECTOR;
 
 @end
 

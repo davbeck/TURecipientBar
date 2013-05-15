@@ -42,6 +42,9 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 #pragma mark - Properties
 
+@synthesize labelTextAttributes = _labelTextAttributes;
+
+
 - (void)setPlaceholder:(NSString *)placeholder
 {
     _placeholder = placeholder;
@@ -221,7 +224,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 - (void)setLabel:(NSString *)label
 {
-	[_toLabel setText:label];
+    _toLabel.attributedText = [[NSAttributedString alloc] initWithString:label attributes:self.labelTextAttributes];
 }
 
 - (NSString *)label
@@ -338,9 +341,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_lineView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_lineView)]];
 	
 	_toLabel = [[UILabel alloc] init];
-	_toLabel.textColor = [UIColor colorWithWhite:0.498 alpha:1.000];
-	_toLabel.font = [UIFont systemFontOfSize:17.0];
-	_toLabel.text = NSLocalizedString(@"To:", nil);
+    self.label = NSLocalizedString(@"To:", nil);
 	_toLabel.translatesAutoresizingMaskIntoConstraints = NO;
 	[_toLabel setContentHuggingPriority:800 forAxis:UILayoutConstraintAxisHorizontal];
 	[_contentView addSubview:_toLabel];
@@ -875,6 +876,29 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
     }
     
     return attributes;
+}
+
+- (void)setLabelTextAttributes:(NSDictionary *)attributes
+{
+    _labelTextAttributes = attributes;
+    
+    NSString *text = _toLabel.text;
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:_labelTextAttributes];
+    _toLabel.attributedText = attributedText;
+}
+
+- (NSDictionary *)labelTextAttributes
+{
+    NSDictionary *labelTextAttributes = _labelTextAttributes;
+    
+    if (labelTextAttributes == nil) {
+        labelTextAttributes = @{
+                                NSForegroundColorAttributeName: [UIColor colorWithWhite:0.498 alpha:1.000],
+                                NSFontAttributeName: [UIFont systemFontOfSize:17.0],
+                                };
+    }
+    
+    return labelTextAttributes;
 }
 
 @end
