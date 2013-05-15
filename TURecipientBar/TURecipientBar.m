@@ -26,6 +26,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	UILabel *_summaryLabel;
 	UIView *_lineView;
 	NSArray *_updatingConstraints;
+    NSArray *_addButtonHiddenConstraints;
 	
 	NSMutableArray *_recipients;
 	NSMutableArray *_recipientViews;
@@ -158,6 +159,22 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	return [_textField spellCheckingType];
 }
 
+- (void)setShowsAddButton:(BOOL)showsAddButton
+{
+    _showsAddButton = showsAddButton;
+    
+    _addButton.hidden = !_showsAddButton;
+    
+    if (_showsAddButton) {
+        if (_addButtonHiddenConstraints != nil) {
+            [_contentView removeConstraints:_addButtonHiddenConstraints];
+        }
+    } else {
+        _addButtonHiddenConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"[_addButton(0)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addButton)];
+        [_contentView addConstraints:_addButtonHiddenConstraints];
+    }
+}
+
 - (void)setText:(NSString *)text
 {
 	if (text != nil) {
@@ -252,6 +269,8 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 
 - (void)_init
 {
+    _showsAddButton = YES;
+    
     self.contentSize = self.bounds.size;
     
 	_recipients = [NSMutableArray array];
@@ -305,7 +324,7 @@ void *TUComposeSelectionContext = &TUComposeSelectionContext;
 	[_contentView addSubview:_textField];
 	[_textField addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_textField(43)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField)]];
 	[_textField setContentHuggingPriority:100 forAxis:UILayoutConstraintAxisHorizontal];
-	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textField]-6-[_addButton]-6-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField, _addButton)]];
+	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textField]-6-[_addButton]-6@900-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField, _addButton)]];
 	[_textField addObserver:self forKeyPath:@"selectedTextRange" options:0 context:TUComposeSelectionContext];
 	
 	[[_recipientLines lastObject] addObject:_textField];

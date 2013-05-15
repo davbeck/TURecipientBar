@@ -28,6 +28,7 @@
 @property (nonatomic) UITextAutocorrectionType autocorrectionType;
 @property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic) UITextSpellCheckingType spellCheckingType;
+@property (nonatomic) BOOL showsAddButton;
 
 @property (nonatomic, weak) id<TUComposeBarDelegate> composeBarDelegate;
 
