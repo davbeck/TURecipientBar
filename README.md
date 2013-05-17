@@ -44,25 +44,34 @@ You will also need to keep a reference to `TURecipientsDisplayController` or it 
 
 ### Hide the add button:
 
+```  objective-c
     self.recipientsBar.showsAddButton = NO;
+```
 
 ### Add placeholder text:
 
+```  objective-c
     self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
+```
 
 ### Change the label's text:
 
+```  objective-c
     self.recipientsBar.label = @"Invite:";
+```
 
 ### Disable search table view:
 
+```  objective-c
     - (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientDisplayController *)controller
     {
         return NO;
     }
+```
 
 ### Change recipients appearance:
 
+```  objective-c
     UIImage *backgroundImage = [[UIImage imageNamed:@"token"] stretchableImageWithLeftCapWidth:14.0 topCapHeight:0.0];
     [[TURecipientsBar appearance] setRecipientBackgroundImage:backgroundImage forState:UIControlStateNormal];
     NSDictionary *attributes = @{
@@ -70,11 +79,14 @@ You will also need to keep a reference to `TURecipientsDisplayController` or it 
                                  NSForegroundColorAttributeName: [UIColor yellowColor],
                                  };
     [[TURecipientsBar appearance] setRecipientTitleTextAttributes:attributes forState:UIControlStateNormal];
+```
 
 ### Change label appearance
 
+```  objective-c
     NSDictionary *labelAttributes = @{
                                       NSFontAttributeName: [UIFont fontWithName:@"Marker Felt" size:14.0],
                                       NSForegroundColorAttributeName: [UIColor redColor],
                                       };
     [[TURecipientsBar appearance] setLabelTextAttributes:labelAttributes];
+```
