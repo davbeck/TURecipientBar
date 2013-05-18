@@ -34,7 +34,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="1022443986">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">1316</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="323141332">
@@ -42,6 +42,7 @@
 						<int key="NSvFlags">1298</int>
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="1022443986"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="589063680"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -62,6 +63,8 @@
 								<int key="NSvFlags">1316</int>
 								<string key="NSFrame">{{20, 20}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="589063680"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -90,6 +93,7 @@
 						</array>
 						<string key="NSFrame">{{0, 44}, {320, 460}}</string>
 						<reference key="NSSuperview" ref="1022443986"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="870029087"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -101,6 +105,8 @@
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrame">{{0, 64}, {320, 504}}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="323141332"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -443,22 +449,6 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="504391475">
-								<reference key="firstItem" ref="589063680"/>
-								<int key="firstAttribute">8</int>
-								<int key="relation">1</int>
-								<nil key="secondItem"/>
-								<int key="secondAttribute">0</int>
-								<float key="multiplier">1</float>
-								<object class="IBLayoutConstant" key="constant">
-									<double key="value">300</double>
-								</object>
-								<float key="priority">1000</float>
-								<reference key="containingView" ref="589063680"/>
-								<int key="scoringType">9</int>
-								<float key="scoringTypeFloat">40</float>
-								<int key="contentType">1</int>
-							</object>
 							<reference ref="870029087"/>
 						</array>
 						<reference key="parent" ref="1022443986"/>
@@ -502,6 +492,22 @@
 						<int key="objectID">12</int>
 						<reference key="object" ref="323141332"/>
 						<array class="NSMutableArray" key="children">
+							<object class="IBNSLayoutConstraint" id="497396729">
+								<reference key="firstItem" ref="323141332"/>
+								<int key="firstAttribute">8</int>
+								<int key="relation">-1</int>
+								<nil key="secondItem"/>
+								<int key="secondAttribute">0</int>
+								<float key="multiplier">1</float>
+								<object class="IBLayoutConstant" key="constant">
+									<double key="value">100</double>
+								</object>
+								<float key="priority">1000</float>
+								<reference key="containingView" ref="323141332"/>
+								<int key="scoringType">9</int>
+								<float key="scoringTypeFloat">40</float>
+								<int key="contentType">1</int>
+							</object>
 							<reference ref="976926841"/>
 						</array>
 						<reference key="parent" ref="1022443986"/>
@@ -542,9 +548,9 @@
 						<reference key="parent" ref="589063680"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">42</int>
-						<reference key="object" ref="504391475"/>
-						<reference key="parent" ref="589063680"/>
+						<int key="objectID">48</int>
+						<reference key="object" ref="497396729"/>
+						<reference key="parent" ref="323141332"/>
 					</object>
 				</array>
 			</object>
@@ -559,6 +565,7 @@
 				<string key="12.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array key="12.IBViewMetadataConstraints">
 					<reference ref="976926841"/>
+					<reference ref="497396729"/>
 				</array>
 				<boolean value="NO" key="12.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -583,15 +590,14 @@
 				<string key="38.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<array key="4.IBViewMetadataConstraints">
-					<reference ref="504391475"/>
+				<array class="NSMutableArray" key="4.IBViewMetadataConstraints">
 					<reference ref="145359752"/>
 					<reference ref="490364355"/>
 					<reference ref="185783754"/>
 				</array>
 				<boolean value="NO" key="4.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="42.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="48.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -602,7 +608,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">47</int>
+			<int key="maxID">48</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -618,13 +624,13 @@
 					<string key="className">TUABSearchSource</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">composeBar</string>
+						<string key="NS.key.0">recipientsBar</string>
 						<string key="NS.object.0">TURecipientsBar</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">composeBar</string>
+						<string key="NS.key.0">recipientsBar</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">composeBar</string>
+							<string key="name">recipientsBar</string>
 							<string key="candidateClassName">TURecipientsBar</string>
 						</object>
 					</object>
@@ -636,25 +642,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TURecipientsBar</string>
 					<string key="superclassName">UIScrollView</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addContact:">id</string>
-						<string key="select:">id</string>
-						<string key="selectRecipientButton:">UIButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addContact:">
-							<string key="name">addContact:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="select:">
-							<string key="name">select:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="selectRecipientButton:">
-							<string key="name">selectRecipientButton:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">heightConstraint</string>
 						<string key="NS.object.0">NSLayoutConstraint</string>
@@ -675,24 +662,24 @@
 					<string key="className">TURecipientsDisplayController</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="composeBar">TURecipientsBar</string>
-						<string key="composeContentsController">UIViewController</string>
+						<string key="contentsController">UIViewController</string>
 						<string key="delegate">id</string>
+						<string key="recipientsBar">TURecipientsBar</string>
 						<string key="searchResultsDataSource">id</string>
 						<string key="searchResultsDelegate">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="composeBar">
-							<string key="name">composeBar</string>
-							<string key="candidateClassName">TURecipientsBar</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="composeContentsController">
-							<string key="name">composeContentsController</string>
+						<object class="IBToOneOutletInfo" key="contentsController">
+							<string key="name">contentsController</string>
 							<string key="candidateClassName">UIViewController</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="delegate">
 							<string key="name">delegate</string>
 							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="recipientsBar">
+							<string key="name">recipientsBar</string>
+							<string key="candidateClassName">TURecipientsBar</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="searchResultsDataSource">
 							<string key="name">searchResultsDataSource</string>
