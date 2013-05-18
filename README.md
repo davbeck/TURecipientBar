@@ -4,6 +4,8 @@
 
 ![Screenshot](Screenshot.gif)
 
+> See a more extensive preview at [http://cl.ly/171y2V072007](http://cl.ly/171y2V072007)
+
 ## Installation
 
 ### [Cocoapods](http://cocoapods.org)
