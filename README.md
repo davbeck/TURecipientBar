@@ -46,37 +46,49 @@ You will also need to keep a reference to `TURecipientsDisplayController` or it 
 
 ### Hide the add button:
 
-    self.recipientsBar.showsAddButton = NO;
+```  objective-c
+self.recipientsBar.showsAddButton = NO;
+```
 
 ### Add placeholder text:
 
-    self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
+```  objective-c
+self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
+```
 
 ### Change the label's text:
 
-    self.recipientsBar.label = @"Invite:";
+```  objective-c
+self.recipientsBar.label = @"Invite:";
+```
 
 ### Disable search table view:
 
-    - (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientDisplayController *)controller
-    {
-        return NO;
-    }
+```  objective-c
+- (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientDisplayController *)controller
+{
+	return NO;
+}
+```
 
 ### Change recipients appearance:
 
-    UIImage *backgroundImage = [[UIImage imageNamed:@"token"] stretchableImageWithLeftCapWidth:14.0 topCapHeight:0.0];
-    [[TURecipientsBar appearance] setRecipientBackgroundImage:backgroundImage forState:UIControlStateNormal];
-    NSDictionary *attributes = @{
-                                 NSFontAttributeName: [UIFont fontWithName:@"American Typewriter" size:14.0],
-                                 NSForegroundColorAttributeName: [UIColor yellowColor],
-                                 };
-    [[TURecipientsBar appearance] setRecipientTitleTextAttributes:attributes forState:UIControlStateNormal];
+```  objective-c
+UIImage *backgroundImage = [[UIImage imageNamed:@"token"] stretchableImageWithLeftCapWidth:14.0 topCapHeight:0.0];
+[[TURecipientsBar appearance] setRecipientBackgroundImage:backgroundImage forState:UIControlStateNormal];
+NSDictionary *attributes = @{
+                             NSFontAttributeName: [UIFont fontWithName:@"American Typewriter" size:14.0],
+                             NSForegroundColorAttributeName: [UIColor yellowColor],
+                             };
+[[TURecipientsBar appearance] setRecipientTitleTextAttributes:attributes forState:UIControlStateNormal];
+```
 
 ### Change label appearance
 
-    NSDictionary *labelAttributes = @{
-                                      NSFontAttributeName: [UIFont fontWithName:@"Marker Felt" size:14.0],
-                                      NSForegroundColorAttributeName: [UIColor redColor],
-                                      };
-    [[TURecipientsBar appearance] setLabelTextAttributes:labelAttributes];
+```  objective-c
+NSDictionary *labelAttributes = @{
+                                  NSFontAttributeName: [UIFont fontWithName:@"Marker Felt" size:14.0],
+                                  NSForegroundColorAttributeName: [UIColor redColor],
+                                  };
+[[TURecipientsBar appearance] setLabelTextAttributes:labelAttributes];
+```
