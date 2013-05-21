@@ -94,6 +94,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	recipientView.translatesAutoresizingMaskIntoConstraints = NO;
 	[_contentView addSubview:recipientView];
 	[_recipientViews addObject:recipientView];
+    
+    if (!_textField.editing) {
+        recipientView.alpha = 0.0;
+    }
 	
 	
 	

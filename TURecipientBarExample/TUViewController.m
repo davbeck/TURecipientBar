@@ -38,6 +38,11 @@
 //                                      NSForegroundColorAttributeName: [UIColor redColor],
 //                                      };
 //    [[TURecipientsBar appearance] setLabelTextAttributes:labelAttributes];
+    
+//    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"John Burke" address:nil]];
+//    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"David Beck" address:nil]];
+//    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Frank Mann" address:nil]];
+//    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Tom Nelson" address:nil]];
 }
 
 - (void)didReceiveMemoryWarning
