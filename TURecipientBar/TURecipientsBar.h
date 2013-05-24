@@ -26,10 +26,11 @@
 @property (nonatomic) BOOL searching;
 - (void)setSearching:(BOOL)searching animated:(BOOL)animated;
 
-@property (nonatomic) UITextAutocapitalizationType autocapitalizationType;
-@property (nonatomic) UITextAutocorrectionType autocorrectionType;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextSpellCheckingType spellCheckingType;
+@property (nonatomic) UITextAutocapitalizationType autocapitalizationType __attribute__((deprecated));
+@property (nonatomic) UITextAutocorrectionType autocorrectionType __attribute__((deprecated));
+@property (nonatomic) UIKeyboardType keyboardType __attribute__((deprecated));
+@property (nonatomic) UITextSpellCheckingType spellCheckingType __attribute__((deprecated));
+@property (nonatomic, readonly) UITextField *textField;
 @property (nonatomic) BOOL showsAddButton;
 
 @property (nonatomic, weak) id<TURecipientsBarDelegate> recipientsBarDelegate;

@@ -20,7 +20,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 @implementation TURecipientsBar
 {
 	UIView *_contentView;
-	UITextField *_textField;
 	UILabel *_toLabel;
 	UIButton *_addButton;
 	UILabel *_summaryLabel;
