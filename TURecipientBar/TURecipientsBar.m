@@ -345,7 +345,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_lineView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_lineView)]];
 	
 	_toLabel = [[UILabel alloc] init];
-    self.label = NSLocalizedString(@"To:", nil);
+    self.label = NSLocalizedString(@"To: ", nil);
 	_toLabel.translatesAutoresizingMaskIntoConstraints = NO;
 	[_toLabel setContentHuggingPriority:800 forAxis:UILayoutConstraintAxisHorizontal];
 	[_contentView addSubview:_toLabel];
@@ -381,8 +381,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	_summaryLabel.font = [UIFont systemFontOfSize:15.0];
 	_summaryLabel.translatesAutoresizingMaskIntoConstraints = NO;
 	[_contentView addSubview:_summaryLabel];
-	[_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_toLabel attribute:NSLayoutAttributeBaseline relatedBy:NSLayoutRelationEqual toItem:_summaryLabel attribute:NSLayoutAttributeBaseline multiplier:1.0 constant:0.0]];
-	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_toLabel]-13-[_summaryLabel]-12-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_toLabel, _summaryLabel)]];
+	[_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_summaryLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:21.0]];
+	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_toLabel]-9-[_summaryLabel]-12-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_toLabel, _summaryLabel)]];
 	[_summaryLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
 	
 	
@@ -441,7 +441,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	for (NSArray *line in _recipientLines) {
 		for (UIView *recipientView in line) {
 			if (lastView == _toLabel) {
-				[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[lastView]-4-[recipientView]->=6-[_addButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(recipientView, lastView, _addButton)]];
+				[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[lastView]-0-[recipientView]->=6-[_addButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(recipientView, lastView, _addButton)]];
 			} else if (lastView == nil) {
 				[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[recipientView]->=6-[_addButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(recipientView, _addButton)]];
 			} else {

@@ -23,7 +23,8 @@
     
 //    self.recipientsBar.showsAddButton = NO;
 //    self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
-//    self.recipientsBar.label = @"To:";
+//    self.recipientsBar.label = @"Send To: ";
+//    self.recipientsBar.label = @"";
     
 //    UIImage *backgroundImage = [[UIImage imageNamed:@"token"] stretchableImageWithLeftCapWidth:14.0 topCapHeight:0.0];
 //    [[TURecipientsBar appearance] setRecipientBackgroundImage:backgroundImage forState:UIControlStateNormal];
