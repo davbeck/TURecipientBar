@@ -23,6 +23,7 @@
 @property (nonatomic, copy) NSString *placeholder;
 @property (nonatomic, readonly) NSArray *recipients;
 - (void)addRecipient:(TURecipient *)recipient;
+- (void)removeRecipient:(TURecipient *)recipient;
 @property (nonatomic) BOOL searching;
 - (void)setSearching:(BOOL)searching animated:(BOOL)animated;
 
