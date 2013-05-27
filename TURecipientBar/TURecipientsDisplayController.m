@@ -112,7 +112,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == TURecipientsContext) {
-        if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didRemoveRecipient:)]) {
+        if ([change[NSKeyValueChangeOldKey] isKindOfClass:[NSArray class]] && [self.delegate respondsToSelector:@selector(recipientsDisplayController:didRemoveRecipient:)]) {
             for (TURecipient *recipient in change[NSKeyValueChangeOldKey]) {
                 [self.delegate recipientsDisplayController:self didRemoveRecipient:recipient];
             }
