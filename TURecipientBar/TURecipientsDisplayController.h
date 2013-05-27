@@ -58,5 +58,6 @@
 
 - (TURecipient *)recipientsDisplayController:(TURecipientsDisplayController *)controller willAddRecipient:(TURecipient *)recipient;
 - (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didAddRecipient:(TURecipient *)recipient;
+- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didRemoveRecipient:(TURecipient *)recipient;
 
 @end

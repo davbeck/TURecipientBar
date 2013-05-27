@@ -11,6 +11,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+static void *TURecipientsContext = &TURecipientsContext;
+
+
 @implementation TURecipientsDisplayController
 {
     BOOL _shouldBeginSearch;
@@ -106,6 +109,19 @@
 	}
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	if (context == TURecipientsContext) {
+        if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didRemoveRecipient:)]) {
+            for (TURecipient *recipient in change[NSKeyValueChangeOldKey]) {
+                [self.delegate recipientsDisplayController:self didRemoveRecipient:recipient];
+            }
+        }
+	} else {
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
+}
+
 - (void)_hideTableView
 {
 	if (self.recipientsBar.searching) {
@@ -140,6 +156,8 @@
 	[self _unloadTableView];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [self removeObserver:self forKeyPath:@"recipientsBar.recipients" context:TURecipientsContext];
 }
 
 - (id)init
@@ -161,6 +179,8 @@
 		_contentsController = viewController;
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        
+        [self addObserver:self forKeyPath:@"recipientsBar.recipients" options:NSKeyValueObservingOptionOld context:TURecipientsContext];
 	}
 	
 	return self;
