@@ -23,11 +23,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="Bdf-J2-7NW"/>
-                                    <constraint firstAttribute="height" priority="900" constant="44" id="tsh-1O-kHQ"/>
+                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="tsh-1O-kHQ"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="cGI-i9-q93" id="jkE-tI-9Po"/>
-                                    <outlet property="heightConstraint" destination="tsh-1O-kHQ" id="F8X-rS-r7B"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N20-gj-dyV">
