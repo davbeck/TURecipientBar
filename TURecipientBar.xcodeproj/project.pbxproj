@@ -26,7 +26,6 @@
 		110611FC1742E64600730F01 /* recipient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F71742E64600730F01 /* recipient@2x.png */; };
 		110611FD1742E64600730F01 /* search-cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F81742E64600730F01 /* search-cover.png */; };
 		110612001742E96700730F01 /* TURecipientsDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611FF1742E96700730F01 /* TURecipientsDisplayController.m */; };
-		110612021742EB4F00730F01 /* TUViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 110612011742EB4E00730F01 /* TUViewController.xib */; };
 		110612051742EDE600730F01 /* TUABSearchSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 110612041742EDE500730F01 /* TUABSearchSource.m */; };
 		110612071742EE9200730F01 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612061742EE9200730F01 /* AddressBook.framework */; };
 		110612091742EE9800730F01 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612081742EE9800730F01 /* AddressBookUI.framework */; };
@@ -60,7 +59,6 @@
 		110611F81742E64600730F01 /* search-cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-cover.png"; sourceTree = "<group>"; };
 		110611FE1742E96700730F01 /* TURecipientsDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TURecipientsDisplayController.h; sourceTree = "<group>"; };
 		110611FF1742E96700730F01 /* TURecipientsDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipientsDisplayController.m; sourceTree = "<group>"; };
-		110612011742EB4E00730F01 /* TUViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TUViewController.xib; sourceTree = "<group>"; };
 		110612031742EDE500730F01 /* TUABSearchSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUABSearchSource.h; sourceTree = "<group>"; };
 		110612041742EDE500730F01 /* TUABSearchSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUABSearchSource.m; sourceTree = "<group>"; };
 		110612061742EE9200730F01 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -121,7 +119,6 @@
 				110611E01742E2D400730F01 /* MainStoryboard.storyboard */,
 				110611E31742E2D400730F01 /* TUViewController.h */,
 				110611E41742E2D400730F01 /* TUViewController.m */,
-				110612011742EB4E00730F01 /* TUViewController.xib */,
 				110612031742EDE500730F01 /* TUABSearchSource.h */,
 				110612041742EDE500730F01 /* TUABSearchSource.m */,
 				110611CF1742E2D400730F01 /* Supporting Files */,
@@ -223,7 +220,6 @@
 				110611FB1742E64600730F01 /* recipient.png in Resources */,
 				110611FC1742E64600730F01 /* recipient@2x.png in Resources */,
 				110611FD1742E64600730F01 /* search-cover.png in Resources */,
-				110612021742EB4F00730F01 /* TUViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +324,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
 				INFOPLIST_FILE = "TURecipientBarExample/TURecipientBar-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -339,6 +336,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
 				INFOPLIST_FILE = "TURecipientBarExample/TURecipientBar-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

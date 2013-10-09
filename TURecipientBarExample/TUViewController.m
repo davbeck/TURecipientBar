@@ -21,6 +21,8 @@
 {
     [super viewDidLoad];
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
 //    self.recipientsBar.showsAddButton = NO;
 //    self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
 //    self.recipientsBar.label = @"Send To: ";
