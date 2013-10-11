@@ -46,6 +46,8 @@
 - (NSDictionary *)recipientTitleTextAttributesForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, copy) NSDictionary *labelTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy) NSDictionary *summaryTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy) NSDictionary *placeholderTextAttributes UI_APPEARANCE_SELECTOR;
 
 @end
 

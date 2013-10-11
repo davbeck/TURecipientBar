@@ -143,11 +143,19 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
             }
         }
         
-        _summaryLabel.text = summary;
         _summaryLabel.textColor = [UIColor darkTextColor];
+        if (self.summaryTextAttributes == nil) {
+            _summaryLabel.text = summary;
+        } else {
+            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:summary attributes:self.summaryTextAttributes];
+        }
     } else {
-        _summaryLabel.text = self.placeholder;
         _summaryLabel.textColor = [UIColor lightGrayColor];
+        if (self.placeholderTextAttributes == nil) {
+            _summaryLabel.text = self.placeholder;
+        } else {
+            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
+        }
     }
 }
 
@@ -891,6 +899,20 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     }
     
     return attributes;
+}
+
+- (void)setSummaryTextAttributes:(NSDictionary *)attributes
+{
+    _summaryTextAttributes = attributes;
+    
+    [self _updateSummary];
+}
+
+- (void)setPlaceholderTextAttributes:(NSDictionary *)attributes
+{
+    _placeholderTextAttributes = attributes;
+    
+    [self _updateSummary];
 }
 
 - (void)setLabelTextAttributes:(NSDictionary *)attributes
