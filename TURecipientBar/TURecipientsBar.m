@@ -335,6 +335,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	self.backgroundColor = [UIColor whiteColor];
 	if (self.heightConstraint == nil) {
 		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:TURecipientsLineHeight + 1.0];
+        _heightConstraint.priority = UILayoutPriorityDefaultHigh;
 		[self addConstraint:_heightConstraint];
 	}
 	self.clipsToBounds = YES;

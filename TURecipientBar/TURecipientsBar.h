@@ -90,7 +90,7 @@
  
  You can use this to set the height constraint in Interface Builder. This was almost necessary in iOS 6, however in iOS 7, you can set a placeholder constraint and let the bar create it's own height constraint.
  
- You can also change the priority. It must be lower than whatever constraint you are using to limit the bars height.
+ You can also change the priority. It must be lower than whatever constraint you are using to limit the bars height. The default priority is `UILayoutPriorityDefaultHigh` (`750`).
  */
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
 
