@@ -113,7 +113,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 {
 	if (context == TURecipientsContext) {
         if ([change[NSKeyValueChangeOldKey] isKindOfClass:[NSArray class]] && [self.delegate respondsToSelector:@selector(recipientsDisplayController:didRemoveRecipient:)]) {
-            for (TURecipient *recipient in change[NSKeyValueChangeOldKey]) {
+            for (id<TURecipient>recipient in change[NSKeyValueChangeOldKey]) {
                 [self.delegate recipientsDisplayController:self didRemoveRecipient:recipient];
             }
         }
@@ -201,7 +201,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 
 - (void)_createRecipientForRecipientsBar:(TURecipientsBar *)recipientsBar
 {
-	TURecipient *recipient = [TURecipient recipientWithTitle:recipientsBar.text address:nil];
+	id<TURecipient> recipient = [TURecipient recipientWithTitle:recipientsBar.text address:nil];
 	
 	if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:willAddRecipient:)]) {
 		recipient = [self.delegate recipientsDisplayController:self willAddRecipient:recipient];
@@ -313,7 +313,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 	return should;
 }
 
-- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldSelectRecipient:(TURecipient *)recipient
+- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldSelectRecipient:(id<TURecipient>)recipient
 {
 	BOOL should = YES;
 	if ([self.delegate respondsToSelector:@selector(recipientsBar:shouldSelectRecipient:)]) {
@@ -329,7 +329,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 	return should;
 }
 
-- (void)recipientsBar:(TURecipientsBar *)recipientsBar didSelectRecipient:(TURecipient *)recipient
+- (void)recipientsBar:(TURecipientsBar *)recipientsBar didSelectRecipient:(id<TURecipient>)recipient
 {
 	if ([self.delegate respondsToSelector:@selector(recipientsBar:didSelectRecipient:)]) {
 		[(id<TURecipientsBarDelegate>)self.delegate recipientsBar:recipientsBar didSelectRecipient:recipient];

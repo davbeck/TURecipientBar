@@ -56,8 +56,8 @@
 // return YES to reload table. called when search string/option changes. convenience methods on top UISearchBar delegate methods
 - (BOOL)recipientsDisplayController:(TURecipientsDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString;
 
-- (TURecipient *)recipientsDisplayController:(TURecipientsDisplayController *)controller willAddRecipient:(TURecipient *)recipient;
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didAddRecipient:(TURecipient *)recipient;
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didRemoveRecipient:(TURecipient *)recipient;
+- (id<TURecipient>)recipientsDisplayController:(TURecipientsDisplayController *)controller willAddRecipient:(id<TURecipient>)recipient;
+- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didAddRecipient:(id<TURecipient>)recipient;
+- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didRemoveRecipient:(id<TURecipient>)recipient;
 
 @end

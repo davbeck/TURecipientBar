@@ -27,11 +27,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	NSArray *_updatingConstraints; // NSLayoutConstraint
     NSArray *_addButtonHiddenConstraints; // NSLayoutConstraint
 	
-	NSMutableArray *_recipients; // TURecipient
+	NSMutableArray *_recipients; // <TURecipient>
 	NSMutableArray *_recipientViews; // UIButton
 	NSMutableArray *_recipientLines; // NSArray -> UIView
 	CGSize _lastKnownSize;
-	TURecipient *_selectedRecipient;
+	id<TURecipient>_selectedRecipient;
     
     // UIAppearance
     NSMutableDictionary *_recipientBackgroundImages; // [@(UIControlState)] UIImage
@@ -56,7 +56,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	return [_recipients copy];
 }
 
-- (void)addRecipient:(TURecipient *)recipient
+- (void)addRecipient:(id<TURecipient>)recipient
 {
 	NSIndexSet *changedIndex = [NSIndexSet indexSetWithIndex:_recipients.count];
 	
@@ -73,17 +73,17 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
 	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateNormal]
                              forState:UIControlStateNormal];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.title attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
+    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
                              forState:UIControlStateNormal];
     
 	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateHighlighted]
 							 forState:UIControlStateHighlighted];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.title attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
+    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
                              forState:UIControlStateHighlighted];
     
 	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateSelected]
 							 forState:UIControlStateSelected];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.title attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
+    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
                              forState:UIControlStateSelected];
     
     
@@ -105,7 +105,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self _resetLines];
 }
 
-- (void)removeRecipient:(TURecipient *)recipient
+- (void)removeRecipient:(id<TURecipient>)recipient
 {
 	NSIndexSet *changedIndex = [NSIndexSet indexSetWithIndex:[_recipients indexOfObject:recipient]];
 	
@@ -135,8 +135,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (_recipients.count > 0) {
         NSMutableString *summary = [[NSMutableString alloc] init];
         
-        for (TURecipient *recipient in _recipients) {
-            [summary appendString:recipient.title];
+        for (id<TURecipient>recipient in _recipients) {
+            [summary appendString:recipient.recipientTitle];
             
             if (recipient != [_recipients lastObject]) {
                 [summary appendString:@", "];
@@ -597,7 +597,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
 }
 
-- (void)selectRecipient:(TURecipient *)recipient
+- (void)selectRecipient:(id<TURecipient>)recipient
 {
 	BOOL should = YES;
 	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldSelectRecipient:)]) {

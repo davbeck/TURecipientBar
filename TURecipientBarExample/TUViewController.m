@@ -46,12 +46,17 @@
 //    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"David Beck" address:nil]];
 //    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Frank Mann" address:nil]];
 //    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Tom Nelson" address:nil]];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    
+    
+    
+    // Large scale testing:
+    for (NSUInteger i = 0; i < 12; i++) {
+        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"John Burke" address:nil]];
+        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"David Beck" address:nil]];
+        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Frank Mann" address:nil]];
+        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Tom Nelson" address:nil]];
+    }
 }
 
 

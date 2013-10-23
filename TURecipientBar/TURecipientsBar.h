@@ -126,7 +126,7 @@
  
 @param recipient A recipient to add.
  */
-- (void)addRecipient:(TURecipient *)recipient;
+- (void)addRecipient:(id<TURecipient>)recipient;
 
 /** Remove a recipient.
  
@@ -134,7 +134,7 @@
  
  @param recipient A recipient to remove.
  */
-- (void)removeRecipient:(TURecipient *)recipient;
+- (void)removeRecipient:(id<TURecipient>)recipient;
 
 /** Select a recipient.
  
@@ -142,7 +142,7 @@
  
  @param recipient A recipient to select.
  */
-- (void)selectRecipient:(TURecipient *)recipient;
+- (void)selectRecipient:(id<TURecipient>)recipient;
 
 
 /**---------------------------------------------------------------------------------------
@@ -288,7 +288,7 @@
  @param recipient The recipient being selected.
  @return `YES` if the recipient should be selected, otherwise, `NO`.
  */
-- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldSelectRecipient:(TURecipient *)recipient;
+- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldSelectRecipient:(id<TURecipient>)recipient;
 
 /** Tells the delegate that recipient selection has changed.
  
@@ -297,7 +297,7 @@
  @param recipientsBar The recipient bar that is being edited.
  @param recipient The recipient that was selected.
  */
-- (void)recipientsBar:(TURecipientsBar *)recipientsBar didSelectRecipient:(TURecipient *)recipient;
+- (void)recipientsBar:(TURecipientsBar *)recipientsBar didSelectRecipient:(id<TURecipient>)recipient;
 
 /**---------------------------------------------------------------------------------------
  * @name Clicking Buttons

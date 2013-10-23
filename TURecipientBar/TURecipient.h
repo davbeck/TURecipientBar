@@ -8,9 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TURecipient : NSObject <NSCopying>
 
-@property (nonatomic, readonly, copy) NSString *title;
+@protocol TURecipient <NSObject, NSCopying>
+
+@property (nonatomic, readonly, copy) NSString *recipientTitle;
+
+@end
+
+
+@interface TURecipient : NSObject <TURecipient>
+
+@property (nonatomic, readonly, copy) NSString *title __attribute__((deprecated));
 @property (nonatomic, readonly, strong) id address;
 
 + (id)recipientWithTitle:(NSString *)title address:(id)address;

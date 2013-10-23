@@ -10,18 +10,23 @@
 
 @interface TURecipient ()
 
-@property (nonatomic, readwrite, copy) NSString *title;
+@property (nonatomic, readwrite, copy) NSString *recipientTitle;
 @property (nonatomic, readwrite, strong) id address;
 
 @end
 
 @implementation TURecipient
 
+- (NSString *)title
+{
+    return self.recipientTitle;
+}
+
 + (id)recipientWithTitle:(NSString *)title address:(id)address
 {
 	TURecipient *recipient = [[TURecipient alloc] init];
 	
-	recipient.title = title;
+	recipient.recipientTitle = title;
 	recipient.address = address;
 	
 	return recipient;
@@ -34,7 +39,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: title=%@, address=%@>", NSStringFromClass([self class]), self.title, self.address];
+	return [NSString stringWithFormat:@"<%@: title=%@, address=%@>", NSStringFromClass([self class]), self.recipientTitle, self.address];
 }
 
 @end
