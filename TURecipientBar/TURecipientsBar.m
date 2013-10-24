@@ -19,7 +19,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 @implementation TURecipientsBar
 {
-	UIView *_contentView;
 	UILabel *_toLabel;
 	UIButton *_addButton;
 	UILabel *_summaryLabel;
@@ -29,9 +28,9 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	NSMutableArray *_recipients; // <TURecipient>
 	NSMutableArray *_recipientViews; // UIButton
-	NSMutableArray *_recipientLines; // NSArray -> UIView
 	CGSize _lastKnownSize;
 	id<TURecipient>_selectedRecipient;
+    BOOL _needsRecipientLayout;
     
     // UIAppearance
     NSMutableDictionary *_recipientBackgroundImages; // [@(UIControlState)] UIImage
@@ -89,9 +88,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
 	[recipientView addTarget:self action:@selector(selectRecipientButton:) forControlEvents:UIControlEventTouchUpInside];
     
-	
-	recipientView.translatesAutoresizingMaskIntoConstraints = NO;
-	[_contentView addSubview:recipientView];
+	[self addSubview:recipientView];
 	[_recipientViews addObject:recipientView];
     
     if (!_textField.editing) {
@@ -101,8 +98,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	
 	[self _updateSummary];
-	
-	[self _resetLines];
+    
+    [self _setNeedsRecipientLayout];
 }
 
 - (void)removeRecipient:(id<TURecipient>)recipient
@@ -118,16 +115,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	[self _updateSummary];
 	
-	[self _resetLines];
-}
-
-- (void)_resetLines
-{
-	_recipientLines = [NSMutableArray arrayWithObject:[_recipientViews mutableCopy]];
-	[[_recipientLines lastObject] addObject:_textField];
-	
-	[self setNeedsUpdateConstraints];
-	[self setNeedsLayout];
+	[self _setNeedsRecipientLayout];
 }
 
 - (void)_updateSummary
@@ -203,16 +191,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
     _showsAddButton = showsAddButton;
     
-    _addButton.hidden = !_showsAddButton;
-    
     if (_showsAddButton) {
-        if (_addButtonHiddenConstraints != nil) {
-            [_contentView removeConstraints:_addButtonHiddenConstraints];
-        }
+        [self addSubview:_addButton];
     } else {
-        _addButtonHiddenConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"[_addButton(0)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addButton)];
-        [_contentView addConstraints:_addButtonHiddenConstraints];
+        [_addButton removeFromSuperview];
     }
+    
+    [self setNeedsLayout];
 }
 
 - (void)setText:(NSString *)text
@@ -257,7 +242,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	if (_searching != searching) {
 		_searching = searching;
 		
-		[self setNeedsUpdateConstraints];
+		[self setNeedsLayout];
 		[self.superview layoutIfNeeded];
 		
 		[self _scrollToBottom];
@@ -329,7 +314,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
 	_recipients = [NSMutableArray array];
 	_recipientViews = [NSMutableArray array];
-	_recipientLines = [NSMutableArray arrayWithObject:[NSMutableArray array]];
 	
 	
 	self.backgroundColor = [UIColor whiteColor];
@@ -340,32 +324,18 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
 	self.clipsToBounds = YES;
 	
-	_contentView = [[UIView alloc] initWithFrame:self.bounds];
-	_contentView.translatesAutoresizingMaskIntoConstraints = NO;
-	[self addSubview:_contentView];
-	[self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)]];
-	[self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)]];
-	
 	_lineView = [[UIView alloc] init];
 	_lineView.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
-	_lineView.translatesAutoresizingMaskIntoConstraints = NO;
-	[_contentView addSubview:_lineView];
-	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_lineView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_lineView)]];
+	[self addSubview:_lineView];
 	
 	_toLabel = [[UILabel alloc] init];
     self.label = NSLocalizedString(@"To: ", nil);
-	_toLabel.translatesAutoresizingMaskIntoConstraints = NO;
-	[_toLabel setContentHuggingPriority:800 forAxis:UILayoutConstraintAxisHorizontal];
-	[_contentView addSubview:_toLabel];
-	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_toLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_toLabel)]];
-	[_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_toLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:21.0]];
+	[self addSubview:_toLabel];
 	
 	_addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
     _addButton.alpha = 0.0;
-	_addButton.translatesAutoresizingMaskIntoConstraints = NO;
 	[_addButton addTarget:self action:@selector(addContact:) forControlEvents:UIControlEventTouchUpInside];
-	[_contentView addSubview:_addButton];
-	[_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_addButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-23.0]];
+	[self addSubview:_addButton];
 	
 	_textField = [[UITextField alloc] init];
 	_textField.text = TURecipientsPlaceholder;
@@ -374,24 +344,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	_textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	_textField.spellCheckingType = UITextSpellCheckingTypeNo;
 	_textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	_textField.translatesAutoresizingMaskIntoConstraints = NO;
-	[_contentView addSubview:_textField];
-	[_textField addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_textField(43)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField)]];
-	[_textField setContentHuggingPriority:100 forAxis:UILayoutConstraintAxisHorizontal];
-	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textField]-6-[_addButton]-6@900-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField, _addButton)]];
+	[self addSubview:_textField];
 	[_textField addObserver:self forKeyPath:@"selectedTextRange" options:0 context:TURecipientsSelectionContext];
-	
-	[[_recipientLines lastObject] addObject:_textField];
 	
 	
 	_summaryLabel = [[UILabel alloc] init];
     _summaryLabel.backgroundColor = [UIColor clearColor];
 	_summaryLabel.font = [UIFont systemFontOfSize:15.0];
-	_summaryLabel.translatesAutoresizingMaskIntoConstraints = NO;
-	[_contentView addSubview:_summaryLabel];
-	[_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_summaryLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:21.0]];
-	[_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_toLabel]-9-[_summaryLabel]-12-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_toLabel, _summaryLabel)]];
-	[_summaryLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+	[self addSubview:_summaryLabel];
 	
 	
 	[self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(select:)]];
@@ -431,125 +391,118 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 #pragma mark - Layout
 
-- (void)updateConstraints
+- (void)_setNeedsRecipientLayout
 {
-	[super updateConstraints];
-	
-	if (_updatingConstraints != nil) {
-		[_contentView removeConstraints:_updatingConstraints];
-	}
-	
-	NSMutableArray *updatingConstraints = [NSMutableArray array];
-	
-	
-	UIView *lastView = _toLabel;
-	CGFloat topOffset = 0.0;
-	UILayoutPriority compressionResistance = UILayoutPriorityDefaultHigh;
-	
-	for (NSArray *line in _recipientLines) {
-		for (UIView *recipientView in line) {
-			if (lastView == _toLabel) {
-				[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[lastView]-0-[recipientView]->=6-[_addButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(recipientView, lastView, _addButton)]];
-			} else if (lastView == nil) {
-				[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[recipientView]->=6-[_addButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(recipientView, _addButton)]];
-			} else {
-				[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[lastView]-6-[recipientView]->=6-[_addButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(recipientView, lastView, _addButton)]];
-			}
-			[updatingConstraints addObject:[NSLayoutConstraint constraintWithItem:recipientView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:topOffset + TURecipientsLineHeight / 2.0]];
-			
-			[recipientView setContentCompressionResistancePriority:compressionResistance forAxis:UILayoutConstraintAxisHorizontal];
-			
-			lastView = recipientView;
-			compressionResistance -= 1;
-		}
-		
-		lastView = nil;
-		topOffset += TURecipientsLineHeight - 8.0;
-	}
-	
-	
-	
-	if (_textField.isFirstResponder) {
-		[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_lineView(1)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_lineView)]];
-	} else {
-		[updatingConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-43-[_lineView(1)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_lineView)]];
-	}
-	
-	
-	self.contentSize = CGSizeMake(self.contentSize.width, topOffset + 9.0);
-	if (_searching) {
-		[self _scrollToBottom];
-	}
-	
-	if (_textField.isFirstResponder && !self.searching) {
-		self.heightConstraint.constant = self.contentSize.height;
-	} else {
-		self.heightConstraint.constant = TURecipientsLineHeight + 1.0;
-	}
-	
-	
-	[updatingConstraints addObject:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.contentSize.height]];
-	[updatingConstraints addObject:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.contentSize.width]];
-	
-	_updatingConstraints = updatingConstraints;
-	[_contentView addConstraints:_updatingConstraints];
+    _needsRecipientLayout = YES;
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
-	[_contentView layoutSubviews];
-	
-	NSMutableArray *lastLine = [_recipientLines lastObject];
-	[[lastLine copy] enumerateObjectsUsingBlock:^(UIView *recipientView, NSUInteger index, BOOL *stop) {
-		if (index != 0) {
-			if (recipientView.intrinsicContentSize.width > recipientView.bounds.size.width
-				|| (recipientView == _textField && recipientView.bounds.size.width < 100.0)) {
-				[_recipientLines addObject:[[lastLine subarrayWithRange:NSMakeRange(index, lastLine.count - index)] mutableCopy]];
-				[lastLine removeObjectsInArray:[_recipientLines lastObject]];
-				
-				[self updateConstraints];
-				[self layoutSubviews];
-				
-				*stop = YES;
-			}
-		}
-	}];
-	
-	
-	if (self.frame.size.width != self.contentSize.width) {
-		self.contentSize = CGSizeMake(self.frame.size.width, self.contentSize.height);
-		[self _resetLines];
-		[self updateConstraints];
-		[self layoutSubviews];
-		return;
+    
+    
+    if (_needsRecipientLayout) {
+        CGSize toSize = _toLabel.intrinsicContentSize;
+        _toLabel.frame = CGRectMake(8.0,
+                                    21.0 - toSize.height / 2,
+                                    toSize.width, toSize.height);
+        
+        
+        CGRect summaryLabelFrame;
+        summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame) + self.recipientContentEdgeInsets.left;
+        summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
+        summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
+        summaryLabelFrame.size.width = self.bounds.size.width - summaryLabelFrame.origin.x - 12.0;
+        _summaryLabel.frame = summaryLabelFrame;
+        
+        CGRect addButtonFrame;
+        addButtonFrame.size = _addButton.intrinsicContentSize;
+        addButtonFrame.origin.x = self.bounds.size.width - addButtonFrame.size.width - 6.0;
+        
+        UIView *lastView = _toLabel;
+        CGFloat topOffset = 0.0;
+        
+        for (UIView *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
+            CGRect recipientViewFrame;
+            if (recipientView == _textField) {
+                recipientViewFrame.size = CGSizeMake(100.0, 43.0);
+            } else {
+                recipientViewFrame.size = recipientView.intrinsicContentSize;
+            }
+            
+            if (lastView == _toLabel) {
+                recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame);
+            } else {
+                recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + 6.0;
+            }
+            
+            if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
+                recipientViewFrame.origin.x = 8.0;
+                topOffset += TURecipientsLineHeight - 8.0;
+            }
+            
+            recipientViewFrame.origin.y = topOffset + TURecipientsLineHeight / 2 - recipientViewFrame.size.height / 2.0;
+            
+            if (recipientView == _textField) {
+                if (_addButton.superview == self) {
+                    recipientViewFrame.size.width = addButtonFrame.origin.x - recipientViewFrame.origin.x;
+                } else {
+                    recipientViewFrame.size.width = self.bounds.size.width - recipientViewFrame.origin.x;
+                }
+            }
+            
+            recipientView.frame = recipientViewFrame;
+            
+            
+            lastView = recipientView;
+        }
+        
+        
+        self.contentSize = CGSizeMake(self.frame.size.width, MAX(topOffset + 9.0 + TURecipientsLineHeight - 8.0, TURecipientsLineHeight));
+        
+        
+        _needsRecipientLayout = NO;
+        
+        addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - 21.0;
+        _addButton.frame = addButtonFrame;
+    }
+    
+    [_lineView.superview bringSubviewToFront:_lineView];
+    _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - 1.0, self.bounds.size.width, 1.0);
+    
+    if (_textField.isFirstResponder && !self.searching) {
+		self.heightConstraint.constant = self.contentSize.height;
+	} else {
+		self.heightConstraint.constant = TURecipientsLineHeight + 1.0;
 	}
-	
-	
+    
+    if (_searching) {
+		[self _scrollToBottom];
+	}
+    
+    
 	if (_textField.isFirstResponder && self.contentSize.height > self.frame.size.height && !_searching) {
 		self.scrollEnabled = YES;
-		_lineView.hidden = YES;
 	} else {
 		self.scrollEnabled = NO;
-		_lineView.hidden = NO;
 	}
 }
 
 - (void)_frameChanged
 {
 	if (_recipients != nil && self.bounds.size.width != _lastKnownSize.width) {
-		[self _resetLines];
+		[self _setNeedsRecipientLayout];
 	}
-	
-	if (_textField.isFirstResponder && self.contentSize.height > self.frame.size.height && !_searching) {
+    
+    if (_textField.isFirstResponder && self.contentSize.height > self.frame.size.height && !_searching) {
 		self.scrollEnabled = YES;
-		_lineView.hidden = YES;
 	} else {
 		self.scrollEnabled = NO;
-		_lineView.hidden = NO;
 	}
 	
-	if (_selectedRecipient == nil
+	if (_textField.isFirstResponder
+        && _selectedRecipient == nil
 		&& (self.bounds.size.width != _lastKnownSize.width || self.bounds.size.height != _lastKnownSize.height)) {
 		[self _scrollToBottom];
 	}
@@ -758,7 +711,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         _summaryLabel.alpha = 0.0;
         
         
-        [self setNeedsUpdateConstraints];
+        [self setNeedsLayout];
         [self.superview layoutIfNeeded];
         
         [self _scrollToBottom];
@@ -790,7 +743,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 				
 				_summaryLabel.alpha = 1.0;
 				
-				[self setNeedsUpdateConstraints];
+				[self setNeedsLayout];
 				[self.superview layoutIfNeeded];
 				
 				self.contentOffset = CGPointMake(0.0, 0.0);
