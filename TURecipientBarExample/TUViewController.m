@@ -23,6 +23,9 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    // we don't want our initial state to animate in
+    self.recipientsBar.animatedRecipientsInAndOut = NO;
+    
 //    self.recipientsBar.showsAddButton = NO;
 //    self.recipientsBar.placeholder = NSLocalizedString(@"Type names...", nil);
 //    self.recipientsBar.label = @"Send To: ";
@@ -57,6 +60,9 @@
         [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Frank Mann" address:nil]];
         [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Tom Nelson" address:nil]];
     }
+    
+    
+    self.recipientsBar.animatedRecipientsInAndOut = YES;
 }
 
 

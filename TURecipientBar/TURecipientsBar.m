@@ -88,18 +88,33 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
 	[recipientView addTarget:self action:@selector(selectRecipientButton:) forControlEvents:UIControlEventTouchUpInside];
     
+    
 	[self addSubview:recipientView];
-	[_recipientViews addObject:recipientView];
+    
+    [self _setNeedsRecipientLayout];
+    if (self.animatedRecipientsInAndOut) {
+        recipientView.transform = CGAffineTransformMakeScale(0.0, 0.0);
+        recipientView.alpha = 0.0;
+        recipientView.frame = [self _frameFoRecipientView:recipientView afterView:_recipientViews.lastObject];
+        
+        // add this after getting the frame, otherwise it will base the frame on itself
+        [_recipientViews addObject:recipientView];
+        
+        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.2 options:0 animations:^{
+            recipientView.transform = CGAffineTransformIdentity;
+            recipientView.alpha = 1.0;
+            [self layoutIfNeeded];
+        } completion:nil];
+    } else {
+        [_recipientViews addObject:recipientView];
+    }
+    
     
     if (!_textField.editing) {
         recipientView.alpha = 0.0;
     }
 	
-	
-	
 	[self _updateSummary];
-    
-    [self _setNeedsRecipientLayout];
 }
 
 - (void)removeRecipient:(id<TURecipient>)recipient
@@ -110,12 +125,23 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[_recipients removeObjectsAtIndexes:changedIndex];
 	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:changedIndex forKey:@"recipients"];
 	
-	[[_recipientViews objectsAtIndexes:changedIndex] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-	[_recipientViews removeObjectsAtIndexes:changedIndex];
+    UIView *recipientView = [_recipientViews objectAtIndex:changedIndex.firstIndex];
+    [_recipientViews removeObject:recipientView];
+    [self _setNeedsRecipientLayout];
+    
+    if (self.animatedRecipientsInAndOut) {
+        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.2 options:0 animations:^{
+            recipientView.transform = CGAffineTransformMakeScale(0.0, 0.0);
+            recipientView.alpha = 0.0;
+            
+            [self layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            [recipientView removeFromSuperview];
+        }];
+    }
+	
 	
 	[self _updateSummary];
-	
-	[self _setNeedsRecipientLayout];
 }
 
 - (void)_updateSummary
@@ -305,6 +331,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 - (void)_init
 {
     _showsAddButton = YES;
+    _animatedRecipientsInAndOut = YES;
     _recipientBackgroundImages = [NSMutableDictionary new];
     _recipientTitleTextAttributes = [NSMutableDictionary new];
     
@@ -355,6 +382,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	
 	[self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(select:)]];
+    
+    
+    
+    [self _setNeedsRecipientLayout];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -397,6 +428,31 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     [self setNeedsLayout];
 }
 
+- (CGRect)_frameFoRecipientView:(UIView *)recipientView afterView:(UIView *)lastView
+{
+    CGRect recipientViewFrame;
+    if (recipientView == _textField) {
+        recipientViewFrame.size = CGSizeMake(100.0, 43.0);
+    } else {
+        recipientViewFrame.size = recipientView.intrinsicContentSize;
+    }
+    
+    if (lastView == _toLabel) {
+        recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame);
+    } else {
+        recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + 6.0;
+    }
+    
+    recipientViewFrame.origin.y = CGRectGetMidY(lastView.frame) - recipientViewFrame.size.height / 2.0;
+    
+    if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
+        recipientViewFrame.origin.x = 8.0;
+        recipientViewFrame.origin.y += TURecipientsLineHeight - 8.0;
+    }
+    
+    return recipientViewFrame;
+}
+
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
@@ -421,9 +477,9 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         addButtonFrame.origin.x = self.bounds.size.width - addButtonFrame.size.width - 6.0;
         
         UIView *lastView = _toLabel;
-        CGFloat topOffset = 0.0;
         
         for (UIView *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
+//            CGRect recipientViewFrame = [self _frameFoRecipientView:recipientView afterView:lastView];
             CGRect recipientViewFrame;
             if (recipientView == _textField) {
                 recipientViewFrame.size = CGSizeMake(100.0, 43.0);
@@ -437,12 +493,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
                 recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + 6.0;
             }
             
+            recipientViewFrame.origin.y = CGRectGetMidY(lastView.frame) - recipientViewFrame.size.height / 2.0;
+            
             if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
                 recipientViewFrame.origin.x = 8.0;
-                topOffset += TURecipientsLineHeight - 8.0;
+                recipientViewFrame.origin.y += TURecipientsLineHeight - 8.0;
             }
-            
-            recipientViewFrame.origin.y = topOffset + TURecipientsLineHeight / 2 - recipientViewFrame.size.height / 2.0;
             
             if (recipientView == _textField) {
                 if (_addButton.superview == self) {
@@ -459,7 +515,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
         
         
-        self.contentSize = CGSizeMake(self.frame.size.width, MAX(topOffset + 9.0 + TURecipientsLineHeight - 8.0, TURecipientsLineHeight));
+        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight) + 1);
         
         
         _needsRecipientLayout = NO;

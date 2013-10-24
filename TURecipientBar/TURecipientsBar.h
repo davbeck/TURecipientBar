@@ -86,6 +86,14 @@
  */
 @property (nonatomic) BOOL showsAddButton;
 
+/** Whether adding and removing recipients should be animated.
+ 
+ Hint: they should. This is turned on by defualt.
+ 
+ When turned on, recipients will fade and zoom. When turned off, they will snap immediately.
+ */
+@property (nonatomic) BOOL animatedRecipientsInAndOut;
+
 /** The height constraint for the entire bar.
  
  You can use this to set the height constraint in Interface Builder. This was almost necessary in iOS 6, however in iOS 7, you can set a placeholder constraint and let the bar create it's own height constraint.
