@@ -1,5 +1,8 @@
 # TURecipientBar
 
+![Current Version](https://cocoapod-badges.herokuapp.com/v/TURecipientBar/1.1.0/badge.png)
+![Library Platform](https://cocoapod-badges.herokuapp.com/p/TURecipientBar/badge.png)
+
 `TURecipientBar` is a `UIView` for entering recipients similarly to the iOS Mail app. It handles search and display of recipients.
 
 ![Screenshot](Screenshot.gif)
