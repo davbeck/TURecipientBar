@@ -519,7 +519,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         
         _needsRecipientLayout = NO;
         
-        addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - 21.0;
+        addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - TURecipientsLineHeight / 2.0;
         _addButton.frame = addButtonFrame;
     }
     
