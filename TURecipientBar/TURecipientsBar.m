@@ -100,11 +100,18 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         // add this after getting the frame, otherwise it will base the frame on itself
         [_recipientViews addObject:recipientView];
         
-        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.2 options:0 animations:^{
+        void(^animations)() = ^{
             recipientView.transform = CGAffineTransformIdentity;
             recipientView.alpha = 1.0;
+            
             [self layoutIfNeeded];
-        } completion:nil];
+        };
+        
+        if ([UIView respondsToSelector:@selector(animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:)]) {
+            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.2 options:0 animations:animations completion:nil];
+        } else {
+            [UIView animateWithDuration:0.5 animations:animations];
+        }
     } else {
         [_recipientViews addObject:recipientView];
     }
@@ -130,14 +137,22 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     [self _setNeedsRecipientLayout];
     
     if (self.animatedRecipientsInAndOut) {
-        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.2 options:0 animations:^{
+        void(^animations)() = ^{
             recipientView.transform = CGAffineTransformMakeScale(0.0, 0.0);
             recipientView.alpha = 0.0;
             
             [self layoutIfNeeded];
-        } completion:^(BOOL finished) {
+        };
+        
+        void (^completion)(BOOL finished) = ^(BOOL finished){
             [recipientView removeFromSuperview];
-        }];
+        };
+        
+        if ([UIView respondsToSelector:@selector(animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:)]) {
+            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.2 options:0 animations:animations completion:completion];
+        } else {
+            [UIView animateWithDuration:0.5 animations:animations completion:completion];
+        }
     }
 	
 	
