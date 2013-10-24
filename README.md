@@ -22,7 +22,7 @@
 
 ## Usage
 
-> See the included example project.
+> See the included example project and the [documentation](http://cocoadocs.org/docsets/TURecipientBar/).
 
 `TURecipientBar` uses auto layout. This means that you will need to add constraints to it to position it. It will update it's height constraint automatically, and if you have your constraints setup properly, everything will adjust as needed.
 

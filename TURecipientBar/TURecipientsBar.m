@@ -60,7 +60,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	NSIndexSet *changedIndex = [NSIndexSet indexSetWithIndex:_recipients.count];
 	
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:changedIndex forKey:@"recipients"];
-	[_recipients addObject:recipient];
+	[_recipients addObject:[(id)recipient copy]];
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:changedIndex forKey:@"recipients"];
 	
 	

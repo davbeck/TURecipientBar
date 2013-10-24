@@ -23,16 +23,6 @@ static void *TURecipientsContext = &TURecipientsContext;
 
 #pragma mark - Properties
 
-- (void)setActive:(BOOL)active
-{
-	[self setActive:active animated:NO];
-}
-
-- (void)setActive:(BOOL)active animated:(BOOL)animated
-{
-	_active = active;
-}
-
 - (void)setRecipientsBar:(TURecipientsBar *)recipientsBar
 {
 	_recipientsBar = recipientsBar;
@@ -177,6 +167,12 @@ static void *TURecipientsContext = &TURecipientsContext;
 		_recipientsBar = recipientsBar;
 		_recipientsBar.recipientsBarDelegate = self;
 		_contentsController = viewController;
+        if ([viewController conformsToProtocol:@protocol(UITableViewDataSource)]) {
+            _searchResultsDataSource = (id<UITableViewDataSource>)viewController;
+        }
+        if ([viewController conformsToProtocol:@protocol(UITableViewDelegate)]) {
+            _searchResultsDelegate = (id<UITableViewDelegate>)viewController;
+        }
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
         
