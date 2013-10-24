@@ -786,10 +786,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
 	
 	if (should) {
+        // we want the animation to execute after the text field has resigned first responder
+        
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
 				self.scrollEnabled = NO;
-				_lineView.hidden = NO;
 				
 				for (UIView *recipientView in _recipientViews) {
 					recipientView.alpha = 0.0;
@@ -802,7 +803,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 				[self setNeedsLayout];
 				[self.superview layoutIfNeeded];
 				
-				self.contentOffset = CGPointMake(0.0, 0.0);
+                [self setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
 			} completion:^(BOOL finished) {
 				if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarTextDidEndEditing:)]) {
 					[self.recipientsBarDelegate recipientsBarTextDidEndEditing:self];
