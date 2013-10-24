@@ -1,4 +1,4 @@
-# TURecipientBar
+# TURecipientBar [![license BSD](http://b.repl.ca/v1/license-BSD-blue.png)](LICENSE.md)
 
 ![Current Version](https://cocoapod-badges.herokuapp.com/v/TURecipientBar/1.1.0/badge.png)
 ![Library Platform](https://cocoapod-badges.herokuapp.com/p/TURecipientBar/badge.png)
