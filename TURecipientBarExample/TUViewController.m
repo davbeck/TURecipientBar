@@ -54,12 +54,12 @@
     
     
     // Large scale testing:
-    for (NSUInteger i = 0; i < 12; i++) {
-        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"John Burke" address:nil]];
-        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"David Beck" address:nil]];
-        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Frank Mann" address:nil]];
-        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Tom Nelson" address:nil]];
-    }
+//    for (NSUInteger i = 0; i < 50; i++) {
+//        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"John Burke" address:nil]];
+//        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"David Beck" address:nil]];
+//        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Frank Mann" address:nil]];
+//        [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"Tom Nelson" address:nil]];
+//    }
     
     
     self.recipientsBar.animatedRecipientsInAndOut = YES;
@@ -98,10 +98,10 @@
 /*
  Uncomment to disable the search table view.
  The shouldReloadTableForSearchString method and other text change methods will still be called, so you can provide your own search UI
- */
 - (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientsDisplayController *)controller
 {
     return NO;
-}
+ }
+ */
 
 @end
