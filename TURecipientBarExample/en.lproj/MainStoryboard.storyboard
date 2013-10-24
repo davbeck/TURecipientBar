@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ojY-mH-dR1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ojY-mH-dR1">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -40,10 +40,22 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLP-9a-i0G">
+                                        <rect key="frame" x="20" y="49" width="97" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Add Recipient">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addRecipient:" destination="2" eventType="touchUpInside" id="zKv-Pg-A3u"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.85899999999999999" green="0.88600000000000001" blue="0.92900000000000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="mk9-f5-Dto" firstAttribute="top" secondItem="N20-gj-dyV" secondAttribute="top" constant="20" symbolic="YES" id="CaH-5X-wiG"/>
+                                    <constraint firstItem="lLP-9a-i0G" firstAttribute="leading" secondItem="N20-gj-dyV" secondAttribute="leading" constant="20" id="Cvb-yK-jKY"/>
+                                    <constraint firstItem="lLP-9a-i0G" firstAttribute="top" secondItem="mk9-f5-Dto" secondAttribute="bottom" constant="8" symbolic="YES" id="YOI-7t-tuL"/>
                                     <constraint firstItem="mk9-f5-Dto" firstAttribute="leading" secondItem="N20-gj-dyV" secondAttribute="leading" constant="20" symbolic="YES" id="Zxd-Vc-sEw"/>
                                     <constraint firstAttribute="trailing" secondItem="mk9-f5-Dto" secondAttribute="trailing" constant="20" symbolic="YES" id="uy5-tb-Ad7"/>
                                 </constraints>

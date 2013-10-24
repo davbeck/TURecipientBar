@@ -114,10 +114,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
     } else {
         [_recipientViews addObject:recipientView];
+        [self layoutIfNeeded];
     }
     
     
-    if (!_textField.editing) {
+    if (_textField.editing) {
+        [self _scrollToBottomAnimated:YES];
+    } else {
         recipientView.alpha = 0.0;
     }
 	
@@ -286,7 +289,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		[self setNeedsLayout];
 		[self.superview layoutIfNeeded];
 		
-		[self _scrollToBottom];
+		[self _scrollToBottomAnimated:YES];
 		
 		if (_searching) {
 			self.scrollEnabled = NO;
@@ -494,26 +497,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         UIView *lastView = _toLabel;
         
         for (UIView *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
-//            CGRect recipientViewFrame = [self _frameFoRecipientView:recipientView afterView:lastView];
-            CGRect recipientViewFrame;
-            if (recipientView == _textField) {
-                recipientViewFrame.size = CGSizeMake(100.0, 43.0);
-            } else {
-                recipientViewFrame.size = recipientView.intrinsicContentSize;
-            }
-            
-            if (lastView == _toLabel) {
-                recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame);
-            } else {
-                recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + 6.0;
-            }
-            
-            recipientViewFrame.origin.y = CGRectGetMidY(lastView.frame) - recipientViewFrame.size.height / 2.0;
-            
-            if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
-                recipientViewFrame.origin.x = 8.0;
-                recipientViewFrame.origin.y += TURecipientsLineHeight - 8.0;
-            }
+            CGRect recipientViewFrame = [self _frameFoRecipientView:recipientView afterView:lastView];
             
             if (recipientView == _textField) {
                 if (_addButton.superview == self) {
@@ -540,7 +524,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     }
     
     [_lineView.superview bringSubviewToFront:_lineView];
-    _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - 1.0, self.bounds.size.width, 1.0);
+    if (self.searching) {
+        _lineView.frame = CGRectMake(0.0, self.contentSize.height - 1.0, self.bounds.size.width, 1.0);
+    } else {
+        _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - 1.0, self.bounds.size.width, 1.0);
+    }
     
     if (_textField.isFirstResponder && !self.searching) {
 		self.heightConstraint.constant = self.contentSize.height;
@@ -549,7 +537,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
     
     if (_searching) {
-		[self _scrollToBottom];
+		[self _scrollToBottomAnimated:NO];
 	}
     
     
@@ -575,7 +563,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	if (_textField.isFirstResponder
         && _selectedRecipient == nil
 		&& (self.bounds.size.width != _lastKnownSize.width || self.bounds.size.height != _lastKnownSize.height)) {
-		[self _scrollToBottom];
+		[self _scrollToBottomAnimated:NO];
 	}
 	
 	_lastKnownSize = self.bounds.size;
@@ -662,9 +650,9 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	_textField.hidden = _selectedRecipient != nil || ![_textField isFirstResponder];
 }
 
-- (void)_scrollToBottom
+- (void)_scrollToBottomAnimated:(BOOL)animated
 {
-	self.contentOffset = CGPointMake(0.0, self.contentSize.height - self.bounds.size.height);
+    [self setContentOffset:CGPointMake(0.0, self.contentSize.height - self.bounds.size.height) animated:animated];
 }
 
 
@@ -785,7 +773,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         [self setNeedsLayout];
         [self.superview layoutIfNeeded];
         
-        [self _scrollToBottom];
+        [self _scrollToBottomAnimated:YES];
     } completion:^(BOOL finished) {
         if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarTextDidBeginEditing:)]) {
             [self.recipientsBarDelegate recipientsBarTextDidBeginEditing:self];

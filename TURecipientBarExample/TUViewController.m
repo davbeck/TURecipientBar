@@ -66,6 +66,14 @@
 }
 
 
+#pragma mark - Actions
+
+- (IBAction)addRecipient:(id)sender
+{
+    [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"John Burke" address:nil]];
+}
+
+
 #pragma mark - TSRecipientsDisplayDelegate
 
 - (void)recipientsBarReturnButtonClicked:(TURecipientsBar *)recipientsBar
@@ -90,10 +98,10 @@
 /*
  Uncomment to disable the search table view.
  The shouldReloadTableForSearchString method and other text change methods will still be called, so you can provide your own search UI
-- (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientDisplayController *)controller
+ */
+- (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientsDisplayController *)controller
 {
     return NO;
 }
- */
 
 @end
