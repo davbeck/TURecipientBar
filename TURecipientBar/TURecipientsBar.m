@@ -710,7 +710,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	
 	BOOL delegateResponse = YES;
-	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldChangeTextInRange::replacementText:)]) {
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldChangeTextInRange:replacementText:)]) {
 		delegateResponse = [self.recipientsBarDelegate recipientsBar:self shouldChangeTextInRange:range replacementText:string];
 	}
 	
