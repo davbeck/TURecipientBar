@@ -197,7 +197,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 
 - (void)_createRecipientForRecipientsBar:(TURecipientsBar *)recipientsBar
 {
-	id<TURecipient> recipient = [TURecipient recipientWithTitle:recipientsBar.text address:nil];
+	id<TURecipient> recipient = [TURecipient recipientWithTitle:recipientsBar.text address:recipientsBar.text];
 	
 	if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:willAddRecipient:)]) {
 		recipient = [self.delegate recipientsDisplayController:self willAddRecipient:recipient];
