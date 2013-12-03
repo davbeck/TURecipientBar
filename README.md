@@ -15,13 +15,13 @@
 
 1. Add `pod TURecipientBar` to your Podfile.
 2. Run 'pod install'
-3. Import `TURecipientBar.h` and `TURecipientsDisplayController.h`.
+3. Import `TURecipientsBar.h` and `TURecipientsDisplayController.h`.
 
 ### Manual
 
 1. Copy the `TURecipientBar` subfolder into your project.
 2. The only required framework is UIKit and iOS 6.0.
-3. Import `TURecipientBar.h` and `TURecipientsDisplayController.h`.
+3. Import `TURecipientsBar.h` and `TURecipientsDisplayController.h`.
 
 ## Usage
 
@@ -37,7 +37,7 @@ For searching, you will need to create an instance of `TURecipientsDisplayContro
 
 You need to connect the following outlets of the `TURecipientsDisplayController`:
 
-- `recipientsBar`: The `TURecipientBar`.
+- `recipientsBar`: The `TURecipientsBar`.
 - `contentsController`: The view controller that the search results will be placed in. Almost always the view controller that the `recipientsBar` is in.
 - `searchResultsDataSource`: The data source for the search table view.
 - `searchResultsDelegate`: The delegate for the search table view. Usually the same as `searchResultsDataSource`.
