@@ -156,6 +156,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         } else {
             [UIView animateWithDuration:0.5 animations:animations completion:completion];
         }
+    } else {
+        [recipientView removeFromSuperview];
     }
 	
 	
