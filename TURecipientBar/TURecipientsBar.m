@@ -264,7 +264,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (void)setLabel:(NSString *)label
 {
-    _toLabel.attributedText = [[NSAttributedString alloc] initWithString:label attributes:self.labelTextAttributes];
+    _toLabel.attributedText = [[NSAttributedString alloc] initWithString:label ?: @"" attributes:self.labelTextAttributes];
 }
 
 - (NSString *)label
