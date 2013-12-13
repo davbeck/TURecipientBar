@@ -17,6 +17,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 @implementation TURecipientsDisplayController
 {
     BOOL _shouldBeginSearch;
+    CGRect _keyboardFrame;
 }
 
 @synthesize searchResultsTableView = _searchResultsTableView;
@@ -38,6 +39,8 @@ static void *TURecipientsContext = &TURecipientsContext;
 		_searchResultsTableView.delegate = self.searchResultsDelegate;
 		_searchResultsTableView.translatesAutoresizingMaskIntoConstraints = NO;
 		_searchResultsTableView.backgroundColor = [UIColor colorWithWhite:0.925 alpha:1.000];
+        
+        [self _insetForKeyboard];
 		
 		if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didLoadSearchResultsTableView:)]) {
 			[self.delegate recipientsDisplayController:self didLoadSearchResultsTableView:_searchResultsTableView];
@@ -176,6 +179,9 @@ static void *TURecipientsContext = &TURecipientsContext;
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+        
         [self addObserver:self forKeyPath:@"recipientsBar.recipients" options:NSKeyValueObservingOptionOld context:TURecipientsContext];
 	}
 	
@@ -190,6 +196,47 @@ static void *TURecipientsContext = &TURecipientsContext;
 	if (_searchResultsTableView != nil && _searchResultsTableView.superview == nil) {
 		[self _unloadTableView];
 	}
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    _keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    [self _insetForKeyboard];
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    _keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    [self _insetForKeyboard];
+    
+    [UIView commitAnimations];
+}
+
+- (void)_insetForKeyboard
+{
+    if (!CGRectIsEmpty(_keyboardFrame) && _searchResultsTableView != nil) {
+        CGRect keyboardFrameInView = [self.contentsController.view convertRect:_keyboardFrame fromView:nil];
+        CGFloat bottomInset = self.contentsController.view.frame.size.height - keyboardFrameInView.origin.y;
+        
+        UIEdgeInsets contentInset = self.searchResultsTableView.contentInset;
+        UIEdgeInsets scrollIndicatorInsets = self.searchResultsTableView.scrollIndicatorInsets;
+        contentInset.bottom = bottomInset;
+        scrollIndicatorInsets.bottom = bottomInset;
+        self.searchResultsTableView.contentInset = contentInset;
+        self.searchResultsTableView.scrollIndicatorInsets = scrollIndicatorInsets;
+    }
 }
 
 
@@ -252,7 +299,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 	if ([self.delegate respondsToSelector:@selector(recipientsBarShouldEndEditing:)]) {
 		should = [(id<TURecipientsBarDelegate>)self.delegate recipientsBarShouldEndEditing:recipientsBar];
 	}
-
+    
 	if (should) {
 		if ([self.delegate respondsToSelector:@selector(recipientsDisplayControllerWillEndSearch:)]) {
 			[self.delegate recipientsDisplayControllerWillEndSearch:self];
