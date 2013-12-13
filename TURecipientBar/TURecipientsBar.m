@@ -156,6 +156,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         } else {
             [UIView animateWithDuration:0.5 animations:animations completion:completion];
         }
+    } else {
+        [recipientView removeFromSuperview];
     }
 	
 	
@@ -710,7 +712,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	
 	BOOL delegateResponse = YES;
-	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldChangeTextInRange::replacementText:)]) {
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldChangeTextInRange:replacementText:)]) {
 		delegateResponse = [self.recipientsBarDelegate recipientsBar:self shouldChangeTextInRange:range replacementText:string];
 	}
 	
