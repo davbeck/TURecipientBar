@@ -1,5 +1,17 @@
 # TURecipientBar CHANGELOG
 
+### 1.1.1
+
+- Fixed keyboard insets.
+
+- Fixed Core Animation warnings.
+
+- Fixed crash related to setting the label text to nil.
+
+- Fixed removing recipients when animations are disabled.
+
+- Automatically added recipients now include the entered text as the address.
+
 ## 1.1.0
 
 - Improved performance with more than a dozen recipients.
