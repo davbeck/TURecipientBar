@@ -93,9 +93,9 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     [self _setNeedsRecipientLayout];
     if (self.animatedRecipientsInAndOut) {
-        recipientView.transform = CGAffineTransformMakeScale(0.0, 0.0);
-        recipientView.alpha = 0.0;
         recipientView.frame = [self _frameFoRecipientView:recipientView afterView:_recipientViews.lastObject];
+        recipientView.alpha = 0.0;
+        recipientView.transform = CGAffineTransformMakeScale(0.1, 0.1);
         
         // add this after getting the frame, otherwise it will base the frame on itself
         [_recipientViews addObject:recipientView];
@@ -141,7 +141,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     if (self.animatedRecipientsInAndOut) {
         void(^animations)() = ^{
-            recipientView.transform = CGAffineTransformMakeScale(0.0, 0.0);
+            recipientView.transform = CGAffineTransformMakeScale(0.1, 0.1);
             recipientView.alpha = 0.0;
             
             [self layoutIfNeeded];
