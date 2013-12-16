@@ -486,7 +486,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         
         
         CGRect summaryLabelFrame;
-        summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame) + self.recipientContentEdgeInsets.left;
+        summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
         summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
         summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
         summaryLabelFrame.size.width = self.bounds.size.width - summaryLabelFrame.origin.x - 12.0;
