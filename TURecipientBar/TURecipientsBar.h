@@ -211,6 +211,12 @@
  */
 @property (nonatomic, copy) NSDictionary *summaryTextAttributes UI_APPEARANCE_SELECTOR;
 
+/** The text attributes applied to the search text field.
+ 
+ Only the font and foreground color are used.
+ */
+@property (nonatomic, copy) NSDictionary *searchFieldTextAttributes UI_APPEARANCE_SELECTOR;
+
 /** The text attributes applied to the placeholder.
  
  Note that at this time, changing summaryTextAttributes or recipientTitleTextAttributesForState: will not change the placeholder attributes.

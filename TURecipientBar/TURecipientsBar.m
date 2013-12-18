@@ -386,6 +386,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	_textField = [[UITextField alloc] init];
 	_textField.text = TURecipientsPlaceholder;
+    _textField.font = [UIFont systemFontOfSize:15.0];
+    _textField.textColor = [UIColor blackColor];
 	_textField.delegate = self;
 	_textField.autocorrectionType = UITextAutocorrectionTypeNo;
 	_textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -919,14 +921,31 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (void)setSummaryTextAttributes:(NSDictionary *)attributes
 {
-    _summaryTextAttributes = attributes;
+    _summaryTextAttributes = [attributes copy];
     
     [self _updateSummary];
 }
 
+- (void)setSearchFieldTextAttributes:(NSDictionary *)attributes
+{
+    _searchFieldTextAttributes = [attributes copy];
+    
+    if (_summaryTextAttributes[NSFontAttributeName] != nil) {
+        _textField.font = _summaryTextAttributes[NSFontAttributeName];
+    } else {
+        _textField.font = [UIFont systemFontOfSize:16.0];
+    }
+    
+    if (_summaryTextAttributes[NSForegroundColorAttributeName] != nil) {
+        _textField.textColor = _summaryTextAttributes[NSForegroundColorAttributeName];
+    } else {
+        _textField.textColor = [UIColor blackColor];
+    }
+}
+
 - (void)setPlaceholderTextAttributes:(NSDictionary *)attributes
 {
-    _placeholderTextAttributes = attributes;
+    _placeholderTextAttributes = [attributes copy];
     
     [self _updateSummary];
 }
