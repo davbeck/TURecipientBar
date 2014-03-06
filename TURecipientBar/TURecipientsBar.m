@@ -887,7 +887,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     attributes = [self recipientTitleTextAttributesForState:state];
     
     for (UIButton *button in _recipientViews) {
-        NSString *text = [button titleForState:state];
+        NSString *text = [button titleForState:state] ?: [button attributedTitleForState:state].string ?: @"";
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
         [button setAttributedTitle:attributedText forState:state];
     }
