@@ -601,7 +601,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
 	[self becomeFirstResponder];
 	
-	[self selectRecipient:nil];
+    self.selectedRecipient = nil;
 }
 
 - (IBAction)selectRecipientButton:(UIButton *)sender
@@ -609,11 +609,16 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	NSUInteger recipientIndex = [_recipientViews indexOfObject:sender];
 	
 	if (recipientIndex != NSNotFound && [_recipients count] > recipientIndex) {
-		[self selectRecipient:[_recipients objectAtIndex:recipientIndex]];
+        self.selectedRecipient = [_recipients objectAtIndex:recipientIndex];
 	}
 }
 
 - (void)selectRecipient:(id<TURecipient>)recipient
+{
+    self.selectedRecipient = recipient;
+}
+
+- (void)setSelectedRecipient:(id<TURecipient>)recipient
 {
 	BOOL should = YES;
 	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:shouldSelectRecipient:)]) {
@@ -687,18 +692,18 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		//select the last recipient
 		if (_selectedRecipient == nil) {
 			if (self.text.length == 0) {
-				[self selectRecipient:[_recipients lastObject]];
+                self.selectedRecipient = _recipients.lastObject;
 			}
 		} else {
 			[self removeRecipient:_selectedRecipient];
-			[self selectRecipient:nil];
+            self.selectedRecipient = nil;
 		}
 		
 		return NO;
 	} else if (_selectedRecipient != nil) {
 		//replace the selected recipient
 		[self removeRecipient:_selectedRecipient];
-		[self selectRecipient:nil];
+        self.selectedRecipient = nil;
 	}
 	
 	

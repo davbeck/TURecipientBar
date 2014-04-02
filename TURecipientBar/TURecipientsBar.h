@@ -144,13 +144,21 @@
  */
 - (void)removeRecipient:(id<TURecipient>)recipient;
 
+/** The currently selected recipient.
+ 
+ If the bar is in search mode, you can use this to select the token that represents it. If the bar is not searching, this has no effect.
+ */
+@property (nonatomic, strong) id<TURecipient> selectedRecipient;
+
 /** Select a recipient.
+ 
+ DEPRECATED: Use selectedRecipient
  
  If the bar is in search mode, you can use this to select the token that represents it. If the bar is not searching, this has no effect.
  
  @param recipient A recipient to select.
  */
-- (void)selectRecipient:(id<TURecipient>)recipient;
+- (void)selectRecipient:(id<TURecipient>)recipient __attribute__((deprecated));
 
 
 /**---------------------------------------------------------------------------------------
