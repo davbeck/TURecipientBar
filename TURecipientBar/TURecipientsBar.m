@@ -358,6 +358,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 - (void)_init
 {
     _showsAddButton = YES;
+    _showsBottomBorder = YES;
     _animatedRecipientsInAndOut = YES;
     _recipientBackgroundImages = [NSMutableDictionary new];
     _recipientTitleTextAttributes = [NSMutableDictionary new];
