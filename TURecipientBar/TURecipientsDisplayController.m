@@ -61,7 +61,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 
 - (void)_showTableView
 {
-	if (!self.recipientsBar.searching) {
+	if (_searchResultsTableView.superview == nil) {
         if (_shouldBeginSearch) {
             UITableView *tableView = self.searchResultsTableView;
             
@@ -290,6 +290,10 @@ static void *TURecipientsContext = &TURecipientsContext;
 	
 	if (_shouldBeginSearch && [self.delegate respondsToSelector:@selector(recipientsDisplayControllerDidBeginSearch:)]) {
 		[self.delegate recipientsDisplayControllerDidBeginSearch:self];
+	}
+    
+    if (recipientsBar.text.length > 0) {
+		[self _showTableView];
 	}
 }
 
