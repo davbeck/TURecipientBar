@@ -27,6 +27,12 @@
  */
 @property (nonatomic, readonly, copy) NSString *recipientTitle;
 
+/** Boolean for recipient validity
+ 
+ An invalid recipient will be displayed in red.
+ */
+@property (nonatomic, readonly) BOOL isValid;
+
 @end
 
 

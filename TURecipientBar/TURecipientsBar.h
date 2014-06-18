@@ -173,7 +173,8 @@
  @param backgroundImage The background image to use. This should be a resizable image.
  @param state The state to use this background in.
  */
-- (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (void)setValidRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (void)setInvalidRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** The background image for the token that represents a recipient.
  
@@ -182,7 +183,8 @@
  @param state The state to use this background in.
  @return The background image for the given state.
  */
-- (UIImage *)recipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (UIImage *)validRecipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (UIImage *)invalidRecipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** The edge insets for the token that represents a recipient.
  
