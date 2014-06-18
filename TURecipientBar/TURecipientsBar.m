@@ -33,7 +33,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     BOOL _needsRecipientLayout;
     
     // UIAppearance
-    NSMutableDictionary *_recipientBackgroundImages; // [@(UIControlState)] UIImage
+    NSMutableDictionary *_validRecipientBackgroundImages; // [@(UIControlState)] UIImage
+	NSMutableDictionary *_invalidRecipientBackgroundImages; // [@(UIControlState)] UIImage
     NSMutableDictionary *_recipientTitleTextAttributes; // [@(UIControlState)] NSDictionary(text attributes dictionary)
     
 }
@@ -69,22 +70,37 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	recipientView.adjustsImageWhenHighlighted = NO;
 	recipientView.contentEdgeInsets = _recipientContentEdgeInsets;
     
-    
-	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateNormal]
-                             forState:UIControlStateNormal];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
-                             forState:UIControlStateNormal];
-    
-	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateHighlighted]
-							 forState:UIControlStateHighlighted];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
-                             forState:UIControlStateHighlighted];
-    
-	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateSelected]
-							 forState:UIControlStateSelected];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
-                             forState:UIControlStateSelected];
-    
+    if ([recipient isValid]) {
+		[recipientView setBackgroundImage:[self validRecipientBackgroundImageForState:UIControlStateNormal]
+								 forState:UIControlStateNormal];
+		[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
+								 forState:UIControlStateNormal];
+		
+		[recipientView setBackgroundImage:[self validRecipientBackgroundImageForState:UIControlStateHighlighted]
+								 forState:UIControlStateHighlighted];
+		[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
+								 forState:UIControlStateHighlighted];
+		
+		[recipientView setBackgroundImage:[self validRecipientBackgroundImageForState:UIControlStateSelected]
+								 forState:UIControlStateSelected];
+		[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
+								 forState:UIControlStateSelected];
+    } else {
+		[recipientView setBackgroundImage:[self invalidRecipientBackgroundImageForState:UIControlStateNormal]
+								 forState:UIControlStateNormal];
+		[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
+								 forState:UIControlStateNormal];
+		
+		[recipientView setBackgroundImage:[self invalidRecipientBackgroundImageForState:UIControlStateHighlighted]
+								 forState:UIControlStateHighlighted];
+		[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
+								 forState:UIControlStateHighlighted];
+		
+		[recipientView setBackgroundImage:[self invalidRecipientBackgroundImageForState:UIControlStateSelected]
+								 forState:UIControlStateSelected];
+		[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
+								 forState:UIControlStateSelected];
+	}
     
 	[recipientView addTarget:self action:@selector(selectRecipientButton:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -352,7 +368,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
     _showsAddButton = YES;
     _animatedRecipientsInAndOut = YES;
-    _recipientBackgroundImages = [NSMutableDictionary new];
+    _validRecipientBackgroundImages = [NSMutableDictionary new];
+	_invalidRecipientBackgroundImages = [NSMutableDictionary new];
     _recipientTitleTextAttributes = [NSMutableDictionary new];
     
     _recipientContentEdgeInsets = UIEdgeInsetsMake(0.0, 9.0, 0.0, 9.0);
@@ -840,24 +857,28 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 #pragma mark - UIAppearance
 
-- (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR
+- (void)setValidRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR
 {
     if (backgroundImage == nil) {
-        [_recipientBackgroundImages removeObjectForKey:@(state)];
+        [_validRecipientBackgroundImages removeObjectForKey:@(state)];
     } else {
-        _recipientBackgroundImages[@(state)] = backgroundImage;
+        _validRecipientBackgroundImages[@(state)] = backgroundImage;
     }
     
-    backgroundImage = [self recipientBackgroundImageForState:state];
+    backgroundImage = [self validRecipientBackgroundImageForState:state];
     
-    for (UIButton *button in _recipientViews) {
-        [button setBackgroundImage:backgroundImage forState:state];
-    }
+	for (int i = 0; i < _recipients.count; i++) {
+		id<TURecipient> recipient = [_recipients objectAtIndex:i];
+		if ([recipient isValid]) {
+			UIButton *button = [_recipientViews objectAtIndex:i];
+			[button setBackgroundImage:backgroundImage forState:state];
+		}
+	}
 }
 
-- (UIImage *)recipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR
+- (UIImage *)validRecipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR
 {
-    UIImage *backgroundImage = _recipientBackgroundImages[@(state)];
+    UIImage *backgroundImage = _validRecipientBackgroundImages[@(state)];
     
     if (backgroundImage == nil) {
         if (state == UIControlStateNormal) {
@@ -866,6 +887,42 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
             backgroundImage = [[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
         } else if (state == UIControlStateSelected) {
             backgroundImage = [[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+        }
+    }
+    
+    return backgroundImage;
+}
+
+- (void)setInvalidRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR
+{
+    if (backgroundImage == nil) {
+        [_invalidRecipientBackgroundImages removeObjectForKey:@(state)];
+    } else {
+        _invalidRecipientBackgroundImages[@(state)] = backgroundImage;
+    }
+    
+    backgroundImage = [self invalidRecipientBackgroundImageForState:state];
+    
+    for (int i = 0; i < _recipients.count; i++) {
+		id<TURecipient> recipient = [_recipients objectAtIndex:i];
+		if (![recipient isValid]) {
+			UIButton *button = [_recipientViews objectAtIndex:i];
+			[button setBackgroundImage:backgroundImage forState:state];
+		}
+	}
+}
+
+- (UIImage *)invalidRecipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR
+{
+    UIImage *backgroundImage = _invalidRecipientBackgroundImages[@(state)];
+    
+    if (backgroundImage == nil) {
+        if (state == UIControlStateNormal) {
+            backgroundImage = [[UIImage imageNamed:@"recipient_invalid.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+        } else if (state == UIControlStateHighlighted) {
+            backgroundImage = [[UIImage imageNamed:@"recipient_invalid-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+        } else if (state == UIControlStateSelected) {
+            backgroundImage = [[UIImage imageNamed:@"recipient_invalid-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
         }
     }
     
@@ -892,7 +949,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     attributes = [self recipientTitleTextAttributesForState:state];
     
     for (UIButton *button in _recipientViews) {
-        NSString *text = [button titleForState:state] ?: [button attributedTitleForState:state].string ?: @"";
+        NSString *text = [button titleForState:state];
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
         [button setAttributedTitle:attributedText forState:state];
     }
