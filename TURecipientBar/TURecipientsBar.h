@@ -86,6 +86,12 @@
  */
 @property (nonatomic) BOOL showsAddButton;
 
+/** Whether the bottom border should appear.
+ 
+ The bottom border is a UIView that displays at the bottom of the recipient bar. This property allows you to hide it if you must
+ */
+@property (nonatomic) BOOL showsBottomBorder;
+
 /** Whether adding and removing recipients should be animated.
  
  Hint: they should. This is turned on by defualt.

@@ -246,6 +246,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     [self setNeedsLayout];
 }
 
+- (void)setShowsBottomBorder:(BOOL)showsBottomBorder
+{
+    _showsBottomBorder = showsBottomBorder;
+    
+    _lineView.hidden = !showsBottomBorder;
+}
+
 - (void)setText:(NSString *)text
 {
 	if (text != nil) {
@@ -295,7 +302,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		
 		if (_searching) {
 			self.scrollEnabled = NO;
-			_lineView.hidden = NO;
+			_lineView.hidden = !_showsBottomBorder;
 			_lineView.backgroundColor = [UIColor colorWithWhite:0.557 alpha:1.000];
 			
 			self.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -351,6 +358,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 - (void)_init
 {
     _showsAddButton = YES;
+    _showsBottomBorder = YES;
     _animatedRecipientsInAndOut = YES;
     _recipientBackgroundImages = [NSMutableDictionary new];
     _recipientTitleTextAttributes = [NSMutableDictionary new];
