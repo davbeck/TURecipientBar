@@ -246,6 +246,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     [self setNeedsLayout];
 }
 
+- (void)setShowsShadows:(BOOL)showsShadows
+{
+	_showsShadows = showsShadows;
+    
+	[self updateShadows];
+}
+
 - (void)setText:(NSString *)text
 {
 	if (text != nil) {
@@ -297,23 +304,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 			self.scrollEnabled = NO;
 			_lineView.hidden = NO;
 			_lineView.backgroundColor = [UIColor colorWithWhite:0.557 alpha:1.000];
-			
-			if (_showsShadows) {
-				self.layer.shadowColor = [UIColor blackColor].CGColor;
-				self.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-				self.layer.shadowOpacity = 0.5;
-				self.layer.shadowRadius = 5.0;
-				self.clipsToBounds = NO;
-			}
 		} else {
 			_lineView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.000];
-			
-			if (_showsShadows) {
-				self.layer.shadowOpacity = 0.0;
-				self.layer.shadowRadius = 0.0;
-				self.clipsToBounds = YES;
-			}
 		}
+		
+		[self updateShadows];
 	}
 }
 
@@ -344,6 +339,26 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
 }
 
+#pragma mark - Visual Updates
+
+- (void)updateShadows
+{
+	if (_searching) {
+		if (_showsShadows) {
+			self.layer.shadowColor = [UIColor blackColor].CGColor;
+			self.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+			self.layer.shadowOpacity = 0.5;
+			self.layer.shadowRadius = 5.0;
+			self.clipsToBounds = NO;
+		}
+	} else {
+		if (_showsShadows) {
+			self.layer.shadowOpacity = 0.0;
+			self.layer.shadowRadius = 0.0;
+			self.clipsToBounds = YES;
+		}
+	}
+}
 
 #pragma mark - Initialization
 
