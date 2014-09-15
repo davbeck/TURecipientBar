@@ -177,6 +177,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
             }
         }
         
+        if (self.text.length > 0) {
+            [summary appendFormat:@" %@",self.text];
+        }
+        
         _summaryLabel.textColor = [UIColor darkTextColor];
         if (self.summaryTextAttributes == nil) {
             _summaryLabel.text = summary;
@@ -185,10 +189,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
     } else {
         _summaryLabel.textColor = [UIColor lightGrayColor];
-        if (self.placeholderTextAttributes == nil) {
-            _summaryLabel.text = self.placeholder;
+        if (self.text.length == 0) {
+            if (self.placeholderTextAttributes == nil) {
+                _summaryLabel.text = self.placeholder;
+            } else {
+                _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
+            }
         } else {
-            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
+            _summaryLabel.text = self.text;
         }
     }
 }
@@ -819,6 +827,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	if (should) {
         // we want the animation to execute after the text field has resigned first responder
+        [self _updateSummary];
         
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
