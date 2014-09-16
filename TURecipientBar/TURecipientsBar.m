@@ -192,7 +192,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         if (self.text.length == 0) {
             if (self.placeholderTextAttributes == nil) {
                 _summaryLabel.text = self.placeholder;
-            } else {
+            } else if (self.placeholder) {
                 _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
             }
         } else {
