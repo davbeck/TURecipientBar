@@ -361,4 +361,3 @@
 - (void)recipientsBarAddButtonClicked:(TURecipientsBar *)recipientsBar;
 
 @end
-™
