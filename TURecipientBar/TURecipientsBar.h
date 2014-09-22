@@ -118,7 +118,7 @@
  
  The default value is 6.0.
  */
-@property (nonatomic, assign) CGFloat recipientsXMargin;
+@property (nonatomic, assign) CGFloat recipientsHorizontalMargin;
 
 
 /**---------------------------------------------------------------------------------------
@@ -361,3 +361,4 @@
 - (void)recipientsBarAddButtonClicked:(TURecipientsBar *)recipientsBar;
 
 @end
+™
