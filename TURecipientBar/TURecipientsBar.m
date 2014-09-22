@@ -168,14 +168,23 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (_recipients.count > 0) {
         NSMutableString *summary = [[NSMutableString alloc] init];
         
-        for (id<TURecipient>recipient in _recipients) {
+        NSEnumerator *enumerator = (self.showsSummaryInReversedOrder ? [_recipients reverseObjectEnumerator]
+                                                                     : [_recipients objectEnumerator]);
+        for (id<TURecipient>recipient in enumerator) {
             [summary appendString:recipient.recipientTitle];
             
-            if (recipient != [_recipients lastObject]) {
+            if (self.showsSummaryInReversedOrder)
+            {
+                if (recipient != [_recipients firstObject])
+                {
+                    [summary appendString:@", "];
+                }
+            }
+            else if (recipient != [_recipients lastObject]) {
                 [summary appendString:@", "];
             }
         }
-        
+
         _summaryLabel.textColor = [UIColor darkTextColor];
         if (self.summaryTextAttributes == nil) {
             _summaryLabel.text = summary;
@@ -371,6 +380,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     _showsAddButton = YES;
 	_showsShadows = YES;
     _animatedRecipientsInAndOut = YES;
+    _showsSummaryInReversedOrder = NO;
     _recipientBackgroundImages = [NSMutableDictionary new];
     _recipientTitleTextAttributes = [NSMutableDictionary new];
     

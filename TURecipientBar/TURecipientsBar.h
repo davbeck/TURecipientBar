@@ -100,6 +100,12 @@
  */
 @property (nonatomic) BOOL animatedRecipientsInAndOut;
 
+/** Whether the recipients shown in the summary should be displayed in reversed order.
+ 
+ The default value is NO.
+ */
+@property (nonatomic) BOOL showsSummaryInReversedOrder;
+
 /** The height constraint for the entire bar.
  
  You can use this to set the height constraint in Interface Builder. This was almost necessary in iOS 6, however in iOS 7, you can set a placeholder constraint and let the bar create it's own height constraint.
@@ -112,13 +118,13 @@
  
  The default value is 43.0.
  */
-@property (nonatomic, assign) CGFloat recipientsLineHeight;
+@property (nonatomic) CGFloat recipientsLineHeight;
 
 /** The horizontal distance between each recipient.
  
  The default value is 6.0.
  */
-@property (nonatomic, assign) CGFloat recipientsHorizontalMargin;
+@property (nonatomic) CGFloat recipientsHorizontalMargin;
 
 
 /**---------------------------------------------------------------------------------------
