@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-#define TURecipientsLineHeight 43.0
 #define TURecipientsPlaceholder @"\u200B"
 
 void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
@@ -376,6 +375,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     _recipientTitleTextAttributes = [NSMutableDictionary new];
     
     _recipientContentEdgeInsets = UIEdgeInsetsMake(0.0, 9.0, 0.0, 9.0);
+    _recipientsLineHeight = 43.0;
     
     self.contentSize = self.bounds.size;
     
@@ -385,7 +385,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	self.backgroundColor = [UIColor whiteColor];
 	if (self.heightConstraint == nil) {
-		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:TURecipientsLineHeight + 1.0];
+		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:_recipientsLineHeight + 1.0];
         _heightConstraint.priority = UILayoutPriorityDefaultHigh;
 		[self addConstraint:_heightConstraint];
 	}
@@ -489,7 +489,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
         recipientViewFrame.origin.x = 8.0;
-        recipientViewFrame.origin.y += TURecipientsLineHeight - 8.0;
+        recipientViewFrame.origin.y += self.recipientsLineHeight - 8.0;
     }
     
     return recipientViewFrame;
@@ -538,12 +538,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
         
         
-        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight) + 1);
+        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), self.recipientsLineHeight) + 1);
         
         
         _needsRecipientLayout = NO;
         
-        addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - TURecipientsLineHeight / 2.0;
+        addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - self.recipientsLineHeight / 2.0;
         _addButton.frame = addButtonFrame;
     }
     
@@ -557,7 +557,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (_textField.isFirstResponder && !self.searching) {
 		self.heightConstraint.constant = self.contentSize.height;
 	} else {
-		self.heightConstraint.constant = TURecipientsLineHeight + 1.0;
+		self.heightConstraint.constant = self.recipientsLineHeight + 1.0;
 	}
     
     if (_searching) {

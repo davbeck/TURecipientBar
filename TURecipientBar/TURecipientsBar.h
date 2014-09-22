@@ -108,6 +108,12 @@
  */
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
 
+/** The distance between each line of recipients.
+ 
+ The default value is 43.0.
+ */
+@property (nonatomic, assign) CGFloat recipientsLineHeight;
+
 
 /**---------------------------------------------------------------------------------------
  * @name Delegate
