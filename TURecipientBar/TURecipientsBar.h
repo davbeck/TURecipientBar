@@ -114,6 +114,12 @@
  */
 @property (nonatomic, assign) CGFloat recipientsLineHeight;
 
+/** The horizontal distance between each recipient.
+ 
+ The default value is 6.0.
+ */
+@property (nonatomic, assign) CGFloat recipientsXMargin;
+
 
 /**---------------------------------------------------------------------------------------
  * @name Delegate

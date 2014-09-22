@@ -376,6 +376,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     _recipientContentEdgeInsets = UIEdgeInsetsMake(0.0, 9.0, 0.0, 9.0);
     _recipientsLineHeight = 43.0;
+    _recipientsXMargin = 6.0;
     
     self.contentSize = self.bounds.size;
     
@@ -482,12 +483,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (lastView == _toLabel) {
         recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame);
     } else {
-        recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + 6.0;
+        recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + self.recipientsXMargin;
     }
     
     recipientViewFrame.origin.y = CGRectGetMidY(lastView.frame) - recipientViewFrame.size.height / 2.0;
     
-    if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
+    if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - self.recipientsXMargin) {
         recipientViewFrame.origin.x = 8.0;
         recipientViewFrame.origin.y += self.recipientsLineHeight - 8.0;
     }
