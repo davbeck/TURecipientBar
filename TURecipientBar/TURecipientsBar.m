@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+#define TURecipientsLineHeight 43.0
 #define TURecipientsPlaceholder @"\u200B"
 
 void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
@@ -385,7 +386,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     _recipientTitleTextAttributes = [NSMutableDictionary new];
     
     _recipientContentEdgeInsets = UIEdgeInsetsMake(0.0, 9.0, 0.0, 9.0);
-    _recipientsLineHeight = 43.0;
+    _recipientsLineHeight = TURecipientsLineHeight;
     _recipientsHorizontalMargin = 6.0;
     
     self.contentSize = self.bounds.size;
@@ -426,7 +427,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	_textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	[self addSubview:_textField];
 	[_textField addObserver:self forKeyPath:@"selectedTextRange" options:0 context:TURecipientsSelectionContext];
-	
 	
 	_summaryLabel = [[UILabel alloc] init];
     _summaryLabel.backgroundColor = [UIColor clearColor];
@@ -485,7 +485,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
     CGRect recipientViewFrame;
     if (recipientView == _textField) {
-        recipientViewFrame.size = CGSizeMake(100.0, 43.0);
+        recipientViewFrame.size = CGSizeMake(100.0, self.recipientsLineHeight);
     } else {
         recipientViewFrame.size = recipientView.intrinsicContentSize;
     }
@@ -549,7 +549,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
         
         
-        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), self.recipientsLineHeight) + 1);
+        self.contentSize = CGSizeMake(self.frame.size.width,
+                                      MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight) + 1);
         
         
         _needsRecipientLayout = NO;
