@@ -389,6 +389,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     _recipientsLineHeight = TURecipientsLineHeight;
     _recipientsHorizontalMargin = 6.0;
     
+    _bottomLineHeight = 1.0;
+    
     self.contentSize = self.bounds.size;
     
 	_recipients = [NSMutableArray array];
@@ -403,10 +405,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
 	self.clipsToBounds = YES;
 	
-	_lineView = [[UIView alloc] init];
-	_lineView.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
-	[self addSubview:_lineView];
-	
+    if (_bottomLineHeight > 0.0)
+    {
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
+        [self addSubview:_lineView];
+    }
+    
 	_toLabel = [[UILabel alloc] init];
     self.label = NSLocalizedString(@"To: ", nil);
 	[self addSubview:_toLabel];
@@ -561,9 +566,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     [_lineView.superview bringSubviewToFront:_lineView];
     if (self.searching) {
-        _lineView.frame = CGRectMake(0.0, self.contentSize.height - 1.0, self.bounds.size.width, 1.0);
+        _lineView.frame = CGRectMake(0.0, self.contentSize.height - self.bottomLineHeight,
+                                     self.bounds.size.width, self.bottomLineHeight);
     } else {
-        _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - 1.0, self.bounds.size.width, 1.0);
+        _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - self.bottomLineHeight,
+                                     self.bounds.size.width, self.bottomLineHeight);
     }
     
     if (_textField.isFirstResponder && !self.searching) {

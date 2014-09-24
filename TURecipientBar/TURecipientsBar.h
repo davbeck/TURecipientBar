@@ -126,6 +126,12 @@
  */
 @property (nonatomic) CGFloat recipientsHorizontalMargin;
 
+/** The height of the bottom line. Setting this value to 0.0 the line will not be created at all.
+ 
+ The default value is 1.0.
+ */
+@property (nonatomic) CGFloat bottomLineHeight;
+
 
 /**---------------------------------------------------------------------------------------
  * @name Delegate
