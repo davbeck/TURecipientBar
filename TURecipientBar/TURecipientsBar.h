@@ -100,7 +100,11 @@
  */
 @property (nonatomic) BOOL animatedRecipientsInAndOut;
 
-/** Whether the recipients shown in the summary should be displayed in reversed order.
+/** Whether the recipients shown in the summary should be displayed in reversed order in such a way that the last
+ selected recipient will stay always visible and the previous will be trimmed by an ellipsis glyph at the beginning
+ of the line.
+ 
+ Example: ...hilip, Steve, Jony, Craig
  
  The default value is NO.
  */

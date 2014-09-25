@@ -164,91 +164,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self _updateSummary];
 }
 
-- (void)_updateSummary
-{
-    if (_recipients.count > 0) {
-        NSMutableString *summary = [[NSMutableString alloc] init];
-        
-        for (id<TURecipient>recipient in _recipients) {
-            [summary appendString:recipient.recipientTitle];
-            
-            if (recipient != [_recipients lastObject]) {
-                [summary appendString:@", "];
-            }
-        }
-
-        _summaryLabel.textColor = [UIColor darkTextColor];
-        if (self.summaryTextAttributes == nil) {
-            _summaryLabel.text = summary;
-        } else {
-            if (self.showsSummaryInReversedOrder) {
-                _summaryLabel.attributedText = [self reversedAttributedSummaryTextFromString:summary];
-            }
-            else {
-                _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:summary
-                                                                               attributes:self.summaryTextAttributes];
-            }
-        }
-    } else {
-        _summaryLabel.textColor = [UIColor lightGrayColor];
-        if (self.placeholderTextAttributes == nil) {
-            _summaryLabel.text = self.placeholder;
-        } else {
-            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
-        }
-    }
-}
-
-
-- (NSAttributedString *)reversedAttributedSummaryTextFromString:(NSString *)summary
-{
-    NSAttributedString *attributedSummary = [[NSAttributedString alloc] initWithString:summary
-                                                                            attributes:self.summaryTextAttributes];
-    
-    CGRect summaryLabelFrame = [self summaryLabelFrame];
-    CGFloat summaryLabelWidth = summaryLabelFrame.size.width;
-    CGFloat summaryLabelHeight = summaryLabelFrame.size.height;
-    
-    CGSize textSize = [attributedSummary boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, summaryLabelHeight)
-                                                      options:NSStringDrawingUsesLineFragmentOrigin
-                                                      context:nil].size;
-    if (textSize.width <= summaryLabelWidth)
-    {
-        return attributedSummary;
-    }
-    
-    NSString *dots = @"...";
-    NSAttributedString *attributedDots = [[NSAttributedString alloc] initWithString:dots
-                                                                         attributes:[self summaryTextAttributes]];
-    CGFloat dotsWidth = [attributedDots boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, summaryLabelHeight)
-                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                     context:nil].size.width;
-    
-    NSRange fullRange = NSMakeRange(0, attributedSummary.length);
-    
-    for (NSUInteger i = fullRange.location; i <= fullRange.length; i++)
-    {
-        NSRange currentRange;
-        currentRange.location = i;
-        currentRange.length = fullRange.length - i;
-        
-        NSAttributedString *partialText = [attributedSummary attributedSubstringFromRange:currentRange];
-        CGFloat partialTextWidth =
-            [partialText boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, summaryLabelHeight)
-                                      options:NSStringDrawingUsesLineFragmentOrigin
-                                      context:nil].size.width;
-        
-        if (partialTextWidth + dotsWidth <= summaryLabelWidth)
-        {
-            summary = [NSString stringWithFormat:@"%@%@", dots, [partialText string]];
-            
-            return [[NSAttributedString alloc] initWithString:summary attributes:[self summaryTextAttributes]];
-        }
-    }
-    
-    return attributedSummary;
-}
-
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)autocapitalizationType
 {
 	[_textField setAutocapitalizationType:autocapitalizationType];
@@ -397,6 +312,153 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 #pragma mark - Visual Updates
 
+- (void)_updateSummary
+{
+    if (_recipients.count > 0) {
+        NSMutableString *summary = [[NSMutableString alloc] init];
+        
+        for (id<TURecipient>recipient in _recipients) {
+            [summary appendString:recipient.recipientTitle];
+            
+            if (recipient != [_recipients lastObject]) {
+                [summary appendString:@", "];
+            }
+        }
+        
+        _summaryLabel.textColor = [UIColor darkTextColor];
+        if (self.summaryTextAttributes == nil) {
+            if (self.showsSummaryInReversedOrder) {
+                _summaryLabel.text = [self reversedSummaryTextFromString:summary];
+            }
+            else {
+                _summaryLabel.text = summary;
+            }
+        } else {
+            if (self.showsSummaryInReversedOrder) {
+                _summaryLabel.attributedText = [self reversedAttributedSummaryTextFromString:summary];
+            }
+            else {
+                _summaryLabel.attributedText =
+                    [[NSAttributedString alloc] initWithString:summary
+                                                    attributes:self.summaryTextAttributes];
+            }
+        }
+    } else {
+        _summaryLabel.textColor = [UIColor lightGrayColor];
+        if (self.placeholderTextAttributes == nil) {
+            _summaryLabel.text = self.placeholder;
+        } else {
+            _summaryLabel.attributedText =
+                [[NSAttributedString alloc] initWithString:self.placeholder
+                                                attributes:self.placeholderTextAttributes];
+        }
+    }
+}
+
+
+- (NSAttributedString *)reversedAttributedSummaryTextFromString:(NSString *)summary
+{
+    NSAttributedString *attributedSummary = [[NSAttributedString alloc] initWithString:summary
+                                                                            attributes:self.summaryTextAttributes];
+    
+    CGRect summaryLabelFrame = [self summaryLabelFrame];
+    CGFloat summaryLabelWidth = summaryLabelFrame.size.width;
+    CGFloat summaryLabelHeight = summaryLabelFrame.size.height;
+    
+    CGSize availableSpace = CGSizeMake(CGFLOAT_MAX, summaryLabelHeight);
+    
+    CGFloat textWidth = [attributedSummary boundingRectWithSize:availableSpace
+                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                        context:nil].size.width;
+    if (textWidth <= summaryLabelWidth)
+    {
+        return attributedSummary;
+    }
+    
+    NSString *dots = @"...";
+    NSAttributedString *attributedDots = [[NSAttributedString alloc] initWithString:dots
+                                                                         attributes:[self summaryTextAttributes]];
+    CGFloat dotsWidth = [attributedDots boundingRectWithSize:availableSpace
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                     context:nil].size.width;
+    
+    NSRange fullRange = NSMakeRange(0, attributedSummary.length);
+    
+    for (NSUInteger i = fullRange.location; i <= fullRange.length; i++)
+    {
+        NSRange currentRange;
+        currentRange.location = i;
+        currentRange.length = fullRange.length - i;
+        
+        NSAttributedString *partialText = [attributedSummary attributedSubstringFromRange:currentRange];
+        CGFloat partialTextWidth =
+        [partialText boundingRectWithSize:availableSpace
+                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                  context:nil].size.width;
+        
+        if (partialTextWidth + dotsWidth <= summaryLabelWidth)
+        {
+            summary = [NSString stringWithFormat:@"%@%@", dots, [partialText string]];
+            
+            return [[NSAttributedString alloc] initWithString:summary attributes:[self summaryTextAttributes]];
+        }
+    }
+    
+    return attributedSummary;
+}
+
+
+- (NSString *)reversedSummaryTextFromString:(NSString *)summary
+{
+    CGRect summaryLabelFrame = [self summaryLabelFrame];
+    CGFloat summaryLabelWidth = summaryLabelFrame.size.width;
+    CGFloat summaryLabelHeight = summaryLabelFrame.size.height;
+    
+    CGSize availableSpace = CGSizeMake(CGFLOAT_MAX, summaryLabelHeight);
+    
+    NSDictionary *attributes = @{NSFontAttributeName : _summaryLabel.font};
+    
+    CGFloat textWidth = [summary boundingRectWithSize:availableSpace
+                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                           attributes:attributes
+                                              context:nil].size.width;
+    
+    if (textWidth <= summaryLabelWidth)
+    {
+        return summary;
+    }
+    
+    NSString *dots = @"...";
+    CGFloat dotsWidth = [dots boundingRectWithSize:availableSpace
+                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                        attributes:attributes
+                                           context:nil].size.width;
+    
+    NSRange fullRange = NSMakeRange(0, summary.length);
+    
+    for (NSUInteger i = fullRange.location; i <= fullRange.length; i++)
+    {
+        NSRange currentRange;
+        currentRange.location = i;
+        currentRange.length = fullRange.length - i;
+        
+        NSString *partialText = [summary substringWithRange:currentRange];
+        CGFloat partialTextWidth =
+            [partialText boundingRectWithSize:availableSpace
+                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                   attributes:attributes
+                                      context:nil].size.width;
+        
+        if (partialTextWidth + dotsWidth <= summaryLabelWidth)
+        {
+            return [NSString stringWithFormat:@"%@%@", dots, partialText];
+        }
+    }
+    
+    return summary;
+}
+
+
 - (void)updateShadows
 {
 	if (_searching) {
@@ -415,6 +477,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		}
 	}
 }
+
 
 #pragma mark - Initialization
 
