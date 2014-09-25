@@ -169,19 +169,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (_recipients.count > 0) {
         NSMutableString *summary = [[NSMutableString alloc] init];
         
-        NSEnumerator *enumerator = (self.showsSummaryInReversedOrder ? [_recipients reverseObjectEnumerator]
-                                                                     : [_recipients objectEnumerator]);
-        for (id<TURecipient>recipient in enumerator) {
+        for (id<TURecipient>recipient in _recipients) {
             [summary appendString:recipient.recipientTitle];
             
-            if (self.showsSummaryInReversedOrder)
-            {
-                if (recipient != [_recipients firstObject])
-                {
-                    [summary appendString:@", "];
-                }
-            }
-            else if (recipient != [_recipients lastObject]) {
+            if (recipient != [_recipients lastObject]) {
                 [summary appendString:@", "];
             }
         }
@@ -190,7 +181,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         if (self.summaryTextAttributes == nil) {
             _summaryLabel.text = summary;
         } else {
-            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:summary attributes:self.summaryTextAttributes];
+            if (self.showsSummaryInReversedOrder) {
+                _summaryLabel.attributedText = [self reversedAttributedSummaryTextFromString:summary];
+            }
+            else {
+                _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:summary
+                                                                               attributes:self.summaryTextAttributes];
+            }
         }
     } else {
         _summaryLabel.textColor = [UIColor lightGrayColor];
@@ -200,6 +197,56 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
             _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
         }
     }
+}
+
+
+- (NSAttributedString *)reversedAttributedSummaryTextFromString:(NSString *)summary
+{
+    NSAttributedString *attributedSummary = [[NSAttributedString alloc] initWithString:summary
+                                                                            attributes:self.summaryTextAttributes];
+    
+    CGRect summaryLabelFrame = [self summaryLabelFrame];
+    CGFloat summaryLabelWidth = summaryLabelFrame.size.width;
+    CGFloat summaryLabelHeight = summaryLabelFrame.size.height;
+    
+    CGSize textSize = [attributedSummary boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, summaryLabelHeight)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                      context:nil].size;
+    if (textSize.width <= summaryLabelWidth)
+    {
+        return attributedSummary;
+    }
+    
+    NSString *dots = @"...";
+    NSAttributedString *attributedDots = [[NSAttributedString alloc] initWithString:dots
+                                                                         attributes:[self summaryTextAttributes]];
+    CGFloat dotsWidth = [attributedDots boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, summaryLabelHeight)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                     context:nil].size.width;
+    
+    NSRange fullRange = NSMakeRange(0, attributedSummary.length);
+    
+    for (NSUInteger i = fullRange.location; i <= fullRange.length; i++)
+    {
+        NSRange currentRange;
+        currentRange.location = i;
+        currentRange.length = fullRange.length - i;
+        
+        NSAttributedString *partialText = [attributedSummary attributedSubstringFromRange:currentRange];
+        CGFloat partialTextWidth =
+            [partialText boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, summaryLabelHeight)
+                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                      context:nil].size.width;
+        
+        if (partialTextWidth + dotsWidth <= summaryLabelWidth)
+        {
+            summary = [NSString stringWithFormat:@"%@%@", dots, [partialText string]];
+            
+            return [[NSAttributedString alloc] initWithString:summary attributes:[self summaryTextAttributes]];
+        }
+    }
+    
+    return attributedSummary;
 }
 
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)autocapitalizationType
@@ -438,6 +485,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	_summaryLabel.font = [UIFont systemFontOfSize:15.0];
 	[self addSubview:_summaryLabel];
 	
+    if (self.showsSummaryInReversedOrder)
+    {
+        _summaryLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    }
 	
 	[self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(select:)]];
     
@@ -522,13 +573,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
                                     21.0 - toSize.height / 2,
                                     toSize.width, toSize.height);
         
-        
-        CGRect summaryLabelFrame;
-        summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
-        summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
-        summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
-        summaryLabelFrame.size.width = self.bounds.size.width - summaryLabelFrame.origin.x - 12.0;
-        _summaryLabel.frame = summaryLabelFrame;
+        _summaryLabel.frame = [self summaryLabelFrame];
         
         CGRect addButtonFrame;
         addButtonFrame.size = _addButton.intrinsicContentSize;
@@ -624,6 +669,17 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[super setFrame:frame];
 	
 	[self _frameChanged];
+}
+
+- (CGRect)summaryLabelFrame
+{
+    CGRect summaryLabelFrame;
+    summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
+    summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
+    summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
+    summaryLabelFrame.size.width = self.bounds.size.width - summaryLabelFrame.origin.x - 12.0;
+    
+    return summaryLabelFrame;
 }
 
 
