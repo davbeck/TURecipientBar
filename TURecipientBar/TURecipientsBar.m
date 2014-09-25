@@ -164,35 +164,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self _updateSummary];
 }
 
-- (void)_updateSummary
-{
-    if (_recipients.count > 0) {
-        NSMutableString *summary = [[NSMutableString alloc] init];
-        
-        for (id<TURecipient>recipient in _recipients) {
-            [summary appendString:recipient.recipientTitle];
-            
-            if (recipient != [_recipients lastObject]) {
-                [summary appendString:@", "];
-            }
-        }
-        
-        _summaryLabel.textColor = [UIColor darkTextColor];
-        if (self.summaryTextAttributes == nil) {
-            _summaryLabel.text = summary;
-        } else {
-            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:summary attributes:self.summaryTextAttributes];
-        }
-    } else {
-        _summaryLabel.textColor = [UIColor lightGrayColor];
-        if (self.placeholderTextAttributes == nil) {
-            _summaryLabel.text = self.placeholder;
-        } else {
-            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
-        }
-    }
-}
-
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)autocapitalizationType
 {
 	[_textField setAutocapitalizationType:autocapitalizationType];
@@ -341,6 +312,153 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 #pragma mark - Visual Updates
 
+- (void)_updateSummary
+{
+    if (_recipients.count > 0) {
+        NSMutableString *summary = [[NSMutableString alloc] init];
+        
+        for (id<TURecipient>recipient in _recipients) {
+            [summary appendString:recipient.recipientTitle];
+            
+            if (recipient != [_recipients lastObject]) {
+                [summary appendString:@", "];
+            }
+        }
+        
+        _summaryLabel.textColor = [UIColor darkTextColor];
+        if (self.summaryTextAttributes == nil) {
+            if (self.showsSummaryInReversedOrder) {
+                _summaryLabel.text = [self reversedSummaryTextFromString:summary];
+            }
+            else {
+                _summaryLabel.text = summary;
+            }
+        } else {
+            if (self.showsSummaryInReversedOrder) {
+                _summaryLabel.attributedText = [self reversedAttributedSummaryTextFromString:summary];
+            }
+            else {
+                _summaryLabel.attributedText =
+                    [[NSAttributedString alloc] initWithString:summary
+                                                    attributes:self.summaryTextAttributes];
+            }
+        }
+    } else {
+        _summaryLabel.textColor = [UIColor lightGrayColor];
+        if (self.placeholderTextAttributes == nil) {
+            _summaryLabel.text = self.placeholder;
+        } else {
+            _summaryLabel.attributedText =
+                [[NSAttributedString alloc] initWithString:self.placeholder
+                                                attributes:self.placeholderTextAttributes];
+        }
+    }
+}
+
+
+- (NSAttributedString *)reversedAttributedSummaryTextFromString:(NSString *)summary
+{
+    NSAttributedString *attributedSummary = [[NSAttributedString alloc] initWithString:summary
+                                                                            attributes:self.summaryTextAttributes];
+    
+    CGRect summaryLabelFrame = [self summaryLabelFrame];
+    CGFloat summaryLabelWidth = summaryLabelFrame.size.width;
+    CGFloat summaryLabelHeight = summaryLabelFrame.size.height;
+    
+    CGSize availableSpace = CGSizeMake(CGFLOAT_MAX, summaryLabelHeight);
+    
+    CGFloat textWidth = [attributedSummary boundingRectWithSize:availableSpace
+                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                        context:nil].size.width;
+    if (textWidth <= summaryLabelWidth)
+    {
+        return attributedSummary;
+    }
+    
+    NSString *dots = @"...";
+    NSAttributedString *attributedDots = [[NSAttributedString alloc] initWithString:dots
+                                                                         attributes:[self summaryTextAttributes]];
+    CGFloat dotsWidth = [attributedDots boundingRectWithSize:availableSpace
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                     context:nil].size.width;
+    
+    NSRange fullRange = NSMakeRange(0, attributedSummary.length);
+    
+    for (NSUInteger i = fullRange.location; i <= fullRange.length; i++)
+    {
+        NSRange currentRange;
+        currentRange.location = i;
+        currentRange.length = fullRange.length - i;
+        
+        NSAttributedString *partialText = [attributedSummary attributedSubstringFromRange:currentRange];
+        CGFloat partialTextWidth =
+        [partialText boundingRectWithSize:availableSpace
+                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                  context:nil].size.width;
+        
+        if (partialTextWidth + dotsWidth <= summaryLabelWidth)
+        {
+            summary = [NSString stringWithFormat:@"%@%@", dots, [partialText string]];
+            
+            return [[NSAttributedString alloc] initWithString:summary attributes:[self summaryTextAttributes]];
+        }
+    }
+    
+    return attributedSummary;
+}
+
+
+- (NSString *)reversedSummaryTextFromString:(NSString *)summary
+{
+    CGRect summaryLabelFrame = [self summaryLabelFrame];
+    CGFloat summaryLabelWidth = summaryLabelFrame.size.width;
+    CGFloat summaryLabelHeight = summaryLabelFrame.size.height;
+    
+    CGSize availableSpace = CGSizeMake(CGFLOAT_MAX, summaryLabelHeight);
+    
+    NSDictionary *attributes = @{NSFontAttributeName : _summaryLabel.font};
+    
+    CGFloat textWidth = [summary boundingRectWithSize:availableSpace
+                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                           attributes:attributes
+                                              context:nil].size.width;
+    
+    if (textWidth <= summaryLabelWidth)
+    {
+        return summary;
+    }
+    
+    NSString *dots = @"...";
+    CGFloat dotsWidth = [dots boundingRectWithSize:availableSpace
+                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                        attributes:attributes
+                                           context:nil].size.width;
+    
+    NSRange fullRange = NSMakeRange(0, summary.length);
+    
+    for (NSUInteger i = fullRange.location; i <= fullRange.length; i++)
+    {
+        NSRange currentRange;
+        currentRange.location = i;
+        currentRange.length = fullRange.length - i;
+        
+        NSString *partialText = [summary substringWithRange:currentRange];
+        CGFloat partialTextWidth =
+            [partialText boundingRectWithSize:availableSpace
+                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                   attributes:attributes
+                                      context:nil].size.width;
+        
+        if (partialTextWidth + dotsWidth <= summaryLabelWidth)
+        {
+            return [NSString stringWithFormat:@"%@%@", dots, partialText];
+        }
+    }
+    
+    return summary;
+}
+
+
 - (void)updateShadows
 {
 	if (_searching) {
@@ -360,6 +478,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
 }
 
+
 #pragma mark - Initialization
 
 - (void)dealloc
@@ -372,10 +491,15 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     _showsAddButton = YES;
 	_showsShadows = YES;
     _animatedRecipientsInAndOut = YES;
+    _showsSummaryInReversedOrder = NO;
     _recipientBackgroundImages = [NSMutableDictionary new];
     _recipientTitleTextAttributes = [NSMutableDictionary new];
     
     _recipientContentEdgeInsets = UIEdgeInsetsMake(0.0, 9.0, 0.0, 9.0);
+    _recipientsLineHeight = TURecipientsLineHeight;
+    _recipientsHorizontalMargin = 6.0;
+    
+    _bottomLineHeight = 1.0;
     
     self.contentSize = self.bounds.size;
     
@@ -385,16 +509,19 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	self.backgroundColor = [UIColor whiteColor];
 	if (self.heightConstraint == nil) {
-		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:TURecipientsLineHeight + 1.0];
+		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:_recipientsLineHeight + 1.0];
         _heightConstraint.priority = UILayoutPriorityDefaultHigh;
 		[self addConstraint:_heightConstraint];
 	}
 	self.clipsToBounds = YES;
 	
-	_lineView = [[UIView alloc] init];
-	_lineView.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
-	[self addSubview:_lineView];
-	
+    if (_bottomLineHeight > 0.0)
+    {
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
+        [self addSubview:_lineView];
+    }
+    
 	_toLabel = [[UILabel alloc] init];
     self.label = NSLocalizedString(@"To: ", nil);
 	[self addSubview:_toLabel];
@@ -416,12 +543,15 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self addSubview:_textField];
 	[_textField addObserver:self forKeyPath:@"selectedTextRange" options:0 context:TURecipientsSelectionContext];
 	
-	
 	_summaryLabel = [[UILabel alloc] init];
     _summaryLabel.backgroundColor = [UIColor clearColor];
 	_summaryLabel.font = [UIFont systemFontOfSize:15.0];
 	[self addSubview:_summaryLabel];
 	
+    if (self.showsSummaryInReversedOrder)
+    {
+        _summaryLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    }
 	
 	[self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(select:)]];
     
@@ -474,7 +604,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
     CGRect recipientViewFrame;
     if (recipientView == _textField) {
-        recipientViewFrame.size = CGSizeMake(100.0, 43.0);
+        recipientViewFrame.size = CGSizeMake(100.0, self.recipientsLineHeight);
     } else {
         recipientViewFrame.size = recipientView.intrinsicContentSize;
     }
@@ -482,14 +612,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (lastView == _toLabel) {
         recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame);
     } else {
-        recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + 6.0;
+        recipientViewFrame.origin.x = CGRectGetMaxX(lastView.frame) + self.recipientsHorizontalMargin;
     }
     
     recipientViewFrame.origin.y = CGRectGetMidY(lastView.frame) - recipientViewFrame.size.height / 2.0;
     
-    if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
+    if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - self.recipientsHorizontalMargin) {
         recipientViewFrame.origin.x = 8.0;
-        recipientViewFrame.origin.y += TURecipientsLineHeight - 8.0;
+        recipientViewFrame.origin.y += self.recipientsLineHeight - 8.0;
     }
     
     return recipientViewFrame;
@@ -506,13 +636,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
                                     21.0 - toSize.height / 2,
                                     toSize.width, toSize.height);
         
-        
-        CGRect summaryLabelFrame;
-        summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
-        summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
-        summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
-        summaryLabelFrame.size.width = self.bounds.size.width - summaryLabelFrame.origin.x - 12.0;
-        _summaryLabel.frame = summaryLabelFrame;
+        _summaryLabel.frame = [self summaryLabelFrame];
         
         CGRect addButtonFrame;
         addButtonFrame.size = _addButton.intrinsicContentSize;
@@ -538,26 +662,29 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
         
         
-        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight) + 1);
+        self.contentSize = CGSizeMake(self.frame.size.width,
+                                      MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight) + 1);
         
         
         _needsRecipientLayout = NO;
         
-        addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - TURecipientsLineHeight / 2.0;
+        addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - self.recipientsLineHeight / 2.0;
         _addButton.frame = addButtonFrame;
     }
     
     [_lineView.superview bringSubviewToFront:_lineView];
     if (self.searching) {
-        _lineView.frame = CGRectMake(0.0, self.contentSize.height - 1.0, self.bounds.size.width, 1.0);
+        _lineView.frame = CGRectMake(0.0, self.contentSize.height - self.bottomLineHeight,
+                                     self.bounds.size.width, self.bottomLineHeight);
     } else {
-        _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - 1.0, self.bounds.size.width, 1.0);
+        _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - self.bottomLineHeight,
+                                     self.bounds.size.width, self.bottomLineHeight);
     }
     
     if (_textField.isFirstResponder && !self.searching) {
 		self.heightConstraint.constant = self.contentSize.height;
 	} else {
-		self.heightConstraint.constant = TURecipientsLineHeight + 1.0;
+		self.heightConstraint.constant = self.recipientsLineHeight + 1.0;
 	}
     
     if (_searching) {
@@ -605,6 +732,17 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[super setFrame:frame];
 	
 	[self _frameChanged];
+}
+
+- (CGRect)summaryLabelFrame
+{
+    CGRect summaryLabelFrame;
+    summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
+    summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
+    summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
+    summaryLabelFrame.size.width = self.bounds.size.width - summaryLabelFrame.origin.x - 12.0;
+    
+    return summaryLabelFrame;
 }
 
 
@@ -955,14 +1093,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
     _searchFieldTextAttributes = [attributes copy];
     
-    if (_summaryTextAttributes[NSFontAttributeName] != nil) {
-        _textField.font = _summaryTextAttributes[NSFontAttributeName];
+    if (_searchFieldTextAttributes[NSFontAttributeName] != nil) {
+        _textField.font = _searchFieldTextAttributes[NSFontAttributeName];
     } else {
         _textField.font = [UIFont systemFontOfSize:16.0];
     }
     
-    if (_summaryTextAttributes[NSForegroundColorAttributeName] != nil) {
-        _textField.textColor = _summaryTextAttributes[NSForegroundColorAttributeName];
+    if (_searchFieldTextAttributes[NSForegroundColorAttributeName] != nil) {
+        _textField.textColor = _searchFieldTextAttributes[NSForegroundColorAttributeName];
     } else {
         _textField.textColor = [UIColor blackColor];
     }

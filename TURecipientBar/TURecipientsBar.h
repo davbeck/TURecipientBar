@@ -100,6 +100,16 @@
  */
 @property (nonatomic) BOOL animatedRecipientsInAndOut;
 
+/** Whether the recipients shown in the summary should be displayed in reversed order in such a way that the last
+ selected recipient will stay always visible and the previous will be trimmed by an ellipsis glyph at the beginning
+ of the line.
+ 
+ Example: ...hilip, Steve, Jony, Craig
+ 
+ The default value is NO.
+ */
+@property (nonatomic) BOOL showsSummaryInReversedOrder;
+
 /** The height constraint for the entire bar.
  
  You can use this to set the height constraint in Interface Builder. This was almost necessary in iOS 6, however in iOS 7, you can set a placeholder constraint and let the bar create it's own height constraint.
@@ -107,6 +117,24 @@
  You can also change the priority. It must be lower than whatever constraint you are using to limit the bars height. The default priority is `UILayoutPriorityDefaultHigh` (`750`).
  */
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
+
+/** The distance between each line of recipients.
+ 
+ The default value is 43.0.
+ */
+@property (nonatomic) CGFloat recipientsLineHeight;
+
+/** The horizontal distance between each recipient.
+ 
+ The default value is 6.0.
+ */
+@property (nonatomic) CGFloat recipientsHorizontalMargin;
+
+/** The height of the bottom line. Setting this value to 0.0 the line will not be created at all.
+ 
+ The default value is 1.0.
+ */
+@property (nonatomic) CGFloat bottomLineHeight;
 
 
 /**---------------------------------------------------------------------------------------
