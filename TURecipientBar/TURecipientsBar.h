@@ -140,7 +140,7 @@
  
 @param recipient A recipient to add.
  */
-- (void)addRecipient:(id<TURecipient>)recipient;
+- (UIButton *)addRecipient:(id<TURecipient>)recipient;
 
 /** Remove a recipient.
  

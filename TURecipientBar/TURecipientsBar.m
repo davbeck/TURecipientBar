@@ -55,7 +55,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	return [_recipients copy];
 }
 
-- (void)addRecipient:(id<TURecipient>)recipient
+- (UIButton *)addRecipient:(id<TURecipient>)recipient
 {
 	NSIndexSet *changedIndex = [NSIndexSet indexSetWithIndex:_recipients.count];
 	
@@ -125,6 +125,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     }
 	
 	[self _updateSummary];
+    return recipientView;
 }
 
 - (void)removeRecipient:(id<TURecipient>)recipient
