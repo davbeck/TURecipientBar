@@ -55,7 +55,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	return [_recipients copy];
 }
 
-- (void)addRecipient:(id<TURecipient>)recipient
+- (UIButton *)addRecipient:(id<TURecipient>)recipient
 {
 	NSIndexSet *changedIndex = [NSIndexSet indexSetWithIndex:_recipients.count];
 	
@@ -125,6 +125,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     }
 	
 	[self _updateSummary];
+    return recipientView;
 }
 
 - (void)removeRecipient:(id<TURecipient>)recipient
@@ -177,6 +178,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
             }
         }
         
+        if (self.text.length > 0) {
+            [summary appendFormat:@" %@",self.text];
+        }
+        
         _summaryLabel.textColor = [UIColor darkTextColor];
         if (self.summaryTextAttributes == nil) {
             _summaryLabel.text = summary;
@@ -185,10 +190,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
     } else {
         _summaryLabel.textColor = [UIColor lightGrayColor];
-        if (self.placeholderTextAttributes == nil) {
-            _summaryLabel.text = self.placeholder;
+        if (self.text.length == 0) {
+            if (self.placeholderTextAttributes == nil) {
+                _summaryLabel.text = self.placeholder;
+            } else if (self.placeholder) {
+                _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
+            }
         } else {
-            _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
+            _summaryLabel.text = self.text;
         }
     }
 }
@@ -406,7 +415,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	_textField = [[UITextField alloc] init];
 	_textField.text = TURecipientsPlaceholder;
-    _textField.font = [UIFont systemFontOfSize:15.0];
+    _textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _textField.textColor = [UIColor blackColor];
 	_textField.delegate = self;
 	_textField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -419,7 +428,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	_summaryLabel = [[UILabel alloc] init];
     _summaryLabel.backgroundColor = [UIColor clearColor];
-	_summaryLabel.font = [UIFont systemFontOfSize:15.0];
+	_summaryLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 	[self addSubview:_summaryLabel];
 	
 	
@@ -819,6 +828,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	if (should) {
         // we want the animation to execute after the text field has resigned first responder
+        [self _updateSummary];
         
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -925,17 +935,17 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (attributes == nil) {
         if (state == UIControlStateNormal) {
             attributes = @{
-                           NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                           NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                            NSForegroundColorAttributeName: [UIColor blackColor],
                            };
         } else if (state == UIControlStateHighlighted) {
             attributes = @{
-                           NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                           NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                            NSForegroundColorAttributeName: [UIColor whiteColor],
                            };
         } else if (state == UIControlStateSelected) {
             attributes = @{
-                           NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                           NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                            NSForegroundColorAttributeName: [UIColor whiteColor],
                            };
         }
@@ -958,7 +968,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (_summaryTextAttributes[NSFontAttributeName] != nil) {
         _textField.font = _summaryTextAttributes[NSFontAttributeName];
     } else {
-        _textField.font = [UIFont systemFontOfSize:16.0];
+        _textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     }
     
     if (_summaryTextAttributes[NSForegroundColorAttributeName] != nil) {
@@ -991,7 +1001,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (labelTextAttributes == nil) {
         labelTextAttributes = @{
                                 NSForegroundColorAttributeName: [UIColor colorWithWhite:0.498 alpha:1.000],
-                                NSFontAttributeName: [UIFont systemFontOfSize:17.0],
+                                NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                                 };
     }
     
