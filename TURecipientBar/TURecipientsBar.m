@@ -881,11 +881,9 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     if (backgroundImage == nil) {
         if (state == UIControlStateNormal) {
-            backgroundImage = [[UIImage imageNamed:@"recipient.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
-        } else if (state == UIControlStateHighlighted) {
-            backgroundImage = [[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
-        } else if (state == UIControlStateSelected) {
-            backgroundImage = [[UIImage imageNamed:@"recipient-selected.png"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+            backgroundImage = [[UIImage imageNamed:@"recipient.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+        } else if (state == UIControlStateHighlighted || state == UIControlStateSelected) {
+            backgroundImage = [[UIImage imageNamed:@"recipient-selected.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
         }
     }
     
