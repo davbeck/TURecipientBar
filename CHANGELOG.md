@@ -1,5 +1,23 @@
 # TURecipientBar CHANGELOG
 
+### 1.1.2
+
+- [Fixed placeholder label layout.](https://github.com/davbeck/TURecipientBar/commit/2c8980a84f1712f5cbdfbfe7d5d960e5514dfe7b)
+
+- [Added search field attributes control.](https://github.com/davbeck/TURecipientBar/commit/cf1cca09c7947ef1b987275eb0c94b44b38743b8)
+
+- [Fixed bug where recipients are added before title attributes are set.](https://github.com/davbeck/TURecipientBar/commit/adddbac929f575aa5faa127a76dd9e3ea2990f50)
+
+- [Added ability to get the selected recipient.](https://github.com/davbeck/TURecipientBar/commit/99abbfb39ee89291797cc5988d8607f2517a149d)
+
+- [Added better support for showing the table view.](https://github.com/davbeck/TURecipientBar/commit/c1556f28592a2785810e8096ad9ab33d39490807)
+
+- [Added ability to hide the drop shadow that appears during search.](https://github.com/davbeck/TURecipientBar/pull/22)
+
+  Thanks to [Matthew Crenshaw](https://github.com/sgtsquiggs) for the pull request.
+
+
+
 ### 1.1.1
 
 - Fixed keyboard insets.
