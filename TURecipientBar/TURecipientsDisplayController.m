@@ -39,7 +39,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 		_searchResultsTableView.delegate = self.searchResultsDelegate;
 		_searchResultsTableView.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [self _insetForKeyboard];
+        [self _updateTableViewInsets];
 		
 		if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:didLoadSearchResultsTableView:)]) {
 			[self.delegate recipientsDisplayController:self didLoadSearchResultsTableView:_searchResultsTableView];
@@ -99,6 +99,8 @@ static void *TURecipientsContext = &TURecipientsContext;
             } completion:nil];
         }
 	}
+    
+    [self _updateTableViewInsets];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -205,7 +207,7 @@ static void *TURecipientsContext = &TURecipientsContext;
     [UIView setAnimationBeginsFromCurrentState:YES];
     
     _keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    [self _insetForKeyboard];
+    [self _updateTableViewInsets];
     
     [UIView commitAnimations];
 }
@@ -218,23 +220,27 @@ static void *TURecipientsContext = &TURecipientsContext;
     [UIView setAnimationBeginsFromCurrentState:YES];
     
     _keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    [self _insetForKeyboard];
+    [self _updateTableViewInsets];
     
     [UIView commitAnimations];
 }
 
-- (void)_insetForKeyboard
+- (void)_updateTableViewInsets
 {
-    if (!CGRectIsEmpty(_keyboardFrame) && _searchResultsTableView != nil) {
+    if (_searchResultsTableView != nil) {
         CGRect keyboardFrameInView = [self.contentsController.view convertRect:_keyboardFrame fromView:nil];
         CGFloat bottomInset = self.contentsController.view.frame.size.height - keyboardFrameInView.origin.y;
         
         UIEdgeInsets contentInset = self.searchResultsTableView.contentInset;
         UIEdgeInsets scrollIndicatorInsets = self.searchResultsTableView.scrollIndicatorInsets;
-        contentInset.bottom = bottomInset;
+        
+        if (!CGRectIsEmpty(_keyboardFrame)) {
+            contentInset.bottom = bottomInset;
+            scrollIndicatorInsets.bottom = contentInset.bottom;
+        }
         contentInset.top = CGRectGetMaxY(self.recipientsBar.frame);
-        scrollIndicatorInsets.bottom = contentInset.bottom;
-        scrollIndicatorInsets.bottom = contentInset.top;
+        scrollIndicatorInsets.top = contentInset.top;
+        
         self.searchResultsTableView.contentInset = contentInset;
         self.searchResultsTableView.scrollIndicatorInsets = scrollIndicatorInsets;
     }
