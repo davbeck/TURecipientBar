@@ -30,6 +30,8 @@
 		110612091742EE9800730F01 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612081742EE9800730F01 /* AddressBookUI.framework */; };
 		11468B921AA689D700279850 /* recipient-selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11468B911AA689D700279850 /* recipient-selected@3x.png */; };
 		11468B941AA689E200279850 /* recipient@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11468B931AA689E200279850 /* recipient@3x.png */; };
+		11468B961AA69B1300279850 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11468B951AA69B1300279850 /* Launch Screen.xib */; };
+		11468B981AA69B2D00279850 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11468B971AA69B2D00279850 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +67,8 @@
 		110612081742EE9800730F01 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		11468B911AA689D700279850 /* recipient-selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient-selected@3x.png"; sourceTree = "<group>"; };
 		11468B931AA689E200279850 /* recipient@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient@3x.png"; sourceTree = "<group>"; };
+		11468B951AA69B1300279850 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		11468B971AA69B2D00279850 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,8 @@
 				110611D71742E2D400730F01 /* TUAppDelegate.h */,
 				110611D81742E2D400730F01 /* TUAppDelegate.m */,
 				110611E01742E2D400730F01 /* MainStoryboard.storyboard */,
+				11468B951AA69B1300279850 /* Launch Screen.xib */,
+				11468B971AA69B2D00279850 /* Images.xcassets */,
 				110611E31742E2D400730F01 /* TUViewController.h */,
 				110611E41742E2D400730F01 /* TUViewController.m */,
 				110612031742EDE500730F01 /* TUABSearchSource.h */,
@@ -216,8 +222,10 @@
 				110611D31742E2D400730F01 /* InfoPlist.strings in Resources */,
 				110611DB1742E2D400730F01 /* Default.png in Resources */,
 				110611DD1742E2D400730F01 /* Default@2x.png in Resources */,
+				11468B981AA69B2D00279850 /* Images.xcassets in Resources */,
 				11468B921AA689D700279850 /* recipient-selected@3x.png in Resources */,
 				110611DF1742E2D400730F01 /* Default-568h@2x.png in Resources */,
+				11468B961AA69B1300279850 /* Launch Screen.xib in Resources */,
 				110611E21742E2D400730F01 /* MainStoryboard.storyboard in Resources */,
 				110611F91742E64600730F01 /* recipient-selected.png in Resources */,
 				110611FA1742E64600730F01 /* recipient-selected@2x.png in Resources */,
@@ -325,6 +333,7 @@
 		110611E91742E2D400730F01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
 				INFOPLIST_FILE = "TURecipientBarExample/TURecipientBar-Info.plist";
@@ -337,6 +346,7 @@
 		110611EA1742E2D400730F01 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
 				INFOPLIST_FILE = "TURecipientBarExample/TURecipientBar-Info.plist";
