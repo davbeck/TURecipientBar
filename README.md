@@ -1,8 +1,8 @@
 # ![TURecipientBar](http://f.cl.ly/items/2t2b39213t130o2N2w2S/WordMark.svg) 
 
-[![Version](https://img.shields.io/cocoapods/v/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TNKImagePickerController)
-[![License](https://img.shields.io/cocoapods/l/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TNKImagePickerController)
-[![Platform](https://img.shields.io/cocoapods/p/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TNKImagePickerController)
+[![Version](https://img.shields.io/cocoapods/v/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
+[![License](https://img.shields.io/cocoapods/l/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
+[![Platform](https://img.shields.io/cocoapods/p/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
 
 `TURecipientBar` is a `UIView` for entering recipients similarly to the iOS Mail app. It handles search and display of recipients.
 
