@@ -1,5 +1,14 @@
 # TURecipientBar CHANGELOG
 
+## 2.0.0
+
+- Added support for Cocoapods 0.36/frameworks. Images are now referenced by the classes bundle.
+- Updated recipient images to be more flat and thin to match the style of iOS 8. They also now use tintColor.
+- Reduced the shadow over the search table view and changed the background to the default white.
+- Added support for a visual effect background that matches the navigation bar.
+
+In order to keep the source code clean and take advantage of UIVisualEffectView, **the minimum version was changed to iOS 8.0**.
+
 ### 1.1.2
 
 - [Fixed placeholder label layout.](https://github.com/davbeck/TURecipientBar/commit/2c8980a84f1712f5cbdfbfe7d5d960e5514dfe7b)
