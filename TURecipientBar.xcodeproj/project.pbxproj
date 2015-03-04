@@ -24,11 +24,12 @@
 		110611FA1742E64600730F01 /* recipient-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F51742E64600730F01 /* recipient-selected@2x.png */; };
 		110611FB1742E64600730F01 /* recipient.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F61742E64600730F01 /* recipient.png */; };
 		110611FC1742E64600730F01 /* recipient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F71742E64600730F01 /* recipient@2x.png */; };
-		110611FD1742E64600730F01 /* search-cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F81742E64600730F01 /* search-cover.png */; };
 		110612001742E96700730F01 /* TURecipientsDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611FF1742E96700730F01 /* TURecipientsDisplayController.m */; };
 		110612051742EDE600730F01 /* TUABSearchSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 110612041742EDE500730F01 /* TUABSearchSource.m */; };
 		110612071742EE9200730F01 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612061742EE9200730F01 /* AddressBook.framework */; };
 		110612091742EE9800730F01 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612081742EE9800730F01 /* AddressBookUI.framework */; };
+		11468B921AA689D700279850 /* recipient-selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11468B911AA689D700279850 /* recipient-selected@3x.png */; };
+		11468B941AA689E200279850 /* recipient@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11468B931AA689E200279850 /* recipient@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,13 +57,14 @@
 		110611F51742E64600730F01 /* recipient-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient-selected@2x.png"; sourceTree = "<group>"; };
 		110611F61742E64600730F01 /* recipient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recipient.png; sourceTree = "<group>"; };
 		110611F71742E64600730F01 /* recipient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient@2x.png"; sourceTree = "<group>"; };
-		110611F81742E64600730F01 /* search-cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-cover.png"; sourceTree = "<group>"; };
 		110611FE1742E96700730F01 /* TURecipientsDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TURecipientsDisplayController.h; sourceTree = "<group>"; };
 		110611FF1742E96700730F01 /* TURecipientsDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipientsDisplayController.m; sourceTree = "<group>"; };
 		110612031742EDE500730F01 /* TUABSearchSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUABSearchSource.h; sourceTree = "<group>"; };
 		110612041742EDE500730F01 /* TUABSearchSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUABSearchSource.m; sourceTree = "<group>"; };
 		110612061742EE9200730F01 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		110612081742EE9800730F01 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		11468B911AA689D700279850 /* recipient-selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient-selected@3x.png"; sourceTree = "<group>"; };
+		11468B931AA689E200279850 /* recipient@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,9 +153,10 @@
 				110611F21742E63D00730F01 /* TURecipient.m */,
 				110611F41742E64600730F01 /* recipient-selected.png */,
 				110611F51742E64600730F01 /* recipient-selected@2x.png */,
+				11468B911AA689D700279850 /* recipient-selected@3x.png */,
 				110611F61742E64600730F01 /* recipient.png */,
 				110611F71742E64600730F01 /* recipient@2x.png */,
-				110611F81742E64600730F01 /* search-cover.png */,
+				11468B931AA689E200279850 /* recipient@3x.png */,
 			);
 			path = TURecipientBar;
 			sourceTree = "<group>";
@@ -213,13 +216,14 @@
 				110611D31742E2D400730F01 /* InfoPlist.strings in Resources */,
 				110611DB1742E2D400730F01 /* Default.png in Resources */,
 				110611DD1742E2D400730F01 /* Default@2x.png in Resources */,
+				11468B921AA689D700279850 /* recipient-selected@3x.png in Resources */,
 				110611DF1742E2D400730F01 /* Default-568h@2x.png in Resources */,
 				110611E21742E2D400730F01 /* MainStoryboard.storyboard in Resources */,
 				110611F91742E64600730F01 /* recipient-selected.png in Resources */,
 				110611FA1742E64600730F01 /* recipient-selected@2x.png in Resources */,
 				110611FB1742E64600730F01 /* recipient.png in Resources */,
+				11468B941AA689E200279850 /* recipient@3x.png in Resources */,
 				110611FC1742E64600730F01 /* recipient@2x.png in Resources */,
-				110611FD1742E64600730F01 /* search-cover.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -607,6 +607,19 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self _frameChanged];
 }
 
+- (void)tintColorDidChange
+{
+    [super tintColorDidChange];
+    
+    UIControlState state = UIControlStateNormal;
+    NSDictionary *attributes = [self recipientTitleTextAttributesForState:state];
+    for (UIButton *button in _recipientViews) {
+        NSString *text = [button titleForState:state] ?: [button attributedTitleForState:state].string ?: @"";
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+        [button setAttributedTitle:attributedText forState:state];
+    }
+}
+
 
 #pragma mark - Actions
 
@@ -881,10 +894,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     if (backgroundImage == nil) {
         if (state == UIControlStateNormal) {
-            backgroundImage = [[UIImage imageNamed:@"recipient.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+            backgroundImage = [UIImage imageNamed:@"recipient" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection];
         } else if (state == UIControlStateHighlighted || state == UIControlStateSelected) {
-            backgroundImage = [[UIImage imageNamed:@"recipient-selected.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+            backgroundImage = [UIImage imageNamed:@"recipient-selected" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection];
         }
+        
+        backgroundImage = [backgroundImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        backgroundImage = [backgroundImage stretchableImageWithLeftCapWidth:14 topCapHeight:0];
     }
     
     return backgroundImage;
@@ -924,7 +940,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         if (state == UIControlStateNormal) {
             attributes = @{
                            NSFontAttributeName: [UIFont systemFontOfSize:15.0],
-                           NSForegroundColorAttributeName: [UIColor blackColor],
+                           NSForegroundColorAttributeName: self.tintColor,
                            };
         } else if (state == UIControlStateHighlighted) {
             attributes = @{
