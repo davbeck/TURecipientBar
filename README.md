@@ -6,9 +6,7 @@
 
 `TURecipientBar` is a `UIView` for entering recipients similarly to the iOS Mail app. It handles search and display of recipients.
 
-![Screenshot](Screenshot.gif)
-
-> See a more extensive preview at [http://cl.ly/171y2V072007](http://cl.ly/171y2V072007)
+[![Screenshot](Screenshot.gif)](http://cl.ly/1h2Y3D0V3j2x)
 
 ## Installation
 
