@@ -70,7 +70,7 @@ static void *TURecipientsContext = &TURecipientsContext;
             
             [self.contentsController.view addSubview:tableView];
             [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
-            [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_recipientsBar][tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_recipientsBar, tableView)]];
+            [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_recipientsBar, tableView)]];
             
             [self.contentsController.view layoutIfNeeded];
             
@@ -232,7 +232,9 @@ static void *TURecipientsContext = &TURecipientsContext;
         UIEdgeInsets contentInset = self.searchResultsTableView.contentInset;
         UIEdgeInsets scrollIndicatorInsets = self.searchResultsTableView.scrollIndicatorInsets;
         contentInset.bottom = bottomInset;
-        scrollIndicatorInsets.bottom = bottomInset;
+        contentInset.top = CGRectGetMaxY(self.recipientsBar.frame);
+        scrollIndicatorInsets.bottom = contentInset.bottom;
+        scrollIndicatorInsets.bottom = contentInset.top;
         self.searchResultsTableView.contentInset = contentInset;
         self.searchResultsTableView.scrollIndicatorInsets = scrollIndicatorInsets;
     }

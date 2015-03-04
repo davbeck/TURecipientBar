@@ -237,6 +237,12 @@
  */
 @property (nonatomic, copy) NSDictionary *placeholderTextAttributes UI_APPEARANCE_SELECTOR;
 
+/** Whether the recipient bar should use a visual effect for it's background.
+ 
+ When set to true, the background will use a UIVisualEffectView for it's background that matches UINavigationBar. When set to false (the default) a plain white background is used. This is good for bars that are placed directly below the navigation bar without other entry fields. The messages app uses this style while the mail app does not.
+ */
+@property (nonatomic) BOOL usesTransparency UI_APPEARANCE_SELECTOR;
+
 @end
 
 

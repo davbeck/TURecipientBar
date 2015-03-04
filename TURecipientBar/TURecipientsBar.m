@@ -19,6 +19,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 @implementation TURecipientsBar
 {
+    UIVisualEffectView *_backgroundView;
 	UILabel *_toLabel;
 	UIButton *_addButton;
 	UILabel *_summaryLabel;
@@ -375,7 +376,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	self.backgroundColor = [UIColor whiteColor];
 	if (self.heightConstraint == nil) {
-		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:TURecipientsLineHeight + 1.0];
+		_heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:TURecipientsLineHeight];
         _heightConstraint.priority = UILayoutPriorityDefaultHigh;
 		[self addConstraint:_heightConstraint];
 	}
@@ -489,6 +490,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
 	[super layoutSubviews];
     
+    _backgroundView.frame = self.bounds;
     
     if (_needsRecipientLayout) {
         CGSize toSize = _toLabel.intrinsicContentSize;
@@ -528,7 +530,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
         
         
-        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight) + 1);
+        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight));
         
         
         _needsRecipientLayout = NO;
@@ -548,7 +550,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (_textField.isFirstResponder && !self.searching) {
 		self.heightConstraint.constant = self.contentSize.height;
 	} else {
-		self.heightConstraint.constant = TURecipientsLineHeight + 1.0;
+		self.heightConstraint.constant = TURecipientsLineHeight;
 	}
     
     if (_searching) {
@@ -1001,6 +1003,23 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     }
     
     return labelTextAttributes;
+}
+
+- (void)setUsesTransparency:(BOOL)usesTransparency
+{
+    _usesTransparency = usesTransparency;
+    
+    if (_usesTransparency) {
+        if (_backgroundView == nil) {
+            _backgroundView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+        }
+        
+        [self insertSubview:_backgroundView atIndex:0];
+        self.backgroundColor = [UIColor clearColor];
+    } else {
+        [_backgroundView removeFromSuperview];
+        self.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 @end

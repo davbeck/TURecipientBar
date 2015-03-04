@@ -23,6 +23,8 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    self.recipientsBar.usesTransparency = YES;
+    
     // we don't want our initial state to animate in
     self.recipientsBar.animatedRecipientsInAndOut = NO;
     
