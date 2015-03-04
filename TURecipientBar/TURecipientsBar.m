@@ -300,14 +300,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		
 		[self _scrollToBottomAnimated:YES];
 		
-		if (_searching) {
-			self.scrollEnabled = NO;
-			_lineView.hidden = NO;
-			_lineView.backgroundColor = [UIColor colorWithWhite:0.557 alpha:1.000];
-		} else {
-			_lineView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.000];
-		}
-		
 		[self updateShadows];
 	}
 }
@@ -343,21 +335,19 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (void)updateShadows
 {
-	if (_searching) {
-		if (_showsShadows) {
-			self.layer.shadowColor = [UIColor blackColor].CGColor;
-			self.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-			self.layer.shadowOpacity = 0.5;
-			self.layer.shadowRadius = 5.0;
-			self.clipsToBounds = NO;
-		}
-	} else {
-		if (_showsShadows) {
-			self.layer.shadowOpacity = 0.0;
-			self.layer.shadowRadius = 0.0;
-			self.clipsToBounds = YES;
-		}
-	}
+    if (_showsShadows) {
+        if (_searching) {
+            self.layer.shadowColor = [UIColor blackColor].CGColor;
+            self.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+            self.layer.shadowOpacity = 0.3;
+            self.layer.shadowRadius = 2.0;
+            self.clipsToBounds = NO;
+        } else {
+            self.layer.shadowOpacity = 0.0;
+            self.layer.shadowRadius = 0.0;
+            self.clipsToBounds = YES;
+        }
+    }
 }
 
 #pragma mark - Initialization
@@ -391,8 +381,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
 	self.clipsToBounds = YES;
 	
-	_lineView = [[UIView alloc] init];
-	_lineView.backgroundColor = [UIColor colorWithWhite:0.800 alpha:1.000];
+    _lineView = [[UIView alloc] init];
+    _lineView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
 	[self addSubview:_lineView];
 	
 	_toLabel = [[UILabel alloc] init];
@@ -548,10 +538,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     }
     
     [_lineView.superview bringSubviewToFront:_lineView];
+    CGFloat lineHeight = 1.0 / self.traitCollection.displayScale;
     if (self.searching) {
-        _lineView.frame = CGRectMake(0.0, self.contentSize.height - 1.0, self.bounds.size.width, 1.0);
+        _lineView.frame = CGRectMake(0.0, self.contentSize.height - lineHeight, self.bounds.size.width, lineHeight);
     } else {
-        _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - 1.0, self.bounds.size.width, 1.0);
+        _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - lineHeight, self.bounds.size.width, lineHeight);
     }
     
     if (_textField.isFirstResponder && !self.searching) {

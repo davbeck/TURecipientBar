@@ -38,7 +38,6 @@ static void *TURecipientsContext = &TURecipientsContext;
 		_searchResultsTableView.dataSource = self.searchResultsDataSource;
 		_searchResultsTableView.delegate = self.searchResultsDelegate;
 		_searchResultsTableView.translatesAutoresizingMaskIntoConstraints = NO;
-		_searchResultsTableView.backgroundColor = [UIColor colorWithWhite:0.925 alpha:1.000];
         
         [self _insetForKeyboard];
 		
