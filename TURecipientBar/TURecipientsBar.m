@@ -541,6 +541,9 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     [_lineView.superview bringSubviewToFront:_lineView];
     CGFloat lineHeight = 1.0 / self.traitCollection.displayScale;
+    if (self.traitCollection.displayScale < 1.0) { // this is the case when the view is off screen
+        lineHeight = 1.0;
+    }
     if (self.searching) {
         _lineView.frame = CGRectMake(0.0, self.contentSize.height - lineHeight, self.bounds.size.width, lineHeight);
     } else {
