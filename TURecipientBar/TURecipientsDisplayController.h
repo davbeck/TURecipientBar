@@ -55,7 +55,7 @@
  attach to the bottom, right and left of the view, and the bottom of the recipients bar. For
  obvious reasons, the view property should return a UIView and not a UIScrollView.
  */
-@property (nonatomic, strong) IBOutlet UIViewController *contentsController;
+@property (nonatomic, weak) IBOutlet UIViewController *contentsController;
 
 /** The table view used to display search results.
  
