@@ -1,5 +1,11 @@
 # TURecipientBar CHANGELOG
 
+### 2.0.1
+
+- Fixed crash related to offscreen views.
+- Fixed searchFieldTextAttributes (#24).
+- Fixed retain cycle (#18).
+
 ## 2.0.0
 
 - Added support for Cocoapods 0.36/frameworks. Images are now referenced by the classes bundle.

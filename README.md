@@ -12,7 +12,7 @@
 
 ### [Cocoapods](http://cocoapods.org)
 
-1. Add `pod TURecipientBar, '~> 1.1.2'` to your Podfile.
+1. Add `pod TURecipientBar, '~> 2.0'` to your Podfile.
 2. Run 'pod install'
 3. Import `TURecipientsBar.h` and `TURecipientsDisplayController.h`.
 
