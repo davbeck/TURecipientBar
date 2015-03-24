@@ -965,14 +965,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
     _searchFieldTextAttributes = [attributes copy];
     
-    if (_summaryTextAttributes[NSFontAttributeName] != nil) {
-        _textField.font = _summaryTextAttributes[NSFontAttributeName];
+    if (_searchFieldTextAttributes[NSFontAttributeName] != nil) {
+        _textField.font = _searchFieldTextAttributes[NSFontAttributeName];
     } else {
         _textField.font = [UIFont systemFontOfSize:16.0];
     }
     
-    if (_summaryTextAttributes[NSForegroundColorAttributeName] != nil) {
-        _textField.textColor = _summaryTextAttributes[NSForegroundColorAttributeName];
+    if (_searchFieldTextAttributes[NSForegroundColorAttributeName] != nil) {
+        _textField.textColor = _searchFieldTextAttributes[NSForegroundColorAttributeName];
     } else {
         _textField.textColor = [UIColor blackColor];
     }
