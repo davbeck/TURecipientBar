@@ -821,39 +821,36 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-	BOOL should = YES;
-	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarShouldEndEditing:)]) {
-		should = [self.recipientsBarDelegate recipientsBarShouldEndEditing:self];
-	}
-	
-	if (should) {
-        // we want the animation to execute after the text field has resigned first responder
+    BOOL should = YES;
+    if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarShouldEndEditing:)]) {
+        should = [self.recipientsBarDelegate recipientsBarShouldEndEditing:self];
+    }
+    
+    return should;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
+    
+    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.scrollEnabled = NO;
         
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-				self.scrollEnabled = NO;
-				
-				for (UIView *recipientView in _recipientViews) {
-					recipientView.alpha = 0.0;
-				}
-				_textField.alpha = 0.0;
-				_addButton.alpha = 0.0;
-				
-				_summaryLabel.alpha = 1.0;
-				
-				[self setNeedsLayout];
-				[self.superview layoutIfNeeded];
-				
-                [self setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
-			} completion:^(BOOL finished) {
-				if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarTextDidEndEditing:)]) {
-					[self.recipientsBarDelegate recipientsBarTextDidEndEditing:self];
-				}
-			}];
-		});
-	}
-	
-	return should;
+        for (UIView *recipientView in _recipientViews) {
+            recipientView.alpha = 0.0;
+        }
+        _textField.alpha = 0.0;
+        _addButton.alpha = 0.0;
+        
+        _summaryLabel.alpha = 1.0;
+        
+        [self setNeedsLayout];
+        [self.superview layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarTextDidEndEditing:)]) {
+            [self.recipientsBarDelegate recipientsBarTextDidEndEditing:self];
+        }
+    }];
 }
 
 - (void)setContentOffset:(CGPoint)contentOffset
