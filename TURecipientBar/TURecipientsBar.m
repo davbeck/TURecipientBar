@@ -186,7 +186,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         }
     } else {
         _summaryLabel.textColor = [UIColor lightGrayColor];
-        if (self.placeholderTextAttributes == nil) {
+        if (self.placeholderTextAttributes == nil || self.placeholder == nil) {
             _summaryLabel.text = self.placeholder;
         } else {
             _summaryLabel.attributedText = [[NSAttributedString alloc] initWithString:self.placeholder attributes:self.placeholderTextAttributes];
