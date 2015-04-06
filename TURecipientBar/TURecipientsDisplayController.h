@@ -183,6 +183,20 @@
  */
 - (void)recipientsDisplayController:(TURecipientsDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView;
 
+/** Tells the delegate to add the search table view to the view hierarchy.
+ 
+ If this is implimented by the delegate, the controller will defer to the delegate to add the search table view to a superview. If not, the controller will attempt to add it to the `contentsController`'s view.
+ 
+ Before returning from this method, it is the delegate's responsibility to:
+ 
+ 1. Add the tableView to a superview.
+ 2. Set the frame of the tableView, either with constraints followed by a call to layoutIfNeeded, or manually.
+ 
+ @param controller The recipients display controller for which the receiver is the delegate.
+ @param tableView The recipients display controller’s table view.
+ */
+- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller displaySearchResultsTableView:(UITableView *)tableView;
+
 /** Tells the delegate that the controller just displayed its table view.
  
  @param controller The recipients display controller for which the receiver is the delegate.

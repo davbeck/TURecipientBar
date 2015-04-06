@@ -68,11 +68,16 @@ static void *TURecipientsContext = &TURecipientsContext;
                 [self.delegate recipientsDisplayController:self willShowSearchResultsTableView:tableView];
             }
             
-            [self.contentsController.view addSubview:tableView];
-            [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
-            [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_recipientsBar, tableView)]];
             
-            [self.contentsController.view layoutIfNeeded];
+            if ([self.delegate respondsToSelector:@selector(recipientsDisplayController:displaySearchResultsTableView:)]) {
+                [self.delegate recipientsDisplayController:self displaySearchResultsTableView:tableView];
+            } else {
+                [self.contentsController.view addSubview:tableView];
+                [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
+                [self.contentsController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_recipientsBar, tableView)]];
+                
+                [self.contentsController.view layoutIfNeeded];
+            }
             
             
             tableView.alpha = 0.0;
@@ -238,7 +243,13 @@ static void *TURecipientsContext = &TURecipientsContext;
             contentInset.bottom = bottomInset;
             scrollIndicatorInsets.bottom = contentInset.bottom;
         }
-        contentInset.top = CGRectGetMaxY(self.recipientsBar.frame);
+        
+        // if we convert directly to the tableView, we will get things in it's bounds coordinates, which changes as it scrolls
+        // instead we convert both to the windows coordinates
+        CGRect recipientBarFrame = [self.recipientsBar convertRect:self.recipientsBar.bounds toView:nil];
+        CGRect tableViewFrame = [self.searchResultsTableView.superview convertRect:self.searchResultsTableView.frame toView:nil];
+        
+        contentInset.top = CGRectGetMaxY(recipientBarFrame) - tableViewFrame.origin.y;
         scrollIndicatorInsets.top = contentInset.top;
         
         self.searchResultsTableView.contentInset = contentInset;
