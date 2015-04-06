@@ -474,7 +474,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     recipientViewFrame.origin.y = CGRectGetMidY(lastView.frame) - recipientViewFrame.size.height / 2.0;
     
     if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
-        recipientViewFrame.origin.x = 8.0;
+        recipientViewFrame.origin.x = 15.0;
         recipientViewFrame.origin.y += TURecipientsLineHeight - 8.0;
     }
     
@@ -489,7 +489,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     if (_needsRecipientLayout) {
         CGSize toSize = _toLabel.intrinsicContentSize;
-        _toLabel.frame = CGRectMake(8.0,
+        _toLabel.frame = CGRectMake(15.0,
                                     21.0 - toSize.height / 2,
                                     toSize.width, toSize.height);
         
