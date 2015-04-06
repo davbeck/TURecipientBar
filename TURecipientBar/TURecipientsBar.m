@@ -550,7 +550,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - lineHeight, self.bounds.size.width, lineHeight);
     }
     
-    if (_textField.isFirstResponder && !self.searching) {
+    if (_textField.isFirstResponder && (!self.searching || self.showsMultipleLinesWhileSearching)) {
 		self.heightConstraint.constant = self.contentSize.height;
 	} else {
 		self.heightConstraint.constant = TURecipientsLineHeight;

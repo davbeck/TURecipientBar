@@ -100,6 +100,12 @@
  */
 @property (nonatomic) BOOL animatedRecipientsInAndOut;
 
+/** Control the height of the bar while searching.
+ 
+ By default, the bar shrinks down to a single line when the user is searching for a recipient. When this is set to `YES`, the control will remain at it's full height.
+ */
+@property (nonatomic) BOOL showsMultipleLinesWhileSearching;
+
 /** The height constraint for the entire bar.
  
  You can use this to set the height constraint in Interface Builder. This was almost necessary in iOS 6, however in iOS 7, you can set a placeholder constraint and let the bar create it's own height constraint.
