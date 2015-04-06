@@ -19,6 +19,7 @@
  */
 
 
+IB_DESIGNABLE
 @interface TURecipientsBar : UIScrollView <UITextFieldDelegate>
 
 /**---------------------------------------------------------------------------------------
@@ -38,13 +39,13 @@
  
  You can set this to nil to disable the label entirely.
  */
-@property (nonatomic, copy) NSString *label;
+@property (nonatomic, copy) IBInspectable NSString *label;
 
 /** The string that is displayed when there is no other text in the search field.
  
  The default value is nil.
  */
-@property (nonatomic, copy) NSString *placeholder;
+@property (nonatomic, copy) IBInspectable NSString *placeholder;
 
 /** Whether the bar is searching or not.
  
