@@ -244,13 +244,10 @@ static void *TURecipientsContext = &TURecipientsContext;
             scrollIndicatorInsets.bottom = contentInset.bottom;
         }
         
-        // if we convert directly to the tableView, we will get things in it's bounds coordinates, which changes as it scrolls
-        // instead we convert both to the windows coordinates
-        CGRect recipientBarFrame = [self.recipientsBar convertRect:self.recipientsBar.bounds toView:nil];
-        CGRect tableViewFrame = [self.searchResultsTableView.superview convertRect:self.searchResultsTableView.frame toView:nil];
-        
-        contentInset.top = CGRectGetMaxY(recipientBarFrame) - tableViewFrame.origin.y;
-        scrollIndicatorInsets.top = contentInset.top;
+        if (![self.delegate respondsToSelector:@selector(recipientsDisplayController:displaySearchResultsTableView:)]) {
+            contentInset.top = CGRectGetMaxY(self.recipientsBar.frame);
+            scrollIndicatorInsets.top = contentInset.top;
+        }
         
         self.searchResultsTableView.contentInset = contentInset;
         self.searchResultsTableView.scrollIndicatorInsets = scrollIndicatorInsets;
