@@ -20,10 +20,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 @implementation TURecipientsBar
 {
     UIVisualEffectView *_backgroundView;
-	UILabel *_toLabel;
 	UIButton *_addButton;
 	UILabel *_summaryLabel;
-	UIView *_lineView;
 	NSArray *_updatingConstraints; // NSLayoutConstraint
     NSArray *_addButtonHiddenConstraints; // NSLayoutConstraint
 	
@@ -384,7 +382,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self addSubview:_lineView];
 	
 	_toLabel = [[UILabel alloc] init];
-    self.label = NSLocalizedString(@"To: ", nil);
+    self.toLabel.text = NSLocalizedString(@"To: ", nil);
 	[self addSubview:_toLabel];
 	
 	_addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];

@@ -38,8 +38,10 @@ IB_DESIGNABLE
  The default value is "To: ".
  
  You can set this to nil to disable the label entirely.
+ 
+ Use `toLabel` instead.
  */
-@property (nonatomic, copy) IBInspectable NSString *label;
+@property (nonatomic, copy) IBInspectable NSString *label __attribute__((deprecated));
 
 /** The string that is displayed when there is no other text in the search field.
  
@@ -80,6 +82,14 @@ IB_DESIGNABLE
  You can use this to customize the text input attributes for searching.
  */
 @property (nonatomic, readonly) UITextField *textField;
+
+@property (nonatomic, readonly) UIView *lineView;
+
+/** The label in front of both the search field and tokens.
+ 
+ The default text is "To: ". You can set the text to nil to disable the label entirely.
+ */
+@property (nonatomic, readonly) UILabel *toLabel;
 
 /** Whether the add button should appear.
  
@@ -226,7 +236,7 @@ IB_DESIGNABLE
 
 /** The text attributes applied to the label.
  */
-@property (nonatomic, copy) NSDictionary *labelTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy) NSDictionary *labelTextAttributes UI_APPEARANCE_SELECTOR __attribute__((deprecated));
 
 /** The text attributes applied to the summary.
  */
