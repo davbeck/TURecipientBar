@@ -20,8 +20,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 @implementation TURecipientsBar
 {
     UIVisualEffectView *_backgroundView;
-	UIButton *_addButton;
-	UILabel *_summaryLabel;
 	NSArray *_updatingConstraints; // NSLayoutConstraint
     NSArray *_addButtonHiddenConstraints; // NSLayoutConstraint
 	

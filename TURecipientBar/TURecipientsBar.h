@@ -84,6 +84,10 @@
 
 @property (nonatomic, readonly) UIView *lineView;
 
+@property (nonatomic, readonly) UIButton *addButton;
+
+@property (nonatomic, readonly) UILabel *summaryLabel;
+
 /** The label in front of both the search field and tokens.
  
  The default text is "To: ". You can set the text to nil to disable the label entirely.
