@@ -19,7 +19,6 @@
  */
 
 
-IB_DESIGNABLE
 @interface TURecipientsBar : UIScrollView <UITextFieldDelegate>
 
 /**---------------------------------------------------------------------------------------
@@ -41,13 +40,13 @@ IB_DESIGNABLE
  
  Use `toLabel` instead.
  */
-@property (nonatomic, copy) IBInspectable NSString *label __attribute__((deprecated));
+@property (nonatomic, copy) NSString *label __attribute__((deprecated));
 
 /** The string that is displayed when there is no other text in the search field.
  
  The default value is nil.
  */
-@property (nonatomic, copy) IBInspectable NSString *placeholder;
+@property (nonatomic, copy) NSString *placeholder;
 
 /** Whether the bar is searching or not.
  

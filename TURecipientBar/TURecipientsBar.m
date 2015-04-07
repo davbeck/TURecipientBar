@@ -272,9 +272,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (void)setLabel:(NSString *)label
 {
-    _label = [label copy];
-    
     _toLabel.attributedText = [[NSAttributedString alloc] initWithString:label ?: @"" attributes:self.labelTextAttributes];
+}
+
+- (NSString *)label
+{
+	return [_toLabel text];
 }
 
 - (void)setHeightConstraint:(NSLayoutConstraint *)heightConstraint
