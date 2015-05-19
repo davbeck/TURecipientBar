@@ -233,8 +233,8 @@ static void *TURecipientsContext = &TURecipientsContext;
 - (void)_updateTableViewInsets
 {
     if (_searchResultsTableView != nil) {
-        CGRect keyboardFrameInView = [self.contentsController.view convertRect:_keyboardFrame fromView:nil];
-        CGFloat bottomInset = self.contentsController.view.frame.size.height - keyboardFrameInView.origin.y;
+        CGRect keyboardFrameInView = [self.searchResultsTableView.superview convertRect:_keyboardFrame fromView:nil];
+        CGFloat bottomInset = CGRectGetMaxY(self.searchResultsTableView.frame) - keyboardFrameInView.origin.y;
         
         UIEdgeInsets contentInset = self.searchResultsTableView.contentInset;
         UIEdgeInsets scrollIndicatorInsets = self.searchResultsTableView.scrollIndicatorInsets;
