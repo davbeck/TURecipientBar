@@ -341,6 +341,8 @@ static void *TURecipientsContext = &TURecipientsContext;
 	if ([self.delegate respondsToSelector:@selector(recipientsDisplayControllerDidEndSearch:)]) {
 		[self.delegate recipientsDisplayControllerDidEndSearch:self];
 	}
+    
+    [self _hideTableView];
 }
 
 - (void)recipientsBar:(TURecipientsBar *)recipientsBar textDidChange:(NSString *)searchText
