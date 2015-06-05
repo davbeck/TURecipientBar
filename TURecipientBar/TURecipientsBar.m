@@ -400,6 +400,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	_textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	_textField.spellCheckingType = UITextSpellCheckingTypeNo;
 	_textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [_textField addTarget:self action:@selector(textFieldEditingChanged:) forControlEvents:UIControlEventEditingChanged];
 	[self addSubview:_textField];
 	[_textField addObserver:self forKeyPath:@"selectedTextRange" options:0 context:TURecipientsSelectionContext];
 	
@@ -748,29 +749,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		delegateResponse = [self.recipientsBarDelegate recipientsBar:self shouldChangeTextInRange:range replacementText:string];
 	}
 	
-	
-	if (delegateResponse) {
-		[self _manuallyChangeTextField:textField inRange:range replacementString:string];
-		
-		
-		if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:textDidChange:)]) {
-			[self.recipientsBarDelegate recipientsBar:self textDidChange:self.text];
-		}
-	}
-	
-	
-	return NO;
+	return delegateResponse;
 }
 
-- (void)_manuallyChangeTextField:(UITextField *)textField inRange:(NSRange)range replacementString:(NSString *)string
-{
-	//we save the offset from the end of the document and reset the selection to be a caret there
-	NSInteger offset = [_textField offsetFromPosition:_textField.selectedTextRange.end toPosition:_textField.endOfDocument];
-	
-	textField.text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-	
-	UITextPosition *newEnd = [_textField positionFromPosition:_textField.endOfDocument inDirection:UITextLayoutDirectionLeft offset:offset];
-	_textField.selectedTextRange = [_textField textRangeFromPosition:newEnd toPosition:newEnd];
+- (void)textFieldEditingChanged:(UITextField *)textField {
+    if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:textDidChange:)]) {
+        [self.recipientsBarDelegate recipientsBar:self textDidChange:self.text];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
