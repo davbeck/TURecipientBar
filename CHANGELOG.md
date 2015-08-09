@@ -1,5 +1,14 @@
 # TURecipientBar CHANGELOG
 
+### 2.0.2
+
+- Fixed crash related to removing from superview.
+- Fixed crash related to a nil placeholder.
+- Added delegate hook for custom search tableView layout.
+- Added option to show multiple lines while searching.
+- Exposed toLabel, lineView, addButton, and summaryLabel.
+- Fixed multistage text input (#31 Thanks [YuAo](https://github.com/davbeck/TURecipientBar/pull/32)).
+
 ### 2.0.1
 
 - Fixed crash related to offscreen views.
