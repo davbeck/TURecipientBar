@@ -658,7 +658,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 			[self _updateRecipientTextField];
 			
 			if (_selectedRecipient != nil) {
-				[_textField becomeFirstResponder];
+                // TODO: CITY-3968 need to implement fix for scrolling to bottom, maybe add delete recipient instead of textfield backspace
+				//[_textField becomeFirstResponder];
 			}
 		}
 		
