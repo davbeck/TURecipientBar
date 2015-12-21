@@ -656,10 +656,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 			_selectedRecipient = recipient;
 			
 			[self _updateRecipientTextField];
-			
-			if (_selectedRecipient != nil) {
-				[_textField becomeFirstResponder];
-			}
 		}
 		
 		for (UIButton *recipientView in _recipientViews) {
