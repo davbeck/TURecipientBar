@@ -656,11 +656,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 			_selectedRecipient = recipient;
 			
 			[self _updateRecipientTextField];
-			
-			if (_selectedRecipient != nil) {
-                // TODO: CITY-3968 need to implement fix for scrolling to bottom, maybe add delete recipient instead of textfield backspace
-				//[_textField becomeFirstResponder];
-			}
 		}
 		
 		for (UIButton *recipientView in _recipientViews) {
