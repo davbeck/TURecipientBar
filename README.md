@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/cocoapods/l/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
 [![Platform](https://img.shields.io/cocoapods/p/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 `TURecipientBar` is a `UIView` for entering recipients similarly to the iOS Mail app. It handles search and display of recipients.
 
 [![Screenshot](Screenshot.gif)](http://cl.ly/1h2Y3D0V3j2x)
