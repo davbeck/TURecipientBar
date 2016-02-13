@@ -10,7 +10,7 @@
 
 ## Installation
 
-### [Cocoapods](http://cocoapods.org)
+### [CocoaPods](http://cocoapods.org)
 
 1. Add `pod TURecipientBar, '~> 2.0'` to your Podfile.
 2. Run 'pod install'
