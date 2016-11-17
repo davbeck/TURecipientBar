@@ -30,7 +30,7 @@
  
  The default value is nil.
  */
-@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy, nullable) NSString *text;
 
 /** The text for the label in front of both the search field and tokens.
  
@@ -40,13 +40,13 @@
  
  Use `toLabel` instead.
  */
-@property (nonatomic, copy) NSString *label __attribute__((deprecated));
+@property (nonatomic, copy, nullable) NSString *label __attribute__((deprecated));
 
 /** The string that is displayed when there is no other text in the search field.
  
  The default value is nil.
  */
-@property (nonatomic, copy) NSString *placeholder;
+@property (nonatomic, copy, nullable) NSString *placeholder;
 
 /** Whether the bar is searching or not.
  
@@ -80,19 +80,19 @@
  
  You can use this to customize the text input attributes for searching.
  */
-@property (nonatomic, readonly) UITextField *textField;
+@property (nonatomic, readonly, nonnull) UITextField *textField;
 
-@property (nonatomic, readonly) UIView *lineView;
+@property (nonatomic, readonly, nonnull) UIView *lineView;
 
-@property (nonatomic, readonly) UIButton *addButton;
+@property (nonatomic, readonly, nonnull) UIButton *addButton;
 
-@property (nonatomic, readonly) UILabel *summaryLabel;
+@property (nonatomic, readonly, nonnull) UILabel *summaryLabel;
 
 /** The label in front of both the search field and tokens.
  
  The default text is "To: ". You can set the text to nil to disable the label entirely.
  */
-@property (nonatomic, readonly) UILabel *toLabel;
+@property (nonatomic, readonly, nonnull) UILabel *toLabel;
 
 /** Whether the add button should appear.
  
@@ -126,7 +126,7 @@
  
  You can also change the priority. It must be lower than whatever constraint you are using to limit the bars height. The default priority is `UILayoutPriorityDefaultHigh` (`750`).
  */
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
+@property (nonatomic, weak, nullable) IBOutlet NSLayoutConstraint *heightConstraint;
 
 
 /**---------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@
  
  The delegate should conform to the TURecipientsBarDelegate protocol. Set this property to further modify the behavior. The default value is nil.
  */
-@property (nonatomic, weak) id<TURecipientsBarDelegate> recipientsBarDelegate;
+@property (nonatomic, weak, nullable) id<TURecipientsBarDelegate> recipientsBarDelegate;
 
 
 /**---------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@
  
  Items are of type TURecipient.
  */
-@property (nonatomic, readonly) NSArray *recipients;
+@property (nonatomic, readonly, nonnull) NSArray<id<TURecipient>> *recipients;
 
 /** Add a recipient.
  
@@ -160,7 +160,7 @@
  
 @param recipient A recipient to add.
  */
-- (void)addRecipient:(id<TURecipient>)recipient;
+- (void)addRecipient:(nonnull id<TURecipient>)recipient;
 
 /** Remove a recipient.
  
@@ -168,13 +168,13 @@
  
  @param recipient A recipient to remove.
  */
-- (void)removeRecipient:(id<TURecipient>)recipient;
+- (void)removeRecipient:(nonnull id<TURecipient>)recipient;
 
 /** The currently selected recipient.
  
  If the bar is in search mode, you can use this to select the token that represents it. If the bar is not searching, this has no effect.
  */
-@property (nonatomic, strong) id<TURecipient> selectedRecipient;
+@property (nonatomic, strong, nullable) id<TURecipient> selectedRecipient;
 
 /** Select a recipient.
  
@@ -184,7 +184,7 @@
  
  @param recipient A recipient to select.
  */
-- (void)selectRecipient:(id<TURecipient>)recipient __attribute__((deprecated));
+- (void)selectRecipient:(nullable id<TURecipient>)recipient __attribute__((deprecated));
 
 
 /**---------------------------------------------------------------------------------------
@@ -199,7 +199,7 @@
  @param backgroundImage The background image to use. This should be a resizable image.
  @param state The state to use this background in.
  */
-- (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (void)setRecipientBackgroundImage:(nullable UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** The background image for the token that represents a recipient.
  
@@ -208,7 +208,7 @@
  @param state The state to use this background in.
  @return The background image for the given state.
  */
-- (UIImage *)recipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (nullable UIImage *)recipientBackgroundImageForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** The edge insets for the token that represents a recipient.
  
@@ -224,7 +224,7 @@
  
  @param state The state to use the attributes in.
  */
-- (void)setRecipientTitleTextAttributes:(NSDictionary *)attributes forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (void)setRecipientTitleTextAttributes:(nullable NSDictionary<NSString *,id> *)attributes forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** The text attributes for the token that represents a recipient.
  
@@ -235,27 +235,27 @@
  @param state The state to use this background in.
  @return The text attributes override for the given state.
  */
-- (NSDictionary *)recipientTitleTextAttributesForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (nullable NSDictionary<NSString *,id> *)recipientTitleTextAttributesForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** The text attributes applied to the label.
  */
-@property (nonatomic, copy) NSDictionary *labelTextAttributes UI_APPEARANCE_SELECTOR __attribute__((deprecated));
+@property (nonatomic, copy, nullable) NSDictionary<NSString *,id> *labelTextAttributes UI_APPEARANCE_SELECTOR __attribute__((deprecated));
 
 /** The text attributes applied to the summary.
  */
-@property (nonatomic, copy) NSDictionary *summaryTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy, nullable) NSDictionary<NSString *,id> *summaryTextAttributes UI_APPEARANCE_SELECTOR;
 
 /** The text attributes applied to the search text field.
  
  Only the font and foreground color are used.
  */
-@property (nonatomic, copy) NSDictionary *searchFieldTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy, nullable) NSDictionary<NSString *,id> *searchFieldTextAttributes UI_APPEARANCE_SELECTOR;
 
 /** The text attributes applied to the placeholder.
  
  Note that at this time, changing summaryTextAttributes or recipientTitleTextAttributesForState: will not change the placeholder attributes.
  */
-@property (nonatomic, copy) NSDictionary *placeholderTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy, nullable) NSDictionary<NSString *,id> *placeholderTextAttributes UI_APPEARANCE_SELECTOR;
 
 /** Whether the recipient bar should use a visual effect for it's background.
  
@@ -282,7 +282,7 @@
  @param recipientsBar The recipient bar that is being edited.
  @return `YES` if an editing session should be initiated, otherwise, `NO`.
  */
-- (BOOL)recipientsBarShouldBeginEditing:(TURecipientsBar *)recipientsBar;
+- (BOOL)recipientsBarShouldBeginEditing:(nonnull TURecipientsBar *)recipientsBar;
 
 /** Tells the delegate when the user begins editing the search text.
  
@@ -290,7 +290,7 @@
  
  @param recipientsBar The recipient bar that is being edited.
  */
-- (void)recipientsBarTextDidBeginEditing:(TURecipientsBar *)recipientsBar;
+- (void)recipientsBarTextDidBeginEditing:(nonnull TURecipientsBar *)recipientsBar;
 
 /** Asks the delegate if editing should stop in the specified search bar.
  
@@ -299,7 +299,7 @@
  @param recipientsBar The recipient bar that is being edited.
  @return `YES` if editing should stop, otherwise, `NO`.
  */
-- (BOOL)recipientsBarShouldEndEditing:(TURecipientsBar *)recipientsBar;
+- (BOOL)recipientsBarShouldEndEditing:(nonnull TURecipientsBar *)recipientsBar;
 
 /** Tells the delegate that the user finished editing the search text.
  
@@ -307,7 +307,7 @@
  
  @param recipientsBar The recipient bar that is being edited.
  */
-- (void)recipientsBarTextDidEndEditing:(TURecipientsBar *)recipientsBar;
+- (void)recipientsBarTextDidEndEditing:(nonnull TURecipientsBar *)recipientsBar;
 
 /** Tells the delegate that the user changed the search text.
  
@@ -316,7 +316,7 @@
  @param recipientsBar The recipient bar that is being edited.
  @param searchText The current text in the search text field.
  */
-- (void)recipientsBar:(TURecipientsBar *)recipientsBar textDidChange:(NSString *)searchText;
+- (void)recipientsBar:(nonnull TURecipientsBar *)recipientsBar textDidChange:(nullable NSString *)searchText;
 
 /** Asks the delegate if editing should stop in the specified recipient bar.
  
@@ -327,7 +327,7 @@
  @param text The text to replace existing text in range.
  @return `YES` if text in range should be replaced by text, otherwise, `NO`.
  */
-- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (BOOL)recipientsBar:(nonnull TURecipientsBar *)recipientsBar shouldChangeTextInRange:(NSRange)range replacementText:(nullable NSString *)text;
 
 /**---------------------------------------------------------------------------------------
  * @name Selection
@@ -342,7 +342,7 @@
  @param recipient The recipient being selected.
  @return `YES` if the recipient should be selected, otherwise, `NO`.
  */
-- (BOOL)recipientsBar:(TURecipientsBar *)recipientsBar shouldSelectRecipient:(id<TURecipient>)recipient;
+- (BOOL)recipientsBar:(nonnull TURecipientsBar *)recipientsBar shouldSelectRecipient:(nonnull id<TURecipient>)recipient;
 
 /** Tells the delegate that recipient selection has changed.
  
@@ -351,7 +351,7 @@
  @param recipientsBar The recipient bar that is being edited.
  @param recipient The recipient that was selected.
  */
-- (void)recipientsBar:(TURecipientsBar *)recipientsBar didSelectRecipient:(id<TURecipient>)recipient;
+- (void)recipientsBar:(nonnull TURecipientsBar *)recipientsBar didSelectRecipient:(nonnull id<TURecipient>)recipient;
 
 /**---------------------------------------------------------------------------------------
  * @name Clicking Buttons
@@ -364,7 +364,7 @@
  
  @param recipientsBar The recipient bar that is being edited.
  */
-- (void)recipientsBarReturnButtonClicked:(TURecipientsBar *)recipientsBar;
+- (void)recipientsBarReturnButtonClicked:(nonnull TURecipientsBar *)recipientsBar;
 
 /**  Tells the delegate when the add button is pressed.
  
@@ -372,6 +372,6 @@
  
  @param recipientsBar The recipient bar that is being edited.
  */
-- (void)recipientsBarAddButtonClicked:(TURecipientsBar *)recipientsBar;
+- (void)recipientsBarAddButtonClicked:(nonnull TURecipientsBar *)recipientsBar;
 
 @end
