@@ -63,6 +63,6 @@
  Because this class is immutable, this is the only way to set the title and address properties.
  If you need to make a change, you should create a new one. This is because the recipients bar will not track changes.
  */
-+ (id)recipientWithTitle:(nonnull NSString *)title address:(nullable id)address;
++ (nonnull id)recipientWithTitle:(nonnull NSString *)title address:(nullable id)address;
 
 @end
