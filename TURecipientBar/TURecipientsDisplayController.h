@@ -40,13 +40,13 @@
  The `TURecipientsBarDelegate` methods are also called on the controller's delegates, after
  the controller processes them.
  */
-@property (nonatomic, weak) IBOutlet id<TURecipientsDisplayDelegate> delegate;
+@property (nonatomic, weak, nullable) IBOutlet id<TURecipientsDisplayDelegate> delegate;
 
 /** The corresponding recipients bar.
  
  The controller is mostly useless if this is not set.
  */
-@property (nonatomic, strong) IBOutlet TURecipientsBar *recipientsBar;
+@property (nonatomic, strong, nullable) IBOutlet TURecipientsBar *recipientsBar;
 
 /** The view controller to display the search results with.
  
@@ -55,27 +55,27 @@
  attach to the bottom, right and left of the view, and the bottom of the recipients bar. For
  obvious reasons, the view property should return a UIView and not a UIScrollView.
  */
-@property (nonatomic, weak) IBOutlet UIViewController *contentsController;
+@property (nonatomic, weak, nullable) IBOutlet UIViewController *contentsController;
 
 /** The table view used to display search results.
  
  This table is populated and controlled with `searchResultsDataSource` and `searchResultsDelegate`.
  */
-@property (nonatomic, readonly, strong) UITableView *searchResultsTableView;
+@property (nonatomic, readonly, strong, nullable) UITableView *searchResultsTableView;
 
 /** The datasource for the `searchResultsTableView`
  
  You can display whatever content you want, but generally will show the search results filtered
  by the recipients bar search string.
  */
-@property (nonatomic, weak) IBOutlet id<UITableViewDataSource> searchResultsDataSource;
+@property (nonatomic, weak, nullable) IBOutlet id<UITableViewDataSource> searchResultsDataSource;
 
 /** The delegate for the `searchResultsTableView`
  
  You can respond to the table however you like, but typically will add a recipient when the
  user selects a row.
  */
-@property (nonatomic, weak) IBOutlet id<UITableViewDelegate> searchResultsDelegate;
+@property (nonatomic, weak, nullable) IBOutlet id<UITableViewDelegate> searchResultsDelegate;
 
 /** Create a controller
  
@@ -90,7 +90,7 @@
  @param viewController The viewController for the controller.
  @return A controller ready to be used.
  */
-- (id)initWithRecipientsBar:(TURecipientsBar *)recipientsBar contentsController:(UIViewController *)viewController;
+- (nonnull id)initWithRecipientsBar:(nullable TURecipientsBar *)recipientsBar contentsController:(nullable UIViewController *)viewController;
 
 @end
 
@@ -119,31 +119,31 @@
  @param controller The recipients display controller for which the receiver is the delegate.
  @return `YES` to show the search UI, otherwise, `NO`.
  */
-- (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientsDisplayController *)controller;
+- (BOOL)recipientsDisplayControllerShouldBeginSearch:(nonnull TURecipientsDisplayController *)controller;
 
 /** Tells the delegate that the controller is about to begin searching.
  
  @param controller The recipients display controller for which the receiver is the delegate.
  */
-- (void)recipientsDisplayControllerWillBeginSearch:(TURecipientsDisplayController *)controller;
+- (void)recipientsDisplayControllerWillBeginSearch:(nonnull TURecipientsDisplayController *)controller;
 
 /** Tells the delegate that the controller is about to begin searching.
  
  @param controller The recipients display controller for which the receiver is the delegate.
  */
-- (void)recipientsDisplayControllerDidBeginSearch:(TURecipientsDisplayController *)controller;
+- (void)recipientsDisplayControllerDidBeginSearch:(nonnull TURecipientsDisplayController *)controller;
 
 /** Tells the delegate that the controller is about to end searching.
  
  @param controller The recipients display controller for which the receiver is the delegate.
  */
-- (void)recipientsDisplayControllerWillEndSearch:(TURecipientsDisplayController *)controller;
+- (void)recipientsDisplayControllerWillEndSearch:(nonnull TURecipientsDisplayController *)controller;
 
 /** Tells the delegate that the controller has finished searching.
  
  @param controller The recipients display controller for which the receiver is the delegate.
  */
-- (void)recipientsDisplayControllerDidEndSearch:(TURecipientsDisplayController *)controller;
+- (void)recipientsDisplayControllerDidEndSearch:(nonnull TURecipientsDisplayController *)controller;
 
 
 /**---------------------------------------------------------------------------------------
@@ -158,7 +158,7 @@
  @param controller The recipients display controller for which the receiver is the delegate.
  @param tableView The `searchResultsTableView` that was just loaded.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller didLoadSearchResultsTableView:(nonnull UITableView *)tableView;
 
 /** Tells the delegate that the controller is about to unload its table view.
  
@@ -168,7 +168,7 @@
  @param controller The recipients display controller for which the receiver is the delegate.
  @param tableView The `searchResultsTableView` that was just loaded.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller willUnloadSearchResultsTableView:(nonnull UITableView *)tableView;
 
 
 /**---------------------------------------------------------------------------------------
@@ -181,7 +181,7 @@
  @param controller The recipients display controller for which the receiver is the delegate.
  @param tableView The recipients display controller’s table view.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller willShowSearchResultsTableView:(nonnull UITableView *)tableView;
 
 /** Tells the delegate to add the search table view to the view hierarchy.
  
@@ -195,28 +195,28 @@
  @param controller The recipients display controller for which the receiver is the delegate.
  @param tableView The recipients display controller’s table view.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller displaySearchResultsTableView:(UITableView *)tableView;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller displaySearchResultsTableView:(nonnull UITableView *)tableView;
 
 /** Tells the delegate that the controller just displayed its table view.
  
  @param controller The recipients display controller for which the receiver is the delegate.
  @param tableView The recipients display controller’s table view.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller didShowSearchResultsTableView:(nonnull UITableView *)tableView;
 
 /** Tells the delegate that the controller is about to hide its table view.
  
  @param controller The recipients display controller for which the receiver is the delegate.
  @param tableView The recipients display controller’s table view.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller willHideSearchResultsTableView:(nonnull UITableView *)tableView;
 
 /** Tells the delegate that the controller just hid its table view.
  
  @param controller The recipients display controller for which the receiver is the delegate.
  @param tableView The recipients display controller’s table view.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller didHideSearchResultsTableView:(nonnull UITableView *)tableView;
 
 
 /**---------------------------------------------------------------------------------------
@@ -237,7 +237,7 @@
  @param searchString The string in the search bar.
  @return `YES` if the display controller should reload the data in its table view, otherwise `NO`.
  */
-- (BOOL)recipientsDisplayController:(TURecipientsDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString;
+- (BOOL)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller shouldReloadTableForSearchString:(nullable NSString *)searchString;
 
 
 /**---------------------------------------------------------------------------------------
@@ -258,7 +258,7 @@
  @param recipient The recipient the controller is about to add.
  @return The recipient to add.
  */
-- (id<TURecipient>)recipientsDisplayController:(TURecipientsDisplayController *)controller willAddRecipient:(id<TURecipient>)recipient;
+- (nullable id<TURecipient>)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller willAddRecipient:(nonnull id<TURecipient>)recipient;
 
 /** Tells the delegate when a recipient has been added
  
@@ -267,7 +267,7 @@
  @param controller The recipients display controller for which the receiver is the delegate.
  @param recipient The recipient that was added.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didAddRecipient:(id<TURecipient>)recipient;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller didAddRecipient:(nonnull id<TURecipient>)recipient;
 
 /** Tell the delegate when a recipient is removed
  
@@ -276,6 +276,6 @@
  @param controller The recipients display controller for which the receiver is the delegate.
  @param recipient The recipient that was removed.
  */
-- (void)recipientsDisplayController:(TURecipientsDisplayController *)controller didRemoveRecipient:(id<TURecipient>)recipient;
+- (void)recipientsDisplayController:(nonnull TURecipientsDisplayController *)controller didRemoveRecipient:(nonnull id<TURecipient>)recipient;
 
 @end
