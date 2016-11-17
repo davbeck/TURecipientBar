@@ -25,7 +25,7 @@
  You can create a category that returns a different property for this value.
  For instance, an `NSManagedObject` could return it's name property
  */
-@property (nonatomic, readonly, copy) NSString *recipientTitle;
+@property (nonatomic, readonly, copy, nonnull) NSString *recipientTitle;
 
 @end
 
@@ -49,13 +49,13 @@
  
  This is for backwards compatability. Use `recipientTitle` instead.
  */
-@property (nonatomic, readonly, copy) NSString *title __attribute__((deprecated));
+@property (nonatomic, readonly, copy, nonnull) NSString *title __attribute__((deprecated));
 
 /** A generic reference to a model.
  
  You can use this to keep track of what a recipient points to.
  */
-@property (nonatomic, readonly, strong) id address;
+@property (nonatomic, readonly, strong, nullable) id address;
 
 
 /** Create a new recipient.
@@ -63,6 +63,6 @@
  Because this class is immutable, this is the only way to set the title and address properties.
  If you need to make a change, you should create a new one. This is because the recipients bar will not track changes.
  */
-+ (id)recipientWithTitle:(NSString *)title address:(id)address;
++ (id)recipientWithTitle:(nonnull NSString *)title address:(nullable id)address;
 
 @end
