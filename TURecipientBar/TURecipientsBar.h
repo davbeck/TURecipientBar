@@ -353,6 +353,25 @@
  */
 - (void)recipientsBar:(nonnull TURecipientsBar *)recipientsBar didSelectRecipient:(nonnull id<TURecipient>)recipient;
 
+/** Tells the delegate that recipient was removed.
+
+ Called when a recipient was removed
+
+ @param recipientsBar The recipient bar that is being edited.
+ @param recipient The recipient that was removed.
+ */
+- (void)recipientsBar:(nonnull TURecipientsBar *)recipientsBar didRemoveRecipient:(nonnull id<TURecipient>)recipient;
+
+/** Tells the delegate that recipient was added.
+
+ Called when a recipient was added
+
+ @param recipientsBar The recipient bar that is being edited.
+ @param recipient The recipient that was added.
+ */
+- (void)recipientsBar:(nonnull TURecipientsBar *)recipientsBar didAddRecipient:(nonnull id<TURecipient>)recipient;
+
+
 /**---------------------------------------------------------------------------------------
  * @name Clicking Buttons
  *  ---------------------------------------------------------------------------------------

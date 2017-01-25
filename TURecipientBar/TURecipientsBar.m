@@ -120,7 +120,9 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     } else {
         recipientView.alpha = 0.0;
     }
-	
+    if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:didAddRecipient:)]) {
+        [self.recipientsBarDelegate recipientsBar:self didAddRecipient:recipient];
+    }
 	[self _updateSummary];
 }
 
@@ -156,9 +158,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     } else {
         [recipientView removeFromSuperview];
     }
-	
-	
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:didRemoveRecipient:)]) {
+        [self.recipientsBarDelegate recipientsBar:self didRemoveRecipient:recipient];
+    }
 	[self _updateSummary];
+
 }
 
 - (void)_updateSummary
