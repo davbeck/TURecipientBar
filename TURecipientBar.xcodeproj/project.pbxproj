@@ -18,24 +18,64 @@
 		110611DF1742E2D400730F01 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611DE1742E2D400730F01 /* Default-568h@2x.png */; };
 		110611E21742E2D400730F01 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 110611E01742E2D400730F01 /* MainStoryboard.storyboard */; };
 		110611E51742E2D400730F01 /* TUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611E41742E2D400730F01 /* TUViewController.m */; };
-		110611F01742E63100730F01 /* TURecipientsBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611EF1742E63100730F01 /* TURecipientsBar.m */; };
-		110611F31742E63D00730F01 /* TURecipient.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611F21742E63D00730F01 /* TURecipient.m */; };
-		110611F91742E64600730F01 /* recipient-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F41742E64600730F01 /* recipient-selected.png */; };
-		110611FA1742E64600730F01 /* recipient-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F51742E64600730F01 /* recipient-selected@2x.png */; };
-		110611FB1742E64600730F01 /* recipient.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F61742E64600730F01 /* recipient.png */; };
-		110611FC1742E64600730F01 /* recipient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 110611F71742E64600730F01 /* recipient@2x.png */; };
-		110612001742E96700730F01 /* TURecipientsDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611FF1742E96700730F01 /* TURecipientsDisplayController.m */; };
 		110612051742EDE600730F01 /* TUABSearchSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 110612041742EDE500730F01 /* TUABSearchSource.m */; };
 		110612071742EE9200730F01 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612061742EE9200730F01 /* AddressBook.framework */; };
 		110612091742EE9800730F01 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612081742EE9800730F01 /* AddressBookUI.framework */; };
-		11468B921AA689D700279850 /* recipient-selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11468B911AA689D700279850 /* recipient-selected@3x.png */; };
-		11468B941AA689E200279850 /* recipient@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11468B931AA689E200279850 /* recipient@3x.png */; };
+		114122E91E3A997C00A59344 /* TURecipientBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 114122E01E3A997C00A59344 /* TURecipientBar.framework */; };
+		114122F01E3A997C00A59344 /* TURecipientBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 114122EF1E3A997C00A59344 /* TURecipientBarTests.m */; };
+		114122F21E3A997C00A59344 /* TURecipientBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 114122E21E3A997C00A59344 /* TURecipientBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		114122F51E3A997C00A59344 /* TURecipientBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 114122E01E3A997C00A59344 /* TURecipientBar.framework */; };
+		114122F61E3A997C00A59344 /* TURecipientBar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 114122E01E3A997C00A59344 /* TURecipientBar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		114122FE1E3A99DB00A59344 /* TURecipientsDisplayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 110611FE1742E96700730F01 /* TURecipientsDisplayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		114122FF1E3A99DB00A59344 /* TURecipientsBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 110611EE1742E63100730F01 /* TURecipientsBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		114123001E3A99DB00A59344 /* TURecipient.h in Headers */ = {isa = PBXBuildFile; fileRef = 110611F11742E63D00730F01 /* TURecipient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		114123011E3A99E300A59344 /* TURecipientsDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611FF1742E96700730F01 /* TURecipientsDisplayController.m */; };
+		114123021E3A99E300A59344 /* TURecipientsBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611EF1742E63100730F01 /* TURecipientsBar.m */; };
+		114123031E3A99E300A59344 /* TURecipient.m in Sources */ = {isa = PBXBuildFile; fileRef = 110611F21742E63D00730F01 /* TURecipient.m */; };
 		11468B961AA69B1300279850 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11468B951AA69B1300279850 /* Launch Screen.xib */; };
 		11468B981AA69B2D00279850 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11468B971AA69B2D00279850 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		114122EA1E3A997C00A59344 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 110611BD1742E2D400730F01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 114122DF1E3A997C00A59344;
+			remoteInfo = TURecipientBar;
+		};
+		114122EC1E3A997C00A59344 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 110611BD1742E2D400730F01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 110611C41742E2D400730F01;
+			remoteInfo = Example;
+		};
+		114122F31E3A997C00A59344 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 110611BD1742E2D400730F01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 114122DF1E3A997C00A59344;
+			remoteInfo = TURecipientBar;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		114122FA1E3A997C00A59344 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				114122F61E3A997C00A59344 /* TURecipientBar.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		110611C51742E2D400730F01 /* TURecipientBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TURecipientBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		110611C51742E2D400730F01 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		110611C81742E2D400730F01 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		110611CA1742E2D400730F01 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		110611CC1742E2D400730F01 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,18 +95,18 @@
 		110611EF1742E63100730F01 /* TURecipientsBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipientsBar.m; sourceTree = "<group>"; };
 		110611F11742E63D00730F01 /* TURecipient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TURecipient.h; sourceTree = "<group>"; };
 		110611F21742E63D00730F01 /* TURecipient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipient.m; sourceTree = "<group>"; };
-		110611F41742E64600730F01 /* recipient-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient-selected.png"; sourceTree = "<group>"; };
-		110611F51742E64600730F01 /* recipient-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient-selected@2x.png"; sourceTree = "<group>"; };
-		110611F61742E64600730F01 /* recipient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recipient.png; sourceTree = "<group>"; };
-		110611F71742E64600730F01 /* recipient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient@2x.png"; sourceTree = "<group>"; };
 		110611FE1742E96700730F01 /* TURecipientsDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TURecipientsDisplayController.h; sourceTree = "<group>"; };
 		110611FF1742E96700730F01 /* TURecipientsDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipientsDisplayController.m; sourceTree = "<group>"; };
 		110612031742EDE500730F01 /* TUABSearchSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TUABSearchSource.h; sourceTree = "<group>"; };
 		110612041742EDE500730F01 /* TUABSearchSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUABSearchSource.m; sourceTree = "<group>"; };
 		110612061742EE9200730F01 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		110612081742EE9800730F01 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		11468B911AA689D700279850 /* recipient-selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient-selected@3x.png"; sourceTree = "<group>"; };
-		11468B931AA689E200279850 /* recipient@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipient@3x.png"; sourceTree = "<group>"; };
+		114122E01E3A997C00A59344 /* TURecipientBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TURecipientBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		114122E21E3A997C00A59344 /* TURecipientBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TURecipientBar.h; sourceTree = "<group>"; };
+		114122E31E3A997C00A59344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		114122E81E3A997C00A59344 /* TURecipientBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TURecipientBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		114122EF1E3A997C00A59344 /* TURecipientBarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TURecipientBarTests.m; sourceTree = "<group>"; };
+		114122F11E3A997C00A59344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11468B951AA69B1300279850 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		11468B971AA69B2D00279850 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +121,22 @@
 				110611C91742E2D400730F01 /* UIKit.framework in Frameworks */,
 				110611CB1742E2D400730F01 /* Foundation.framework in Frameworks */,
 				110611CD1742E2D400730F01 /* CoreGraphics.framework in Frameworks */,
+				114122F51E3A997C00A59344 /* TURecipientBar.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		114122DC1E3A997C00A59344 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		114122E51E3A997C00A59344 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				114122E91E3A997C00A59344 /* TURecipientBar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +148,7 @@
 			children = (
 				110611ED1742E34B00730F01 /* TURecipientBar */,
 				110611CE1742E2D400730F01 /* TURecipientBarExample */,
+				114122EE1E3A997C00A59344 /* TURecipientBarTests */,
 				110611C71742E2D400730F01 /* Frameworks */,
 				110611C61742E2D400730F01 /* Products */,
 			);
@@ -100,7 +157,9 @@
 		110611C61742E2D400730F01 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				110611C51742E2D400730F01 /* TURecipientBar.app */,
+				110611C51742E2D400730F01 /* Example.app */,
+				114122E01E3A997C00A59344 /* TURecipientBar.framework */,
+				114122E81E3A997C00A59344 /* TURecipientBarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,32 +210,71 @@
 		110611ED1742E34B00730F01 /* TURecipientBar */ = {
 			isa = PBXGroup;
 			children = (
+				114122E21E3A997C00A59344 /* TURecipientBar.h */,
+				114122E31E3A997C00A59344 /* Info.plist */,
 				110611FE1742E96700730F01 /* TURecipientsDisplayController.h */,
 				110611FF1742E96700730F01 /* TURecipientsDisplayController.m */,
 				110611EE1742E63100730F01 /* TURecipientsBar.h */,
 				110611EF1742E63100730F01 /* TURecipientsBar.m */,
 				110611F11742E63D00730F01 /* TURecipient.h */,
 				110611F21742E63D00730F01 /* TURecipient.m */,
-				110611F41742E64600730F01 /* recipient-selected.png */,
-				110611F51742E64600730F01 /* recipient-selected@2x.png */,
-				11468B911AA689D700279850 /* recipient-selected@3x.png */,
-				110611F61742E64600730F01 /* recipient.png */,
-				110611F71742E64600730F01 /* recipient@2x.png */,
-				11468B931AA689E200279850 /* recipient@3x.png */,
 			);
 			path = TURecipientBar;
 			sourceTree = "<group>";
 		};
+		114122EE1E3A997C00A59344 /* TURecipientBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				114122EF1E3A997C00A59344 /* TURecipientBarTests.m */,
+				114122F11E3A997C00A59344 /* Info.plist */,
+			);
+			path = TURecipientBarTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		114122DD1E3A997C00A59344 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				114122FE1E3A99DB00A59344 /* TURecipientsDisplayController.h in Headers */,
+				114122F21E3A997C00A59344 /* TURecipientBar.h in Headers */,
+				114122FF1E3A99DB00A59344 /* TURecipientsBar.h in Headers */,
+				114123001E3A99DB00A59344 /* TURecipient.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		110611C41742E2D400730F01 /* TURecipientBar */ = {
+		110611C41742E2D400730F01 /* Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 110611E81742E2D400730F01 /* Build configuration list for PBXNativeTarget "TURecipientBar" */;
+			buildConfigurationList = 110611E81742E2D400730F01 /* Build configuration list for PBXNativeTarget "Example" */;
 			buildPhases = (
 				110611C11742E2D400730F01 /* Sources */,
 				110611C21742E2D400730F01 /* Frameworks */,
 				110611C31742E2D400730F01 /* Resources */,
+				114122FA1E3A997C00A59344 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				114122F41E3A997C00A59344 /* PBXTargetDependency */,
+			);
+			name = Example;
+			productName = TURecipientBar;
+			productReference = 110611C51742E2D400730F01 /* Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		114122DF1E3A997C00A59344 /* TURecipientBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 114122F71E3A997C00A59344 /* Build configuration list for PBXNativeTarget "TURecipientBar" */;
+			buildPhases = (
+				114122DB1E3A997C00A59344 /* Sources */,
+				114122DC1E3A997C00A59344 /* Frameworks */,
+				114122DD1E3A997C00A59344 /* Headers */,
+				114122DE1E3A997C00A59344 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -184,8 +282,27 @@
 			);
 			name = TURecipientBar;
 			productName = TURecipientBar;
-			productReference = 110611C51742E2D400730F01 /* TURecipientBar.app */;
-			productType = "com.apple.product-type.application";
+			productReference = 114122E01E3A997C00A59344 /* TURecipientBar.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		114122E71E3A997C00A59344 /* TURecipientBarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 114122FB1E3A997C00A59344 /* Build configuration list for PBXNativeTarget "TURecipientBarTests" */;
+			buildPhases = (
+				114122E41E3A997C00A59344 /* Sources */,
+				114122E51E3A997C00A59344 /* Frameworks */,
+				114122E61E3A997C00A59344 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				114122EB1E3A997C00A59344 /* PBXTargetDependency */,
+				114122ED1E3A997C00A59344 /* PBXTargetDependency */,
+			);
+			name = TURecipientBarTests;
+			productName = TURecipientBarTests;
+			productReference = 114122E81E3A997C00A59344 /* TURecipientBarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -196,6 +313,22 @@
 				CLASSPREFIX = TU;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = ThinkUltimate;
+				TargetAttributes = {
+					110611C41742E2D400730F01 = {
+						DevelopmentTeam = 7TR2B85D62;
+					};
+					114122DF1E3A997C00A59344 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7TR2B85D62;
+						ProvisioningStyle = Automatic;
+					};
+					114122E71E3A997C00A59344 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7TR2B85D62;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 110611C41742E2D400730F01;
+					};
+				};
 			};
 			buildConfigurationList = 110611C01742E2D400730F01 /* Build configuration list for PBXProject "TURecipientBar" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -209,7 +342,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				110611C41742E2D400730F01 /* TURecipientBar */,
+				110611C41742E2D400730F01 /* Example */,
+				114122DF1E3A997C00A59344 /* TURecipientBar */,
+				114122E71E3A997C00A59344 /* TURecipientBarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -223,15 +358,23 @@
 				110611DB1742E2D400730F01 /* Default.png in Resources */,
 				110611DD1742E2D400730F01 /* Default@2x.png in Resources */,
 				11468B981AA69B2D00279850 /* Images.xcassets in Resources */,
-				11468B921AA689D700279850 /* recipient-selected@3x.png in Resources */,
 				110611DF1742E2D400730F01 /* Default-568h@2x.png in Resources */,
 				11468B961AA69B1300279850 /* Launch Screen.xib in Resources */,
 				110611E21742E2D400730F01 /* MainStoryboard.storyboard in Resources */,
-				110611F91742E64600730F01 /* recipient-selected.png in Resources */,
-				110611FA1742E64600730F01 /* recipient-selected@2x.png in Resources */,
-				110611FB1742E64600730F01 /* recipient.png in Resources */,
-				11468B941AA689E200279850 /* recipient@3x.png in Resources */,
-				110611FC1742E64600730F01 /* recipient@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		114122DE1E3A997C00A59344 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		114122E61E3A997C00A59344 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,14 +388,47 @@
 				110611D51742E2D400730F01 /* main.m in Sources */,
 				110611D91742E2D400730F01 /* TUAppDelegate.m in Sources */,
 				110611E51742E2D400730F01 /* TUViewController.m in Sources */,
-				110611F01742E63100730F01 /* TURecipientsBar.m in Sources */,
-				110611F31742E63D00730F01 /* TURecipient.m in Sources */,
-				110612001742E96700730F01 /* TURecipientsDisplayController.m in Sources */,
 				110612051742EDE600730F01 /* TUABSearchSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		114122DB1E3A997C00A59344 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				114123021E3A99E300A59344 /* TURecipientsBar.m in Sources */,
+				114123031E3A99E300A59344 /* TURecipient.m in Sources */,
+				114123011E3A99E300A59344 /* TURecipientsDisplayController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		114122E41E3A997C00A59344 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				114122F01E3A997C00A59344 /* TURecipientBarTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		114122EB1E3A997C00A59344 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 114122DF1E3A997C00A59344 /* TURecipientBar */;
+			targetProxy = 114122EA1E3A997C00A59344 /* PBXContainerItemProxy */;
+		};
+		114122ED1E3A997C00A59344 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 110611C41742E2D400730F01 /* Example */;
+			targetProxy = 114122EC1E3A997C00A59344 /* PBXContainerItemProxy */;
+		};
+		114122F41E3A997C00A59344 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 114122DF1E3A997C00A59344 /* TURecipientBar */;
+			targetProxy = 114122F31E3A997C00A59344 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		110611D11742E2D400730F01 /* InfoPlist.strings */ = {
@@ -353,12 +529,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
 				INFOPLIST_FILE = "TURecipientBarExample/TURecipientBar-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ThinkUltimate.${PRODUCT_NAME:rfc1034identifier}";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBar.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -368,14 +545,127 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
 				INFOPLIST_FILE = "TURecipientBarExample/TURecipientBar-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ThinkUltimate.${PRODUCT_NAME:rfc1034identifier}";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBar.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		114122F81E3A997C00A59344 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TURecipientBar/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		114122F91E3A997C00A59344 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TURecipientBar/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		114122FC1E3A997C00A59344 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TURecipientBarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
+			};
+			name = Debug;
+		};
+		114122FD1E3A997C00A59344 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 7TR2B85D62;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TURecipientBarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
 		};
@@ -391,7 +681,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		110611E81742E2D400730F01 /* Build configuration list for PBXNativeTarget "TURecipientBar" */ = {
+		110611E81742E2D400730F01 /* Build configuration list for PBXNativeTarget "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				110611E91742E2D400730F01 /* Debug */,
@@ -399,6 +689,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		114122F71E3A997C00A59344 /* Build configuration list for PBXNativeTarget "TURecipientBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				114122F81E3A997C00A59344 /* Debug */,
+				114122F91E3A997C00A59344 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		114122FB1E3A997C00A59344 /* Build configuration list for PBXNativeTarget "TURecipientBarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				114122FC1E3A997C00A59344 /* Debug */,
+				114122FD1E3A997C00A59344 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

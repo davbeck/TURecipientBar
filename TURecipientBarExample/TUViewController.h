@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TURecipientsDisplayController.h"
+#import <TURecipientBar/TURecipientBar.h>
 
 @class TUABSearchSource;
 

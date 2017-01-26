@@ -12,6 +12,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/davbeck/TURecipientBar.git", :tag => s.version.to_s }
   s.platform     = :ios, '8.0'
   s.source_files = 'TURecipientBar/*.{h,m}'
-  s.resources    = 'TURecipientBar/*.png'
   s.requires_arc = true
 end

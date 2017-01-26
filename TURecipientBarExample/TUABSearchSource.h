@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TURecipientsBar.h"
+#import <TURecipientBar/TURecipientBar.h>
 #import <AddressBook/AddressBook.h>
 
 

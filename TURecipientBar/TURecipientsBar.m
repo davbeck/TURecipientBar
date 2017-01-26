@@ -847,6 +847,53 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 #pragma mark - UIAppearance
 
++ (UIImage *)_defaultRecipientBackground
+{
+	static UIImage *background = nil;
+	if (background != nil) {
+		return background;
+	}
+	
+	CGRect bounds = CGRectMake(0, 0, 29, 25);
+	UIGraphicsBeginImageContextWithOptions(bounds.size, NO, 0);
+	
+	UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(bounds, 0.5, 0.5) cornerRadius:12];
+	[[UIColor blackColor] setStroke];
+	path.lineWidth = 1;
+	[path stroke];
+	
+	background = UIGraphicsGetImageFromCurrentImageContext();
+	background = [background imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	background = [background stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+	
+	UIGraphicsEndImageContext();
+	
+	return background;
+}
+
++ (UIImage *)_defaultRecipientSelectedBackground
+{
+	static UIImage *background = nil;
+	if (background != nil) {
+		return background;
+	}
+	
+	CGRect bounds = CGRectMake(0, 0, 29, 25);
+	UIGraphicsBeginImageContextWithOptions(bounds.size, NO, 0);
+	
+	UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:12];
+	[[UIColor blackColor] setFill];
+	[path fill];
+	
+	background = UIGraphicsGetImageFromCurrentImageContext();
+	background = [background imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	background = [background stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+	
+	UIGraphicsEndImageContext();
+	
+	return background;
+}
+
 - (void)setRecipientBackgroundImage:(UIImage *)backgroundImage forState:(UIControlState)state UI_APPEARANCE_SELECTOR
 {
     if (backgroundImage == nil) {
@@ -868,13 +915,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     if (backgroundImage == nil) {
         if (state == UIControlStateNormal) {
-            backgroundImage = [UIImage imageNamed:@"recipient" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection];
+            backgroundImage = [[self class] _defaultRecipientBackground];
         } else if (state == UIControlStateHighlighted || state == UIControlStateSelected) {
-            backgroundImage = [UIImage imageNamed:@"recipient-selected" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:self.traitCollection];
+            backgroundImage = [[self class] _defaultRecipientSelectedBackground];
         }
-        
-        backgroundImage = [backgroundImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        backgroundImage = [backgroundImage stretchableImageWithLeftCapWidth:14 topCapHeight:0];
     }
     
     return backgroundImage;
