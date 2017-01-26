@@ -1,6 +1,7 @@
 # ![TURecipientBar](http://f.cl.ly/items/2t2b39213t130o2N2w2S/WordMark.svg) 
 
 [![Version](https://img.shields.io/cocoapods/v/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
 [![Platform](https://img.shields.io/cocoapods/p/TURecipientBar.svg?style=flat)](http://cocoadocs.org/docsets/TURecipientBar)
 
