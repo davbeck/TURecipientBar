@@ -91,8 +91,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	UIControl *recipientView;
 	
-	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarViewForRecipient:)]) {
-		recipientView = [self.recipientsBarDelegate recipientsBarViewForRecipient:recipient];
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:viewForRecipient:)]) {
+		recipientView = [self.recipientsBarDelegate recipientsBar:self viewForRecipient:recipient];
 	}
 	
 	if (recipientView == nil) {

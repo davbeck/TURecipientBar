@@ -109,7 +109,7 @@
 
 /*
 // Uncomment to customize the recipient view.
-- (nullable UIControl *)recipientsBarViewForRecipient:(nonnull id<TURecipient>)recipient
+- (nullable UIControl *)recipientsBar:(nonnull TURecipientsBar *)recipientsBar viewForRecipient:(nonnull id<TURecipient>)recipient
 {
 	ChipView *view = [[ChipView alloc] init];
 	

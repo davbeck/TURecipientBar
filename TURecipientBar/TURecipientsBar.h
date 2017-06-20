@@ -405,6 +405,6 @@
  
  @param recipient The recipient to create the view for.
  */
-- (nullable UIControl *)recipientsBarViewForRecipient:(nonnull id<TURecipient>)recipient;
+- (nullable UIControl *)recipientsBar:(nonnull TURecipientsBar *)recipientsBar viewForRecipient:(nonnull id<TURecipient>)recipient;
 
 @end

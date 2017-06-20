@@ -418,10 +418,10 @@ static void *TURecipientsContext = &TURecipientsContext;
 	}
 }
 
-- (nullable UIControl *)recipientsBarViewForRecipient:(nonnull id<TURecipient>)recipient
+- (nullable UIControl *)recipientsBar:(TURecipientsBar *)recipientsBar viewForRecipient:(nonnull id<TURecipient>)recipient
 {
-	if ([self.delegate respondsToSelector:@selector(recipientsBarViewForRecipient:)]) {
-		return [(id<TURecipientsBarDelegate>)self.delegate recipientsBarViewForRecipient:recipient];
+	if ([self.delegate respondsToSelector:@selector(recipientsBar:viewForRecipient:)]) {
+		return [(id<TURecipientsBarDelegate>)self.delegate recipientsBar:recipientsBar viewForRecipient:recipient];
 	}
 	
 	return nil;
