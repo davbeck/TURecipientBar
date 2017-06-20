@@ -8,6 +8,7 @@
 
 #import "TUViewController.h"
 
+#import "Example-Swift.h"
 #import "TUABSearchSource.h"
 
 
@@ -98,12 +99,30 @@
 }
 
 /*
- Uncomment to disable the search table view.
- The shouldReloadTableForSearchString method and other text change methods will still be called, so you can provide your own search UI
+// Uncomment to disable the search table view.
+// The shouldReloadTableForSearchString method and other text change methods will still be called, so you can provide your own search UI
 - (BOOL)recipientsDisplayControllerShouldBeginSearch:(TURecipientsDisplayController *)controller
 {
     return NO;
  }
  */
+
+/*
+// Uncomment to customize the recipient view.
+- (nullable UIControl *)recipientsBarViewForRecipient:(nonnull id<TURecipient>)recipient
+{
+	ChipView *view = [[ChipView alloc] init];
+	
+	view.nameLabel.text = recipient.recipientTitle;
+	
+	[view.removeButton addTarget:self action:@selector(remove) forControlEvents:UIControlEventTouchUpInside];
+	
+	return view;
+}
+ */
+
+- (void)remove {
+	[self.recipientsBar removeRecipient:self.recipientsBar.recipients.lastObject];
+}
 
 @end

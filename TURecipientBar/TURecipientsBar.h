@@ -393,4 +393,18 @@
  */
 - (void)recipientsBarAddButtonClicked:(nonnull TURecipientsBar *)recipientsBar;
 
+
+/**---------------------------------------------------------------------------------------
+ * @name Customization
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**  Asks the delegate to create a token view for the given recipient.
+ 
+ If the delegate doesn't impliment this method, or returns nil, a UIButton with default styling will be used instead. You can customize that button using UIAppearance, or return a completely custom view here.
+ 
+ @param recipient The recipient to create the view for.
+ */
+- (nullable UIControl *)recipientsBarViewForRecipient:(nonnull id<TURecipient>)recipient;
+
 @end

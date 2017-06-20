@@ -418,4 +418,13 @@ static void *TURecipientsContext = &TURecipientsContext;
 	}
 }
 
+- (nullable UIControl *)recipientsBarViewForRecipient:(nonnull id<TURecipient>)recipient
+{
+	if ([self.delegate respondsToSelector:@selector(recipientsBarViewForRecipient:)]) {
+		return [(id<TURecipientsBarDelegate>)self.delegate recipientsBarViewForRecipient:recipient];
+	}
+	
+	return nil;
+}
+
 @end

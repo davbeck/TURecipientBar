@@ -21,6 +21,9 @@
 		110612051742EDE600730F01 /* TUABSearchSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 110612041742EDE500730F01 /* TUABSearchSource.m */; };
 		110612071742EE9200730F01 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612061742EE9200730F01 /* AddressBook.framework */; };
 		110612091742EE9800730F01 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110612081742EE9800730F01 /* AddressBookUI.framework */; };
+		113B021E1EF975FD00F36662 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B021D1EF975FD00F36662 /* ChipView.swift */; };
+		113B02211EF9790C00F36662 /* TURecipientButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 113B021F1EF9790C00F36662 /* TURecipientButton.h */; };
+		113B02221EF9790C00F36662 /* TURecipientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 113B02201EF9790C00F36662 /* TURecipientButton.m */; };
 		114122E91E3A997C00A59344 /* TURecipientBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 114122E01E3A997C00A59344 /* TURecipientBar.framework */; };
 		114122F01E3A997C00A59344 /* TURecipientBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 114122EF1E3A997C00A59344 /* TURecipientBarTests.m */; };
 		114122F21E3A997C00A59344 /* TURecipientBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 114122E21E3A997C00A59344 /* TURecipientBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -101,6 +104,10 @@
 		110612041742EDE500730F01 /* TUABSearchSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TUABSearchSource.m; sourceTree = "<group>"; };
 		110612061742EE9200730F01 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		110612081742EE9800730F01 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		113B021C1EF975FD00F36662 /* Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Bridging-Header.h"; sourceTree = "<group>"; };
+		113B021D1EF975FD00F36662 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
+		113B021F1EF9790C00F36662 /* TURecipientButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TURecipientButton.h; sourceTree = "<group>"; };
+		113B02201EF9790C00F36662 /* TURecipientButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TURecipientButton.m; sourceTree = "<group>"; };
 		114122E01E3A997C00A59344 /* TURecipientBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TURecipientBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		114122E21E3A997C00A59344 /* TURecipientBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TURecipientBar.h; sourceTree = "<group>"; };
 		114122E31E3A997C00A59344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -188,7 +195,9 @@
 				110611E41742E2D400730F01 /* TUViewController.m */,
 				110612031742EDE500730F01 /* TUABSearchSource.h */,
 				110612041742EDE500730F01 /* TUABSearchSource.m */,
+				113B021D1EF975FD00F36662 /* ChipView.swift */,
 				110611CF1742E2D400730F01 /* Supporting Files */,
+				113B021C1EF975FD00F36662 /* Example-Bridging-Header.h */,
 			);
 			path = TURecipientBarExample;
 			sourceTree = "<group>";
@@ -218,6 +227,8 @@
 				110611EF1742E63100730F01 /* TURecipientsBar.m */,
 				110611F11742E63D00730F01 /* TURecipient.h */,
 				110611F21742E63D00730F01 /* TURecipient.m */,
+				113B021F1EF9790C00F36662 /* TURecipientButton.h */,
+				113B02201EF9790C00F36662 /* TURecipientButton.m */,
 			);
 			path = TURecipientBar;
 			sourceTree = "<group>";
@@ -242,6 +253,7 @@
 				114122F21E3A997C00A59344 /* TURecipientBar.h in Headers */,
 				114122FF1E3A99DB00A59344 /* TURecipientsBar.h in Headers */,
 				114123001E3A99DB00A59344 /* TURecipient.h in Headers */,
+				113B02211EF9790C00F36662 /* TURecipientButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +328,7 @@
 				TargetAttributes = {
 					110611C41742E2D400730F01 = {
 						DevelopmentTeam = 7TR2B85D62;
+						LastSwiftMigration = 0900;
 					};
 					114122DF1E3A997C00A59344 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -387,6 +400,7 @@
 			files = (
 				110611D51742E2D400730F01 /* main.m in Sources */,
 				110611D91742E2D400730F01 /* TUAppDelegate.m in Sources */,
+				113B021E1EF975FD00F36662 /* ChipView.swift in Sources */,
 				110611E51742E2D400730F01 /* TUViewController.m in Sources */,
 				110612051742EDE600730F01 /* TUABSearchSource.m in Sources */,
 			);
@@ -398,6 +412,7 @@
 			files = (
 				114123021E3A99E300A59344 /* TURecipientsBar.m in Sources */,
 				114123031E3A99E300A59344 /* TURecipient.m in Sources */,
+				113B02221EF9790C00F36662 /* TURecipientButton.m in Sources */,
 				114123011E3A99E300A59344 /* TURecipientsDisplayController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,6 +544,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 7TR2B85D62;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
@@ -537,6 +553,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBar.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TURecipientBarExample/Example-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -545,6 +564,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 7TR2B85D62;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TURecipientBarExample/TURecipientBar-Prefix.pch";
@@ -553,6 +573,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ThinkUltimate.TURecipientBar.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TURecipientBarExample/Example-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -626,6 +648,7 @@
 		114122FC1E3A997C00A59344 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -648,6 +671,7 @@
 		114122FD1E3A997C00A59344 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -697,6 +721,7 @@
 				114122F91E3A997C00A59344 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		114122FB1E3A997C00A59344 /* Build configuration list for PBXNativeTarget "TURecipientBarTests" */ = {
 			isa = XCConfigurationList;
@@ -705,6 +730,7 @@
 				114122FD1E3A997C00A59344 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

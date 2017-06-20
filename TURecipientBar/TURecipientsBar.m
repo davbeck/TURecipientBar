@@ -10,8 +10,10 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "TURecipientButton.h"
 
-#define TURecipientsLineHeight 43.0
+
+#define TURecipientsLineHeight 44.0
 #define TURecipientsPlaceholder @"\u200B"
 
 void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
@@ -20,11 +22,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 @implementation TURecipientsBar
 {
     UIVisualEffectView *_backgroundView;
-	NSArray *_updatingConstraints; // NSLayoutConstraint
-    NSArray *_addButtonHiddenConstraints; // NSLayoutConstraint
+	NSArray<NSLayoutConstraint *> *_updatingConstraints;
+    NSArray<NSLayoutConstraint *> *_addButtonHiddenConstraints;
 	
-	NSMutableArray *_recipients; // <TURecipient>
-	NSMutableArray *_recipientViews; // UIButton
+	NSMutableArray<id<TURecipient>> *_recipients;
+	NSMutableArray<UIControl *> *_recipientViews;
 	CGSize _lastKnownSize;
 	id<TURecipient>_selectedRecipient;
     BOOL _needsRecipientLayout;
@@ -32,7 +34,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     // UIAppearance
     NSMutableDictionary *_recipientBackgroundImages; // [@(UIControlState)] UIImage
     NSMutableDictionary *_recipientTitleTextAttributes; // [@(UIControlState)] NSDictionary(text attributes dictionary)
-    
 }
 
 #pragma mark - Properties
@@ -52,6 +53,33 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	return [_recipients copy];
 }
 
+- (UIControl *)_defaultRecipientViewForRecipient:(id<TURecipient>)recipient
+{
+	// we use TURecipientButton to check if we are using a custom view or should style the default
+	UIButton *recipientView = [TURecipientButton buttonWithType:UIButtonTypeCustom];
+	
+	recipientView.adjustsImageWhenHighlighted = NO;
+	recipientView.contentEdgeInsets = _recipientContentEdgeInsets;
+	
+	
+	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateNormal]
+							 forState:UIControlStateNormal];
+	[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
+							 forState:UIControlStateNormal];
+	
+	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateHighlighted]
+							 forState:UIControlStateHighlighted];
+	[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
+							 forState:UIControlStateHighlighted];
+	
+	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateSelected]
+							 forState:UIControlStateSelected];
+	[recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
+							 forState:UIControlStateSelected];
+	
+	return recipientView;
+}
+
 - (void)addRecipient:(id<TURecipient>)recipient
 {
 	NSIndexSet *changedIndex = [NSIndexSet indexSetWithIndex:_recipients.count];
@@ -61,26 +89,16 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:changedIndex forKey:@"recipients"];
 	
 	
-	UIButton *recipientView = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-	recipientView.adjustsImageWhenHighlighted = NO;
-	recipientView.contentEdgeInsets = _recipientContentEdgeInsets;
-    
-    
-	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateNormal]
-                             forState:UIControlStateNormal];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateNormal]]
-                             forState:UIControlStateNormal];
-    
-	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateHighlighted]
-							 forState:UIControlStateHighlighted];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateHighlighted]]
-                             forState:UIControlStateHighlighted];
-    
-	[recipientView setBackgroundImage:[self recipientBackgroundImageForState:UIControlStateSelected]
-							 forState:UIControlStateSelected];
-    [recipientView setAttributedTitle:[[NSAttributedString alloc] initWithString:recipient.recipientTitle attributes:[self recipientTitleTextAttributesForState:UIControlStateSelected]]
-                             forState:UIControlStateSelected];
+	UIControl *recipientView;
+	
+	if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarViewForRecipient:)]) {
+		recipientView = [self.recipientsBarDelegate recipientsBarViewForRecipient:recipient];
+	}
+	
+	if (recipientView == nil) {
+		recipientView = [self _defaultRecipientViewForRecipient:recipient];
+	}
+	
     
     
 	[recipientView addTarget:self action:@selector(selectRecipientButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,7 +152,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[_recipients removeObjectsAtIndexes:changedIndex];
 	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:changedIndex forKey:@"recipients"];
 	
-    UIView *recipientView = [_recipientViews objectAtIndex:changedIndex.firstIndex];
+    UIControl *recipientView = [_recipientViews objectAtIndex:changedIndex.firstIndex];
     [_recipientViews removeObject:recipientView];
     [self _setNeedsRecipientLayout];
     
@@ -468,7 +486,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     if (recipientView == _textField) {
         recipientViewFrame.size = CGSizeMake(100.0, 43.0);
     } else {
-        recipientViewFrame.size = recipientView.intrinsicContentSize;
+        recipientViewFrame.size = [recipientView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     }
     
     if (lastView == _toLabel) {
@@ -481,7 +499,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
         recipientViewFrame.origin.x = 15.0;
-        recipientViewFrame.origin.y += TURecipientsLineHeight - 8.0;
+        recipientViewFrame.origin.y += TURecipientsLineHeight - 4.0;
     }
     
     return recipientViewFrame;
@@ -513,7 +531,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         
         UIView *lastView = _toLabel;
         
-        for (UIView *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
+        for (UIControl *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
             CGRect recipientViewFrame = [self _frameFoRecipientView:recipientView afterView:lastView];
             
             if (recipientView == _textField) {
@@ -610,7 +628,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     UIControlState state = UIControlStateNormal;
     NSDictionary *attributes = [self recipientTitleTextAttributesForState:state];
-    for (UIButton *button in _recipientViews) {
+    for (TURecipientButton *button in _recipientViews) {
+		if ([button isKindOfClass:[TURecipientButton class]]) {
+			continue;
+		}
+		
         NSString *text = [button titleForState:state] ?: [button attributedTitleForState:state].string ?: @"";
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
         [button setAttributedTitle:attributedText forState:state];
@@ -634,7 +656,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     self.selectedRecipient = nil;
 }
 
-- (IBAction)selectRecipientButton:(UIButton *)sender
+- (IBAction)selectRecipientButton:(UIControl *)sender
 {
 	NSUInteger recipientIndex = [_recipientViews indexOfObject:sender];
 	
@@ -662,14 +684,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 			[self _updateRecipientTextField];
 		}
 		
-		for (UIButton *recipientView in _recipientViews) {
+		for (UIControl *recipientView in _recipientViews) {
 			recipientView.selected = NO;
 		}
 		
 		NSUInteger recipientIndex = [_recipients indexOfObject:recipient];
 		
 		if (recipientIndex != NSNotFound && [_recipientViews count] > recipientIndex) {
-			UIButton *recipientView = [_recipientViews objectAtIndex:recipientIndex];
+			UIControl *recipientView = [_recipientViews objectAtIndex:recipientIndex];
 			recipientView.selected = YES;
 		}
 		
@@ -780,7 +802,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 - (void)textFieldDidBeginEditing:(UITextField *)textField;
 {
     [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-        for (UIView *recipientView in _recipientViews) {
+        for (UIControl *recipientView in _recipientViews) {
             recipientView.alpha = 1.0;
         }
         _textField.alpha = 1.0;
@@ -817,7 +839,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
         self.scrollEnabled = NO;
         
-        for (UIView *recipientView in _recipientViews) {
+        for (UIControl *recipientView in _recipientViews) {
             recipientView.alpha = 0.0;
         }
         _textField.alpha = 0.0;
@@ -904,8 +926,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     backgroundImage = [self recipientBackgroundImageForState:state];
     
-    for (UIButton *button in _recipientViews) {
-        [button setBackgroundImage:backgroundImage forState:state];
+    for (TURecipientButton *button in _recipientViews) {
+		if ([button isKindOfClass:[TURecipientButton class]]) {
+			continue;
+		}
+		
+		[button setBackgroundImage:backgroundImage forState:state];
     }
 }
 
@@ -928,8 +954,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 {
     _recipientContentEdgeInsets = recipientContentEdgeInsets;
     
-    for (UIButton *button in _recipientViews) {
-        button.contentEdgeInsets = _recipientContentEdgeInsets;
+    for (TURecipientButton *button in _recipientViews) {
+		if ([button isKindOfClass:[TURecipientButton class]]) {
+			continue;
+		}
+		
+		button.contentEdgeInsets = _recipientContentEdgeInsets;
     }
 }
 
@@ -943,8 +973,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     
     attributes = [self recipientTitleTextAttributesForState:state];
     
-    for (UIButton *button in _recipientViews) {
-        NSString *text = [button titleForState:state] ?: [button attributedTitleForState:state].string ?: @"";
+    for (TURecipientButton *button in _recipientViews) {
+		if ([button isKindOfClass:[TURecipientButton class]]) {
+			continue;
+		}
+		
+		NSString *text = [button titleForState:state] ?: [button attributedTitleForState:state].string ?: @"";
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
         [button setAttributedTitle:attributedText forState:state];
     }
