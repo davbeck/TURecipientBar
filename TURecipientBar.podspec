@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "TURecipientBar"
-  s.version      = "2.0.4"
+  s.version      = "2.1.0"
   s.summary      = "A UIView to handle entering recipients similar to iOS Mail."
   s.homepage     = "http://github.com/davbeck/TURecipientBar"
   s.screenshots  = [ "http://cl.ly/image/032E2A0O052m/iOS%20Simulator%20Screen%20Shot%20Mar%204,%202015,%209.12.50%20AM.png",
