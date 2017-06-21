@@ -76,6 +76,13 @@
     [self.recipientsBar addRecipient:[TURecipient recipientWithTitle:@"John Burke" address:nil]];
 }
 
+- (IBAction)changeExpandedMode:(UISwitch *)sender
+{
+	[UIView animateWithDuration:0.2 animations:^{
+		self.recipientsBar.displayMode = sender.on ? TURecipientsBarDisplayModeExpanded : TURecipientsBarDisplayModeAutomatic;
+	}];
+}
+
 
 #pragma mark - TSRecipientsDisplayDelegate
 

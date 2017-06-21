@@ -19,6 +19,14 @@
 void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 
+@interface TURecipientsBar ()
+
+@property (nonatomic) BOOL expanded;
+@property (nonatomic) BOOL editing;
+	
+@end
+
+
 @implementation TURecipientsBar
 {
     UIVisualEffectView *_backgroundView;
@@ -133,11 +141,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
     }
     
     
-    if (_textField.editing) {
+    if (self.editing) {
         [self _scrollToBottomAnimated:YES];
-    } else {
-        recipientView.alpha = 0.0;
-    }
+    } else if (self.expanded) {
+		recipientView.alpha = 1.0;
+	} else {
+		recipientView.alpha = 0.0;
+	}
     if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBar:didAddRecipient:)]) {
         [self.recipientsBarDelegate recipientsBar:self didAddRecipient:recipient];
     }
@@ -332,6 +342,42 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	} else {
 		[self setSearching:searching];
 	}
+}
+
+- (void)setDisplayMode:(TURecipientsBarDisplayMode)displayMode
+{
+	_displayMode = displayMode;
+	
+	self.expanded = _displayMode == TURecipientsBarDisplayModeExpanded || self.editing;
+}
+
+- (void)setEditing:(BOOL)editing
+{
+	_editing = editing;
+	
+	[self _updateRecipientTextField];
+	
+	self.expanded = _displayMode == TURecipientsBarDisplayModeExpanded || self.editing;
+}
+
+- (void)setExpanded:(BOOL)expanded
+{
+	_expanded = expanded;
+	
+	if (!_expanded) {
+		self.scrollEnabled = NO;
+	}
+	
+	for (UIControl *recipientView in _recipientViews) {
+		recipientView.alpha = _expanded ? 1.0 : 0.0;
+	}
+	
+	_textField.alpha = _expanded ? 1.0 : 0.0;
+	_addButton.alpha = _expanded ? 1.0 : 0.0;
+	_summaryLabel.alpha = !_expanded ? 1.0 : 0.0;
+	
+	[self _setNeedsRecipientLayout];
+	[self.superview layoutIfNeeded];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -530,7 +576,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         addButtonFrame.origin.x = self.bounds.size.width - addButtonFrame.size.width - 6.0;
         
         UIView *lastView = _toLabel;
-        
+		
         for (UIControl *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
             CGRect recipientViewFrame = [self _frameFoRecipientView:recipientView afterView:lastView];
             
@@ -547,16 +593,18 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
             
             lastView = recipientView;
         }
-        
-        
-        self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMaxY(lastView.frame), TURecipientsLineHeight));
-        
-        
+		
+		if (!self.editing) {
+			lastView = _recipientViews.lastObject;
+		}
+		self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMidY(lastView.frame) + TURecipientsLineHeight/2, TURecipientsLineHeight));
+		
         _needsRecipientLayout = NO;
         
         addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - TURecipientsLineHeight / 2.0;
         _addButton.frame = addButtonFrame;
     }
+	
     
     [_lineView.superview bringSubviewToFront:_lineView];
     CGFloat lineHeight = 1.0 / self.traitCollection.displayScale;
@@ -569,7 +617,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
         _lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - lineHeight, self.bounds.size.width, lineHeight);
     }
     
-    if (_textField.isFirstResponder && (!self.searching || self.showsMultipleLinesWhileSearching)) {
+    if (self.expanded && (!self.searching || self.showsMultipleLinesWhileSearching)) {
 		self.heightConstraint.constant = self.contentSize.height;
 	} else {
 		self.heightConstraint.constant = TURecipientsLineHeight;
@@ -580,7 +628,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	}
     
     
-	if (_textField.isFirstResponder && self.contentSize.height > self.frame.size.height && !_searching) {
+	if (self.editing && self.contentSize.height > self.frame.size.height && !_searching) {
 		self.scrollEnabled = YES;
 	} else {
 		self.scrollEnabled = NO;
@@ -593,13 +641,13 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		[self _setNeedsRecipientLayout];
 	}
     
-    if (_textField.isFirstResponder && self.contentSize.height > self.frame.size.height && !_searching) {
+    if (self.expanded && self.contentSize.height > self.frame.size.height && !_searching) {
 		self.scrollEnabled = YES;
 	} else {
 		self.scrollEnabled = NO;
 	}
 	
-	if (_textField.isFirstResponder
+	if (self.editing
         && _selectedRecipient == nil
 		&& (self.bounds.size.width != _lastKnownSize.width || self.bounds.size.height != _lastKnownSize.height)) {
 		[self _scrollToBottomAnimated:NO];
@@ -679,6 +727,10 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	if (should) {
 		if (_selectedRecipient != recipient) {
+			if (recipient != nil && !self.editing) {
+				[self becomeFirstResponder];
+			}
+			
 			_selectedRecipient = recipient;
 			
 			[self _updateRecipientTextField];
@@ -704,7 +756,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 - (void)_updateRecipientTextField
 {
-	_textField.hidden = _selectedRecipient != nil || ![_textField isFirstResponder];
+	_textField.hidden = _selectedRecipient != nil || !self.editing;
 }
 
 - (void)_scrollToBottomAnimated:(BOOL)animated
@@ -802,17 +854,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 - (void)textFieldDidBeginEditing:(UITextField *)textField;
 {
     [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-        for (UIControl *recipientView in _recipientViews) {
-            recipientView.alpha = 1.0;
-        }
-        _textField.alpha = 1.0;
-        _addButton.alpha = 1.0;
-        
-        _summaryLabel.alpha = 0.0;
-        
-        
-        [self setNeedsLayout];
-        [self.superview layoutIfNeeded];
+		self.editing = YES;
         
         [self _scrollToBottomAnimated:YES];
     } completion:^(BOOL finished) {
@@ -835,20 +877,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     [self setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
+	
+	[self setSelectedRecipient:nil];
     
     [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.scrollEnabled = NO;
-        
-        for (UIControl *recipientView in _recipientViews) {
-            recipientView.alpha = 0.0;
-        }
-        _textField.alpha = 0.0;
-        _addButton.alpha = 0.0;
-        
-        _summaryLabel.alpha = 1.0;
-        
-        [self setNeedsLayout];
-        [self.superview layoutIfNeeded];
+		self.editing = NO;
     } completion:^(BOOL finished) {
         if ([self.recipientsBarDelegate respondsToSelector:@selector(recipientsBarTextDidEndEditing:)]) {
             [self.recipientsBarDelegate recipientsBarTextDidEndEditing:self];

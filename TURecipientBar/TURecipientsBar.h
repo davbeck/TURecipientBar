@@ -13,12 +13,22 @@
 @protocol TURecipientsBarDelegate;
 
 
+/**
+ How the recipient bar should be displayed.
+ 
+ - TURecipientsBarDisplayModeAutomatic: When the recipient bar is active, the recipients will be expanded into full individual views, when it is not active, the summary label will be shown in stead.
+ - TURecipientsBarDisplayModeExpanded: Recipient views will always be shown instead of the summary labels and the height will be expanded. When inactive, the text field is not shown.
+ */
+typedef NS_ENUM(NSInteger, TURecipientsBarDisplayMode) {
+	TURecipientsBarDisplayModeAutomatic,
+	TURecipientsBarDisplayModeExpanded,
+};
+
+
 /** The primary view for a recipient bar.
  
  This view can be used independantly, but works best with TURecipientsDisplayController.
  */
-
-
 @interface TURecipientsBar : UIScrollView <UITextFieldDelegate>
 
 /**---------------------------------------------------------------------------------------
@@ -53,6 +63,13 @@
  When the user taps on the bar it enters a searching mode that shows the recipients as tokens.
  */
 @property (nonatomic) BOOL searching;
+
+/**
+ How the bar should be displayed.
+ 
+ See `TURecipientsBarDisplayMode`. The default is `automatic`.
+ */
+@property (nonatomic) TURecipientsBarDisplayMode displayMode;
 
 /** Animate changes to searching.
  
