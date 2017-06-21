@@ -1,5 +1,13 @@
 # TURecipientBar CHANGELOG
 
+## 2.2.0
+
+- Add optional always expanded display mode.
+
+## 2.1.0
+
+- Add support for custom recipient views.
+
 ### 2.0.2
 
 - Fixed crash related to removing from superview.
