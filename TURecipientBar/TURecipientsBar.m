@@ -526,6 +526,15 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self setNeedsLayout];
 }
 
+- (CGRect)_safeBounds
+{
+	if (@available(iOS 11.0, *)) {
+		return self.safeAreaLayoutGuide.layoutFrame;
+	} else {
+		return self.bounds;
+	}
+}
+
 - (CGRect)_frameFoRecipientView:(UIView *)recipientView afterView:(UIView *)lastView
 {
 	CGRect recipientViewFrame;
@@ -543,8 +552,8 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	recipientViewFrame.origin.y = CGRectGetMidY(lastView.frame) - recipientViewFrame.size.height / 2.0;
 	
-	if (CGRectGetMaxX(recipientViewFrame) > self.bounds.size.width - 6.0) {
-		recipientViewFrame.origin.x = 15.0;
+	if (CGRectGetMaxX(recipientViewFrame) > [self _safeBounds].size.width - 6.0) {
+		recipientViewFrame.origin.x = CGRectGetMinX([self _safeBounds]) + 15.0;
 		recipientViewFrame.origin.y += TURecipientsLineHeight - 4.0;
 	}
 	
@@ -557,9 +566,11 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	_backgroundView.frame = self.bounds;
 	
+	CGRect bounds = [self _safeBounds];
+	
 	if (_needsRecipientLayout) {
 		CGSize toSize = _toLabel.intrinsicContentSize;
-		_toLabel.frame = CGRectMake(15.0,
+		_toLabel.frame = CGRectMake(bounds.origin.x + 15.0,
 									21.0 - toSize.height / 2,
 									toSize.width, toSize.height);
 		
@@ -568,12 +579,12 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
 		summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
 		summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
-		summaryLabelFrame.size.width = self.bounds.size.width - summaryLabelFrame.origin.x - 12.0;
+		summaryLabelFrame.size.width = bounds.size.width - summaryLabelFrame.origin.x - 12.0;
 		_summaryLabel.frame = summaryLabelFrame;
 		
 		CGRect addButtonFrame;
 		addButtonFrame.size = _addButton.intrinsicContentSize;
-		addButtonFrame.origin.x = self.bounds.size.width - addButtonFrame.size.width - 6.0;
+		addButtonFrame.origin.x = bounds.size.width - addButtonFrame.size.width - 6.0;
 		
 		UIView *lastView = _toLabel;
 		
@@ -584,7 +595,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 				if (_addButton.superview == self) {
 					recipientViewFrame.size.width = addButtonFrame.origin.x - recipientViewFrame.origin.x;
 				} else {
-					recipientViewFrame.size.width = self.bounds.size.width - recipientViewFrame.origin.x;
+					recipientViewFrame.size.width = bounds.size.width - recipientViewFrame.origin.x;
 				}
 			}
 			
@@ -1115,3 +1126,4 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 }
 
 @end
+
