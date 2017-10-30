@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, TURecipientsBarDisplayMode) {
  
  This will both add the recipient to the array of recipients and will also update the view, whether it is in searching mode or not.
  
-@param recipient A recipient to add.
+ @param recipient A recipient to add.
  */
 - (void)addRecipient:(nonnull id<TURecipient>)recipient;
 
@@ -371,18 +371,18 @@ typedef NS_ENUM(NSInteger, TURecipientsBarDisplayMode) {
 - (void)recipientsBar:(nonnull TURecipientsBar *)recipientsBar didSelectRecipient:(nonnull id<TURecipient>)recipient;
 
 /** Tells the delegate that recipient was removed.
-
+ 
  Called when a recipient was removed
-
+ 
  @param recipientsBar The recipient bar that is being edited.
  @param recipient The recipient that was removed.
  */
 - (void)recipientsBar:(nonnull TURecipientsBar *)recipientsBar didRemoveRecipient:(nonnull id<TURecipient>)recipient;
 
 /** Tells the delegate that recipient was added.
-
+ 
  Called when a recipient was added
-
+ 
  @param recipientsBar The recipient bar that is being edited.
  @param recipient The recipient that was added.
  */

@@ -19,7 +19,7 @@
 
 - (NSString *)title
 {
-    return self.recipientTitle;
+	return self.recipientTitle;
 }
 
 + (id)recipientWithTitle:(NSString *)title address:(id)address

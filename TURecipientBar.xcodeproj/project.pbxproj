@@ -95,7 +95,7 @@
 		110611E31742E2D400730F01 /* TUViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TUViewController.h; sourceTree = "<group>"; };
 		110611E41742E2D400730F01 /* TUViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TUViewController.m; sourceTree = "<group>"; };
 		110611EE1742E63100730F01 /* TURecipientsBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TURecipientsBar.h; sourceTree = "<group>"; };
-		110611EF1742E63100730F01 /* TURecipientsBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipientsBar.m; sourceTree = "<group>"; };
+		110611EF1742E63100730F01 /* TURecipientsBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipientsBar.m; sourceTree = "<group>"; usesTabs = 1; };
 		110611F11742E63D00730F01 /* TURecipient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TURecipient.h; sourceTree = "<group>"; };
 		110611F21742E63D00730F01 /* TURecipient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TURecipient.m; sourceTree = "<group>"; };
 		110611FE1742E96700730F01 /* TURecipientsDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TURecipientsDisplayController.h; sourceTree = "<group>"; };
