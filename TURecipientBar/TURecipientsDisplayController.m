@@ -233,19 +233,26 @@ static void *TURecipientsContext = &TURecipientsContext;
 - (void)_updateTableViewInsets
 {
 	if (_searchResultsTableView != nil) {
-		CGRect keyboardFrameInView = [self.searchResultsTableView.superview convertRect:_keyboardFrame fromView:nil];
-		CGFloat bottomInset = CGRectGetMaxY(self.searchResultsTableView.frame) - keyboardFrameInView.origin.y;
-		
 		UIEdgeInsets contentInset = self.searchResultsTableView.contentInset;
 		UIEdgeInsets scrollIndicatorInsets = self.searchResultsTableView.scrollIndicatorInsets;
 		
 		if (!CGRectIsEmpty(_keyboardFrame)) {
+			CGRect keyboardFrameInView = [self.searchResultsTableView.superview convertRect:_keyboardFrame fromView:nil];
+			CGFloat bottomInset = CGRectGetMaxY(self.searchResultsTableView.frame) - keyboardFrameInView.origin.y;
+			if (@available(iOS 11, *)) {
+				bottomInset -= self.searchResultsTableView.adjustedContentInset.bottom - contentInset.bottom;
+			}
+			
 			contentInset.bottom = bottomInset;
 			scrollIndicatorInsets.bottom = contentInset.bottom;
 		}
 		
 		if (![self.delegate respondsToSelector:@selector(recipientsDisplayController:displaySearchResultsTableView:)]) {
-			contentInset.top = CGRectGetMaxY(self.recipientsBar.frame);
+			if (@available(iOS 11, *)) {
+				contentInset.top = self.recipientsBar.frame.size.height;
+			} else {
+				contentInset.top = CGRectGetMaxY(self.recipientsBar.frame);
+			}
 			scrollIndicatorInsets.top = contentInset.top;
 		}
 		
