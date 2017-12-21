@@ -123,7 +123,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		// add this after getting the frame, otherwise it will base the frame on itself
 		[_recipientViews addObject:recipientView];
 		
-		void(^animations)() = ^{
+		void(^animations)(void) = ^{
 			recipientView.transform = CGAffineTransformIdentity;
 			recipientView.alpha = 1.0;
 			
@@ -167,7 +167,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	[self _setNeedsRecipientLayout];
 	
 	if (self.animatedRecipientsInAndOut) {
-		void(^animations)() = ^{
+		void(^animations)(void) = ^{
 			recipientView.transform = CGAffineTransformMakeScale(0.1, 0.1);
 			recipientView.alpha = 0.0;
 			
