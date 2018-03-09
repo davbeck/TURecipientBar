@@ -60,9 +60,15 @@
 
 /** Create a new recipient.
  
+ Use `initWithTitle:address:` instead.
+ */
++ (nonnull id)recipientWithTitle:(nonnull NSString *)title address:(nullable id)address __attribute__((deprecated));
+
+/** Create a new recipient.
+ 
  Because this class is immutable, this is the only way to set the title and address properties.
  If you need to make a change, you should create a new one. This is because the recipients bar will not track changes.
  */
-+ (nonnull id)recipientWithTitle:(nonnull NSString *)title address:(nullable id)address;
+- (nonnull instancetype)initWithTitle:(nonnull NSString *)title address:(nullable id)address;
 
 @end
