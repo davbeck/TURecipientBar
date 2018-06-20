@@ -30,6 +30,13 @@
 
 @interface TURecipientsDisplayController : NSObject <TURecipientsBarDelegate>
 
+/**
+ Show the search results table view when the search query is empty.
+ 
+ Normally the search results table view is hidden until the user has typed at least 1 character into the search field. Sometimes however it makes sense to show results when the user selects the field.
+ */
+@property (nonatomic) BOOL alwaysShowResults;
+
 /**---------------------------------------------------------------------------------------
  * @name Delegate
  *  ---------------------------------------------------------------------------------------

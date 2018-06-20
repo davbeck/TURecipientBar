@@ -20,6 +20,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 	CGRect _keyboardFrame;
 }
 
+@synthesize alwaysShowResults = _alwaysShowResults;
 @synthesize searchResultsTableView = _searchResultsTableView;
 
 #pragma mark - Properties
@@ -314,7 +315,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 		[self.delegate recipientsDisplayControllerDidBeginSearch:self];
 	}
 	
-	if (recipientsBar.text.length > 0) {
+	if (recipientsBar.text.length > 0 || _alwaysShowResults) {
 		[self _showTableView];
 	}
 }
@@ -358,7 +359,7 @@ static void *TURecipientsContext = &TURecipientsContext;
 		[(id<TURecipientsBarDelegate>)self.delegate recipientsBar:recipientsBar textDidChange:searchText];
 	}
 	
-	if (recipientsBar.text.length > 0) {
+	if (recipientsBar.text.length > 0 || _alwaysShowResults) {
 		[self _showTableView];
 		
 		BOOL should = YES;
