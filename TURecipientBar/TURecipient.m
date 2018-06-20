@@ -22,14 +22,20 @@
 	return self.recipientTitle;
 }
 
+- (instancetype)initWithTitle:(NSString *)title address:(id)address
+{
+	self = [super init];
+	if (self != nil) {
+		self.recipientTitle = title;
+		self.address = address;
+	}
+	
+	return self;
+}
+
 + (id)recipientWithTitle:(NSString *)title address:(id)address
 {
-	TURecipient *recipient = [[TURecipient alloc] init];
-	
-	recipient.recipientTitle = title;
-	recipient.address = address;
-	
-	return recipient;
+	return [[TURecipient alloc] initWithTitle:title address:address];
 }
 
 - (id)copyWithZone:(NSZone *)zone
