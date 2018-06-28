@@ -622,11 +622,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	if (self.traitCollection.displayScale < 1.0) { // this is the case when the view is off screen
 		lineHeight = 1.0;
 	}
-	if (self.searching) {
-		_lineView.frame = CGRectMake(0.0, self.contentSize.height - lineHeight, self.bounds.size.width, lineHeight);
-	} else {
-		_lineView.frame = CGRectMake(0.0, self.contentOffset.y + self.bounds.size.height - lineHeight, self.bounds.size.width, lineHeight);
-	}
+	_lineView.frame = CGRectMake(0.0, CGRectGetMaxY(self.bounds) - lineHeight, self.bounds.size.width, lineHeight);
 	
 	if (self.expanded && (!self.searching || self.showsMultipleLinesWhileSearching)) {
 		self.heightConstraint.constant = self.contentSize.height;
@@ -634,12 +630,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 		self.heightConstraint.constant = TURecipientsLineHeight;
 	}
 	
-	if (_searching) {
-		[self _scrollToBottomAnimated:NO];
-	}
-	
-	
-	if (self.editing && self.contentSize.height > self.frame.size.height && !_searching) {
+	if (self.expanded && self.contentSize.height > self.frame.size.height && !_searching) {
 		self.scrollEnabled = YES;
 	} else {
 		self.scrollEnabled = NO;
