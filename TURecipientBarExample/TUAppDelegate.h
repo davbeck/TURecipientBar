@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 ThinkUltimate. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface TUAppDelegate : UIResponder <UIApplicationDelegate>
 

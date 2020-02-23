@@ -6,7 +6,7 @@
 //  Copyright © 2017 ThinkUltimate. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 //! Project version number for TURecipientBar.
 FOUNDATION_EXPORT double TURecipientBarVersionNumber;
@@ -16,7 +16,7 @@ FOUNDATION_EXPORT const unsigned char TURecipientBarVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <TURecipientBar/PublicHeader.h>
 
-#import <TURecipientBar/TURecipientsDisplayController.h>
-#import <TURecipientBar/TURecipientsBar.h>
-#import <TURecipientBar/TURecipient.h>
+#import "TURecipientsDisplayController.h"
+#import "TURecipientsBar.h"
+#import "TURecipient.h"
 

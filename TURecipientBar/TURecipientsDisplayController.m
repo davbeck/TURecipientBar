@@ -8,7 +8,7 @@
 
 #import "TURecipientsDisplayController.h"
 
-#import <QuartzCore/QuartzCore.h>
+@import QuartzCore;
 
 
 static void *TURecipientsContext = &TURecipientsContext;

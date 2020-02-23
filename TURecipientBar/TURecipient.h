@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 ThinkUltimate. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 
 /** A recipient object that will be represented with a token.

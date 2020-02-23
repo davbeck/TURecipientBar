@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 ThinkUltimate. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 #import "TURecipient.h"
 
