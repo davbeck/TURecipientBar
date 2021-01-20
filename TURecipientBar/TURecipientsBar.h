@@ -111,6 +111,12 @@ typedef NS_ENUM(NSInteger, TURecipientsBarDisplayMode) {
  */
 @property (nonatomic, readonly, nonnull) UILabel *toLabel;
 
+/** The frame for the toLabel.
+ 
+ Subclasses can override this method to customize the placement of the to label. The first recipient view and the summary label base their layout off of this frame.
+ */
+- (CGRect)toLabelRectForBounds:(CGRect)bounds;
+
 /** Whether the add button should appear.
  
  The add button calls the delegates method -recipientsBarAddButtonClicked:. It is a UIButtonTypeContactAdd type button.

@@ -37,7 +37,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	NSMutableArray<UIControl *> *_recipientViews;
 	CGSize _lastKnownSize;
 	id<TURecipient>_selectedRecipient;
-	BOOL _needsRecipientLayout;
 	
 	// UIAppearance
 	NSMutableDictionary *_recipientBackgroundImages; // [@(UIControlState)] UIImage
@@ -114,7 +113,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	[self addSubview:recipientView];
 	
-	[self _setNeedsRecipientLayout];
+	[self setNeedsLayout];
 	if (self.animatedRecipientsInAndOut) {
 		recipientView.frame = [self _frameFoRecipientView:recipientView afterView:_recipientViews.lastObject];
 		recipientView.alpha = 0.0;
@@ -164,7 +163,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	UIControl *recipientView = [_recipientViews objectAtIndex:changedIndex.firstIndex];
 	[_recipientViews removeObject:recipientView];
-	[self _setNeedsRecipientLayout];
+	[self setNeedsLayout];
 	
 	if (self.animatedRecipientsInAndOut) {
 		void(^animations)(void) = ^{
@@ -376,7 +375,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	_addButton.alpha = _expanded ? 1.0 : 0.0;
 	_summaryLabel.alpha = !_expanded ? 1.0 : 0.0;
 	
-	[self _setNeedsRecipientLayout];
+	[self setNeedsLayout];
 	[self.superview layoutIfNeeded];
 }
 
@@ -483,7 +482,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	
 	
-	[self _setNeedsRecipientLayout];
+	[self setNeedsLayout];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -520,12 +519,6 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 
 #pragma mark - Layout
 
-- (void)_setNeedsRecipientLayout
-{
-	_needsRecipientLayout = YES;
-	[self setNeedsLayout];
-}
-
 - (CGRect)_safeBounds
 {
 	if (@available(iOS 11.0, *)) {
@@ -560,6 +553,14 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	return recipientViewFrame;
 }
 
+- (CGRect)toLabelRectForBounds:(CGRect)bounds
+{
+    CGSize toSize = _toLabel.intrinsicContentSize;
+    return CGRectMake(bounds.origin.x + 15.0,
+                      21.0 - toSize.height / 2,
+                      toSize.width, toSize.height);
+}
+
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
@@ -568,53 +569,45 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 	
 	CGRect bounds = [self _safeBounds];
 	
-	if (_needsRecipientLayout) {
-		CGSize toSize = _toLabel.intrinsicContentSize;
-		_toLabel.frame = CGRectMake(bounds.origin.x + 15.0,
-									21.0 - toSize.height / 2,
-									toSize.width, toSize.height);
-		
-		
-		CGRect summaryLabelFrame;
-		summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
-		summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
-		summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
-		summaryLabelFrame.size.width = bounds.size.width - summaryLabelFrame.origin.x - 12.0;
-		_summaryLabel.frame = summaryLabelFrame;
-		
-		CGRect addButtonFrame;
-		addButtonFrame.size = _addButton.intrinsicContentSize;
-		addButtonFrame.origin.x = bounds.size.width - addButtonFrame.size.width - 6.0;
-		
-		UIView *lastView = _toLabel;
-		
-		for (UIControl *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
-			CGRect recipientViewFrame = [self _frameFoRecipientView:recipientView afterView:lastView];
-			
-			if (recipientView == _textField) {
-				if (_addButton.superview == self) {
-					recipientViewFrame.size.width = addButtonFrame.origin.x - recipientViewFrame.origin.x;
-				} else {
-					recipientViewFrame.size.width = bounds.size.width - recipientViewFrame.origin.x;
-				}
-			}
-			
-			recipientView.frame = recipientViewFrame;
-			
-			
-			lastView = recipientView;
-		}
-		
-		if (!self.editing) {
-			lastView = _recipientViews.lastObject;
-		}
-		self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMidY(lastView.frame) + TURecipientsLineHeight/2, TURecipientsLineHeight));
-		
-		_needsRecipientLayout = NO;
-		
-		addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - TURecipientsLineHeight / 2.0;
-		_addButton.frame = addButtonFrame;
-	}
+    _toLabel.frame = [self toLabelRectForBounds: bounds];
+    
+    CGRect summaryLabelFrame;
+    summaryLabelFrame.origin.x = CGRectGetMaxX(_toLabel.frame);
+    summaryLabelFrame.size.height = ceil(_summaryLabel.font.lineHeight);
+    summaryLabelFrame.origin.y = 21.0 - summaryLabelFrame.size.height / 2;
+    summaryLabelFrame.size.width = bounds.size.width - summaryLabelFrame.origin.x - 12.0;
+    _summaryLabel.frame = summaryLabelFrame;
+    
+    CGRect addButtonFrame;
+    addButtonFrame.size = _addButton.intrinsicContentSize;
+    addButtonFrame.origin.x = bounds.size.width - addButtonFrame.size.width - 6.0;
+    
+    UIView *lastView = _toLabel;
+    
+    for (UIControl *recipientView in [_recipientViews arrayByAddingObject:_textField]) {
+        CGRect recipientViewFrame = [self _frameFoRecipientView:recipientView afterView:lastView];
+        
+        if (recipientView == _textField) {
+            if (_addButton.superview == self) {
+                recipientViewFrame.size.width = addButtonFrame.origin.x - recipientViewFrame.origin.x;
+            } else {
+                recipientViewFrame.size.width = bounds.size.width - recipientViewFrame.origin.x;
+            }
+        }
+        
+        recipientView.frame = recipientViewFrame;
+        
+        
+        lastView = recipientView;
+    }
+    
+    if (!self.editing) {
+        lastView = _recipientViews.lastObject;
+    }
+    self.contentSize = CGSizeMake(self.frame.size.width, MAX(CGRectGetMidY(lastView.frame) + TURecipientsLineHeight/2, TURecipientsLineHeight));
+    
+    addButtonFrame.origin.y = self.contentSize.height - addButtonFrame.size.height / 2.0 - TURecipientsLineHeight / 2.0;
+    _addButton.frame = addButtonFrame;
 	
 	
 	[_lineView.superview bringSubviewToFront:_lineView];
@@ -640,7 +633,7 @@ void *TURecipientsSelectionContext = &TURecipientsSelectionContext;
 - (void)_frameChanged
 {
 	if (_recipients != nil && self.bounds.size.width != _lastKnownSize.width) {
-		[self _setNeedsRecipientLayout];
+		[self setNeedsLayout];
 	}
 	
 	if (self.expanded && self.contentSize.height > self.frame.size.height && !_searching) {
